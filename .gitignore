@@ -5,8 +5,14 @@ ART_BRIEF*.md
 ui-kit.html
 css/ui-kit.css
 assets/scenes/*.png
+assets/scenes/*.webp
 assets/scenes/stages/*
-!assets/scenes/stages/stage_00.png
+!assets/scenes/stages/stage_00.webp
 *.zip
 MUSIC_BRIEF.md
 GAME_REVIEW.md
+
+# Full-size PNG sources stay on this computer; the game loads the WebP copies
+# made by tools/optimize_assets.py
+assets/**/*.png
+!assets/app/*.png

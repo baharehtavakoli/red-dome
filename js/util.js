@@ -48,34 +48,63 @@
      reloading is all it takes to swap in real art. */
   const loaded = new Set();
   const tried = new Set();
+  /* Downloads go through a queue, a few at a time, in the order given, so what the player
+     sees first (background, intro faces, board items) arrives first on a slow connection. */
+  const queue = [];
+  let active = 0;
+  const PARALLEL = 6;
+  function pump() {
+    while (active < PARALLEL && queue.length) {
+      const { p, onLoad } = queue.shift();
+      active++;
+      const img = new Image();
+      img.decoding = "async";
+      const done = (ok) => { active--; if (ok) { loaded.add(p); onLoad && onLoad(p); } pump(); };
+      img.onload = () => done(true);
+      img.onerror = () => done(false);
+      img.src = p;
+    }
+  }
   const Art = {
     probe(paths, onLoad) {
       if (!window.GAME_CONFIG.tryImages) return;
       paths.forEach((p) => {
         if (!p || tried.has(p)) return;
         tried.add(p);
-        const img = new Image();
-        img.onload = () => { loaded.add(p); onLoad && onLoad(); };
-        img.src = p;
+        queue.push({ p, onLoad });
       });
+      pump();
     },
     html(icon, emoji, cls) {
       cls = cls ? " " + cls : "";
       if (icon && loaded.has(icon)) return `<img class="art${cls}" src="${U.esc(icon)}" alt="" draggable="false">`;
       return `<span class="emoji${cls}">${emoji || "❔"}</span>`;
     },
+    /* Every art path, most urgent first. */
     allPaths() {
-      const out = [window.GAME_CONFIG.talisman.icon];
+      const G = window.GAME_CONFIG, C = window.CHARACTERS, out = [];
+      const intro = (window.STORY && STORY.intro && STORY.intro.cast) || [];
+      const done = (window.State && State.d && State.d.dome) || [];
+      const next = G.domeParts.findIndex((p, i) => !done[i]);
+      // 1. what the first screen shows
+      out.push(G.scene.background);
+      intro.forEach((w) => C[w] && out.push(C[w].portrait));
+      (G.scene.residents || []).forEach((r) => C[r.who] && C[r.who].body && out.push(C[r.who].body + "neutral.webp"));
+      // 2. parts already built, and the next one
+      G.domeParts.forEach((p, i) => { if (done[i] || i === next) out.push(p.restored); });
+      // 3. the merge board
+      out.push(G.talisman.icon);
       Object.values(window.CHAINS).forEach((c) => {
         out.push(c.generator.icon);
         c.items.forEach((it) => out.push(it.icon));
       });
-      Object.values(window.CHARACTERS).forEach((c) => {
-        out.push(c.portrait, c.avatar);
-        if (c.body) (window.POSES || []).forEach((p) => out.push(c.body + p + ".png"));
+      Object.values(C).forEach((c) => out.push(c.avatar));
+      // 4. the rest: other portraits, talking poses, later parts
+      Object.values(C).forEach((c) => out.push(c.portrait));
+      Object.values(C).forEach((c) => {
+        if (c.body) (window.POSES || []).forEach((p) => out.push(c.body + p + ".webp"));
       });
-      out.push(window.GAME_CONFIG.scene.background);
-      window.GAME_CONFIG.domeParts.forEach((p) => out.push(p.ruined, p.restored));
+      G.domeParts.forEach((p) => out.push(p.restored, p.ruined));
       return out;
     },
     has(path) {

@@ -1100,7 +1100,7 @@ img.art { width: 82%; height: 82%; object-fit: contain; pointer-events: none; }
 .chain-step.cur .chain-art { box-shadow: 0 0 0 3px #2e9d58, 0 0 12px rgba(46, 157, 88, .6); }
 .chain-step.cur small { color: #1f7a42; }
 .chain-arrow { color: var(--gold-d); font: 900 16px "Nunito", sans-serif; }
-.chain-gen .chain-art { background: url("../assets/ui/slot_gold.png") center / 100% 100% no-repeat, #f3d27a; }
+.chain-gen .chain-art { background: url("../assets/ui/slot_gold.webp") center / 100% 100% no-repeat, #f3d27a; }
 .chain-howto { margin: 6px 0 0; padding: 8px 10px; border-radius: 10px; background: rgba(212, 165, 55, .16); color: var(--ink); font: 700 13px/1.4 "Nunito", sans-serif; }
 .modal.chain-modal { width: min(372px, 100%); }
 
@@ -1137,3 +1137,6 @@ html { touch-action: manipulation; } /* no double-tap zoom; pinch zoom still wor
 .task::before { inset: -10px; }
 .dlg-skip.confirm { background: #b8322a; border-color: #ffd76a; }
 .deliver[aria-disabled="true"] { cursor: default; }
+
+/* the screen behind the other one is hidden: stop its looping animations */
+#scene-screen.behind *, #app:not(.open) * { animation-play-state: paused !important; }

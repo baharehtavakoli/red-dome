@@ -23,7 +23,7 @@
     if (GAME_CONFIG.tryImages) {
       const probe = new Image();
       probe.onload = () => { document.documentElement.classList.add("ui-art"); UI.layoutBoard(); };
-      probe.src = "assets/ui/btn_gold.png";
+      probe.src = "assets/ui/btn_gold.webp";
     }
 
     // Swap placeholders for real art as PNGs are found.
@@ -79,6 +79,13 @@
         setTimeout(arm, 2500); // after a while, Back is caught again
       }
     });
+
+    // Offline cache + "Add to Home screen" (only on the real site; local testing stays uncached).
+    if ("serviceWorker" in navigator && location.protocol === "https:") {
+      window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+    }
+    // Ask the browser to keep the save even when storage runs low.
+    if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
 
     // Handy for poking around in the console.
     window.RD = { State, Board, Orders, Scene, Dialogue, UI, Debug };

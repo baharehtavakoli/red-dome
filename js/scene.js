@@ -202,8 +202,8 @@
         const idx = r.after ? parts().findIndex((p) => p.id === r.after) : -1;
         el.classList.toggle("away", !c || (idx >= 0 && !done[idx]));
         if (!c) return;
-        const pose = c.body && Art.has(c.body + (el._pose || "neutral") + ".png") ? c.body + (el._pose || "neutral") + ".png"
-          : c.body && Art.has(c.body + "neutral.png") ? c.body + "neutral.png" : null;
+        const pose = c.body && Art.has(c.body + (el._pose || "neutral") + ".webp") ? c.body + (el._pose || "neutral") + ".webp"
+          : c.body && Art.has(c.body + "neutral.webp") ? c.body + "neutral.webp" : null;
         el.classList.toggle("full", !!pose);
         const src = pose || (Art.has(c.portrait) ? c.portrait : null);
         const html = src
@@ -448,6 +448,7 @@
       if (this.busy) return;
       const app = document.getElementById("app");
       app.classList.add("open");
+      setTimeout(() => { if (this.boardOpen()) this.el.classList.add("behind"); }, 450); // after the slide-in
       Sfx.play("whoosh");
       UI.layoutBoard();
       Board.render();
@@ -457,6 +458,7 @@
     closeBoard() {
       if (this.boardOpen()) Sfx.play("whooshBack");
       document.getElementById("app").classList.remove("open");
+      this.el.classList.remove("behind");
       this.render();
     },
 

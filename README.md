@@ -228,3 +228,22 @@ licences to track. Melodic sounds use a plucked-string tone (close to a santur) 
 - **Phone**: Back closes the top window / story / board; on the main screen a second Back leaves.
   Pinch zoom is allowed. Skip asks once. A grey Deliver says which item is missing.
 - **Debug** 🐞 only shows on localhost or with `?debug` in the address.
+
+## Art files: PNG sources, WebP in the game
+
+The game loads **WebP** copies of the art (about 3.4 MB instead of 38 MB of PNG). The full-size
+PNGs stay in `assets/` on your computer as the sources, but are not uploaded to GitHub.
+
+After adding or changing any PNG, run:
+
+    python tools/optimize_assets.py
+
+It writes a resized `.webp` next to each PNG (items 224 px, portraits 600x900, full-body poses
+480x600, avatars 160 px; scenes and UI keep their size). Paths in `js/` and `css/` point at `.webp`.
+
+Art downloads in priority order, a few at a time (`Art.allPaths` in `js/util.js`): background and
+intro faces first, then the board, then everything else.
+
+**Offline / home screen:** on the live site `sw.js` caches the game so it opens offline, and
+`manifest.webmanifest` lets phones "Add to Home screen" as an app (icon in `assets/app/`).
+After changing art, bump `VERSION` in `sw.js` so phones fetch the new images.

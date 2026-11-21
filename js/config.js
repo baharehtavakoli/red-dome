@@ -17,19 +17,19 @@
 window.POSES = ["neutral", "happy", "surprised", "sad", "angry", "arms_open"];
 window.CHARACTERS = {
   shideh: { name: "Shideh",      role: "Architect",           emoji: "👷‍♀️", color: "#9b1c1c",
-            portrait: "assets/characters/shideh.png", avatar: "assets/characters/shideh_avatar.png",
+            portrait: "assets/characters/shideh.webp", avatar: "assets/characters/shideh_avatar.webp",
             body: "assets/characters/full_body/shideh/" },
   nasrin: { name: "Nasrin-Nush", role: "Princess",            emoji: "👸",   color: "#b8860b",
-            portrait: "assets/characters/nasrin.png", avatar: "assets/characters/nasrin_avatar.png",
+            portrait: "assets/characters/nasrin.webp", avatar: "assets/characters/nasrin_avatar.webp",
             body: "assets/characters/full_body/nasrin/" },
   mehrab: { name: "Mehrab",      role: "Shideh's apprentice", emoji: "🧑‍🔧", color: "#137470",
-            portrait: "assets/characters/mehrab.png", avatar: "assets/characters/mehrab_avatar.png",
+            portrait: "assets/characters/mehrab.webp", avatar: "assets/characters/mehrab_avatar.webp",
             body: "assets/characters/full_body/mehrab/" },
   golnar: { name: "Golnar",      role: "Gardener",            emoji: "👩‍🌾", color: "#3f7a2f",
-            portrait: "assets/characters/golnar.png", avatar: "assets/characters/golnar_avatar.png",
+            portrait: "assets/characters/golnar.webp", avatar: "assets/characters/golnar_avatar.webp",
             body: "assets/characters/full_body/golnar/" },
   sage:   { name: "The Sage",    role: "Hermit of the hills", emoji: "🧙",   color: "#5b3a8c",
-            portrait: "assets/characters/sage.png",   avatar: "assets/characters/sage_avatar.png",
+            portrait: "assets/characters/sage.webp",   avatar: "assets/characters/sage_avatar.webp",
             body: "assets/characters/full_body/sage/" },
 };
 
@@ -47,7 +47,7 @@ window.GAME_CONFIG = {
   scene: {
     width: 360,
     height: 640,
-    background: "assets/scenes/stages/stage_00.png", // the full ruin; restored parts fade in over it
+    background: "assets/scenes/stages/stage_00.webp", // the full ruin; restored parts fade in over it
     stagedArt: true, // parts are cut from stage paintings (tools/cut_stages.py): ruined layers only show while building
     maxZoom: 2.6, // how far the camera may zoom into a part
 
@@ -80,34 +80,34 @@ window.GAME_CONFIG = {
   domeParts: [
     { id: "stairs", name: "Stone Stairs", cost: 5, story: "stairs", emoji: "🪜",
       box: { x: 48, y: 407, w: 261, h: 79 }, button: { x: 177, y: 441 },
-      ruined: "assets/scenes/parts/stairs_ruined.png", restored: "assets/scenes/parts/stairs_restored.png" },
+      ruined: "assets/scenes/parts/stairs_ruined.webp", restored: "assets/scenes/parts/stairs_restored.webp" },
     { id: "terrace", name: "Terrace", cost: 8, story: "terrace", emoji: "🧱",
       box: { x: 0, y: 409, w: 360, h: 65 }, button: { x: 174, y: 434 },
-      ruined: "assets/scenes/parts/terrace_ruined.png", restored: "assets/scenes/parts/terrace_restored.png" },
+      ruined: "assets/scenes/parts/terrace_ruined.webp", restored: "assets/scenes/parts/terrace_restored.webp" },
     { id: "walls", name: "Red Brick Walls", cost: 12, story: "walls", emoji: "🧱",
       box: { x: 25, y: 274, w: 311, h: 147 }, button: { x: 176, y: 321 },
-      ruined: "assets/scenes/parts/walls_ruined.png", restored: "assets/scenes/parts/walls_restored.png" },
+      ruined: "assets/scenes/parts/walls_ruined.webp", restored: "assets/scenes/parts/walls_restored.webp" },
     { id: "arch", name: "Iwan & Doors", cost: 18, story: "arch", emoji: "🚪",
       box: { x: 116, y: 281, w: 124, h: 140 }, button: { x: 178, y: 349 },
-      ruined: "assets/scenes/parts/arch_ruined.png", restored: "assets/scenes/parts/arch_restored.png" },
+      ruined: "assets/scenes/parts/arch_ruined.webp", restored: "assets/scenes/parts/arch_restored.webp" },
     { id: "balcony", name: "Balcony", cost: 24, story: "balcony", emoji: "🏛️",
       box: { x: 20, y: 184, w: 319, h: 109 }, button: { x: 180, y: 231 },
-      ruined: "assets/scenes/parts/balcony_ruined.png", restored: "assets/scenes/parts/balcony_restored.png" },
+      ruined: "assets/scenes/parts/balcony_ruined.webp", restored: "assets/scenes/parts/balcony_restored.webp" },
     { id: "dome", name: "Red Dome", cost: 32, story: "dome", emoji: "🕌",
       box: { x: 55, y: 59, w: 250, h: 146 }, button: { x: 179, y: 152 },
-      ruined: "assets/scenes/parts/dome_ruined.png", restored: "assets/scenes/parts/dome_restored.png" },
+      ruined: "assets/scenes/parts/dome_ruined.webp", restored: "assets/scenes/parts/dome_restored.webp" },
     { id: "tiles", name: "Tilework", cost: 42, story: "tiles", emoji: "💠",
       box: { x: 40, y: 259, w: 279, h: 99 }, button: { x: 179, y: 302 },
-      ruined: "assets/scenes/parts/tiles_ruined.png", restored: "assets/scenes/parts/tiles_restored.png" },
+      ruined: "assets/scenes/parts/tiles_ruined.webp", restored: "assets/scenes/parts/tiles_restored.webp" },
     { id: "towers", name: "Towers", cost: 52, story: "towers", emoji: "🗼",
       box: { x: 20, y: 127, w: 320, h: 154 }, button: { x: 62, y: 184 },
-      ruined: "assets/scenes/parts/towers_ruined.png", restored: "assets/scenes/parts/towers_restored.png" },
+      ruined: "assets/scenes/parts/towers_ruined.webp", restored: "assets/scenes/parts/towers_restored.webp" },
     { id: "pool", name: "Pool & Fountain", cost: 64, story: "pool", emoji: "⛲",
       box: { x: 87, y: 431, w: 186, h: 80 }, button: { x: 180, y: 477 },
-      ruined: "assets/scenes/parts/pool_ruined.png", restored: "assets/scenes/parts/pool_restored.png" },
+      ruined: "assets/scenes/parts/pool_ruined.webp", restored: "assets/scenes/parts/pool_restored.webp" },
     { id: "garden", name: "Garden", cost: 80, story: "garden", emoji: "🌳",
       box: { x: 0, y: 197, w: 360, h: 260 }, button: { x: 62, y: 342 },
-      ruined: "assets/scenes/parts/garden_ruined.png", restored: "assets/scenes/parts/garden_restored.png" },
+      ruined: "assets/scenes/parts/garden_ruined.webp", restored: "assets/scenes/parts/garden_restored.webp" },
   ],
 
   energy: {
@@ -127,7 +127,7 @@ window.GAME_CONFIG = {
 
   talisman: {
     name: "Talisman",
-    icon: "assets/tiles/talisman.png",
+    icon: "assets/tiles/talisman.webp",
     emoji: "🔯",
     revealChance: 0.6, // chance a broken talisman leaves a random level-1 item
   },
