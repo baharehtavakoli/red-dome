@@ -1348,3 +1348,28 @@ html[dir="rtl"] #onboard .ob-skip { right: auto; left: max(14px, calc(50% - 246p
 html[dir="rtl"] #mission .ms-panel { direction: rtl; }
 html[dir="rtl"] #mission .ms-say p, html[dir="rtl"] #mission .ms-tip { font-family: "Vazirmatn", sans-serif; line-height: 1.8; }
 html[dir="rtl"] #mission h3 { font-family: "Vazirmatn", sans-serif; font-weight: 800; font-size: 22px; }
+/* onboarding v2: characters on the picture, a readable text panel */
+#onboard .ob-cast { position: absolute; top: 12%; bottom: 30%; display: flex; justify-content: center; align-items: flex-end; gap: 0;
+  opacity: 0; transform: translateX(-50%) translateY(16px); transition: opacity .45s ease, transform .45s ease; pointer-events: none; }
+#onboard .ob-cast.show { opacity: 1; transform: translateX(-50%); }
+#onboard .ob-actor { height: 100%; display: flex; align-items: flex-end; justify-content: center; font-size: 120px; }
+#onboard .ob-actor img { height: 100%; width: auto; max-width: 100%; object-fit: contain; object-position: bottom; filter: drop-shadow(0 8px 18px rgba(20, 4, 20, .55)); }
+#onboard .ob-cast.n1 .ob-actor { width: 78%; }
+#onboard .ob-cast.n2 .ob-actor { width: 54%; height: 92%; }
+#onboard .ob-cast.n2 .ob-actor + .ob-actor { margin-left: -12%; }
+#onboard .ob-cast.n2 .ob-actor.nasrin img { transform: scaleX(-1); }
+#onboard .ob-shade { background: linear-gradient(180deg, rgba(20, 6, 24, .35) 0%, transparent 18%, transparent 55%, rgba(20, 6, 24, .7) 100%); }
+#onboard .ob-card { padding: 0 14px max(16px, env(safe-area-inset-bottom)); }
+#onboard .ob-card > .ob-who, #onboard .ob-card > .ob-text {
+  background: rgba(36, 10, 34, .78); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+#onboard .ob-text { margin: 0 0 12px; padding: 14px 16px; min-height: 0; border-radius: 16px; border: 1.5px solid rgba(224, 178, 74, .55);
+  white-space: pre-line; font-size: 18px; text-shadow: none; box-shadow: 0 8px 22px rgba(10, 2, 12, .45); }
+#onboard .ob-who { display: none; width: max-content; margin: 0 6px -8px; padding: 7px 14px; border-radius: 12px 12px 0 0;
+  border: 1.5px solid rgba(224, 178, 74, .55); border-bottom: 0; font-size: 15px; position: relative; z-index: 1; }
+#onboard .ob-who.show { display: block; }
+#onboard .ob-who.show + .ob-text { border-start-start-radius: 0; }
+#onboard.quote .ob-text { font-style: normal; color: #fff4d8; }
+html[dir="rtl"] #onboard .ob-text { font-size: 17px; line-height: 1.85; }
+/* same staging in both languages: Shideh on the right, Nasrin-Nush facing her from the left */
+#onboard .ob-cast { direction: rtl; }
