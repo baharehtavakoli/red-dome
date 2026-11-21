@@ -1,9 +1,14 @@
-/* Debug panel for fast testing. Toggle with the 🐞 button. */
+/* Debug panel for fast testing. Toggle with the 🐞 button.
+   The button only shows on localhost, or when the address ends with ?debug. */
 (function () {
   const Debug = {
     init() {
       this.panel = document.getElementById("debug-panel");
-      document.getElementById("debug-toggle").addEventListener("click", () => this.toggle());
+      const btn = document.getElementById("debug-toggle");
+      const on = /[?&]debug\b/.test(location.search) || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === "file:";
+      if (!on) btn.style.display = "none";
+      else document.documentElement.classList.add("debug-on");
+      btn.addEventListener("click", () => this.toggle());
       this.build();
       this.panel.addEventListener("click", (e) => {
         const sp = e.target.closest("[data-spawn]");

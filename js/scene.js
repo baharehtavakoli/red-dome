@@ -225,7 +225,7 @@
 
     bark(i, text) {
       const r = this.residents()[i], el = this.resEls[i];
-      if (!r || !el || el.classList.contains("away")) return;
+      if (!r || !el || el.classList.contains("away") || this.busy) return;
       let pose = null;
       if (!text) {
         const lines = (window.BARKS && BARKS[r.who]) || [];
@@ -376,6 +376,14 @@
       await this.build(i);
       await Dialogue.play(p.story);
       await this.endCinematic();
+      const gift = cfg().energy.partReward || 0;
+      if (gift) {
+        State.addEnergy(gift);
+        UI.updateTop();
+        const pill = document.querySelector("#scene-screen .energy-pill");
+        if (pill) { UI.bump(pill); UI.floatText(pill.getBoundingClientRect(), `+${gift} ⚡`); }
+        Sfx.play("energy");
+      }
       if (State.partsRestored() === parts().length) { Sfx.play("fanfare"); UI.celebrate(); }
     },
 

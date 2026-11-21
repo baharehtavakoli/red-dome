@@ -11,8 +11,8 @@
 
 /* ---------- shared: painted buttons ---------- */
 .ui-art .btn,
-.ui-art .deliver:not([disabled]),
-.ui-art .deliver[disabled] {
+.ui-art .deliver:not(.off),
+.ui-art .deliver.off {
   border: 0 solid transparent;
   background: none;
   box-shadow: none;
@@ -124,14 +124,14 @@
   background: var(--slot, none) center / 100% 100% no-repeat;
 }
 .ui-art .req img.art, .ui-art .info-icon img.art { width: 74%; height: 74%; }
-.ui-art .deliver, .ui-art .deliver:not([disabled]), .ui-art .deliver[disabled] { border-image-width: 0 13px; }
+.ui-art .deliver, .ui-art .deliver:not(.off), .ui-art .deliver.off { border-image-width: 0 13px; }
 .ui-art .piece .lvl, .ui-art .piece .tick, .ui-art .piece .bolt, .ui-art .req .lvl, .ui-art .req .check { z-index: 1; }
 /* pieces now fill the tile: keep the badges inside it so they don't cover the neighbour's badges */
 .ui-art .piece .bolt { top: -1px; right: -1px; }
 .ui-art .piece .tick { top: -1px; left: -1px; }
-.ui-art .deliver { height: 28px; padding: 0 13px 2px; font-size: 12px; overflow: hidden; white-space: nowrap; letter-spacing: -.2px; }
-.ui-art .deliver:not([disabled]) { border-image-source: url("../assets/ui/btn_gold.png"); color: #420a0a; text-shadow: none; animation: none; }
-.ui-art .deliver[disabled] { border-image-source: url("../assets/ui/btn_cream.png"); color: #8a6a3a; text-shadow: none; filter: none; }
+.ui-art .deliver { height: 28px; padding: 0 13px 2px; font-size: 12px; white-space: nowrap; letter-spacing: -.2px; }
+.ui-art .deliver:not(.off) { border-image-source: url("../assets/ui/btn_gold.png"); color: #420a0a; text-shadow: none; animation: none; }
+.ui-art .deliver.off { border-image-source: url("../assets/ui/btn_cream.png"); color: #8a6a3a; text-shadow: none; filter: none; }
 
 /* ---------- merge board ---------- */
 .ui-art #board {

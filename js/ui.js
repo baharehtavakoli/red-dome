@@ -13,6 +13,17 @@
         if (!b) return;
         if (b.dataset.action === "activate") Board.activateCharm(+b.dataset.i);
         if (b.dataset.action === "chain") this.openChain(b.dataset.chain, +b.dataset.level);
+        if (b.dataset.action === "sell") {
+          // two taps: the first one asks
+          if (!b.classList.contains("confirm")) {
+            b.classList.add("confirm");
+            b.querySelector("span").textContent = "Sure?";
+            clearTimeout(this._sellT);
+            this._sellT = setTimeout(() => this.showInfo(Board.selected), 2500);
+            return;
+          }
+          Board.sell(+b.dataset.i);
+        }
       });
     },
 
@@ -94,8 +105,11 @@
         right = `<button class="info-chain" data-action="chain" data-chain="${cell.chain}" data-level="${cell.level}">✦ Max<span class="ibtn">i</span></button>`;
       }
       const extra = def.description ? ` · ${U.esc(def.description)}` : "";
+      const value = Board.sellValue(cell);
+      right += `<button class="info-sell" data-action="sell" data-i="${i}" aria-label="${value ? `Sell for ${value} stars` : "Remove item"}">` +
+        `<b>🗑</b><span>${value ? `+${value} ⭐` : "Remove"}</span></button>`;
       el.innerHTML = `<div class="info-icon" style="--c:${ch.color};${U.slotVar(cell.chain)}">${Art.html(def.icon, def.emoji)}</div>
-        <div class="info-text"><b>${U.esc(def.name)}</b><small>${ch.name} · Level ${cell.level}/${max}${extra}</small></div>${right}`;
+        <div class="info-text"><b>${U.esc(def.name)}</b><small>${ch.name} · Lv ${cell.level}/${max}${extra}</small></div>${right}`;
     },
 
     /* ---------- merge chain card ---------- */
@@ -171,10 +185,11 @@
         <div class="energy-big">⚡ <span data-e></span></div>
         <p class="muted" data-etimer></p>
         <button class="btn gold wide" data-ad>📺 Watch ad <b>+${e.adReward} ⚡</b></button>
+        <p class="muted small" data-adsleft></p>
         <button class="btn ghost wide" data-close>Close</button>`, { onClose: () => (this.energyModal = null) });
       this.energyModal = m;
       this.refreshEnergyModal();
-      m.querySelector("[data-ad]").addEventListener("click", () => this.watchAd());
+      m.querySelector("[data-ad]").addEventListener("click", () => { if (State.adsLeft() > 0) this.watchAd(); });
     },
 
     refreshEnergyModal() {
@@ -182,6 +197,9 @@
       if (!m || !m.querySelector("[data-e]")) return;
       const max = GAME_CONFIG.energy.max;
       m.querySelector("[data-e]").textContent = `${State.d.energy} / ${max}`;
+      const left = State.adsLeft(), ad = m.querySelector("[data-ad]"), info = m.querySelector("[data-adsleft]");
+      if (ad) { ad.disabled = left <= 0; ad.classList.toggle("dim", left <= 0); }
+      if (info) info.textContent = left === Infinity ? "" : left > 0 ? `${left} ad${left > 1 ? "s" : ""} left today` : "No more ads today. Come back tomorrow!";
       m.querySelector("[data-etimer]").textContent = State.d.energy >= max
         ? "Energy is full."
         : `+1 in ${U.fmtTime(State.secondsToNextEnergy())} · full in ${U.fmtTime(State.secondsToFull())}`;
@@ -189,6 +207,8 @@
 
     watchAd() {
       const e = GAME_CONFIG.energy;
+      if (State.adsLeft() <= 0) return;
+      State.useAd();
       this.energyModal = null;
       const m = this.modal(`
         <h3>Ad playing…</h3>

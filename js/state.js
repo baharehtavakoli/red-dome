@@ -52,6 +52,7 @@
         ordersDone: 0,
         dome: cfg().domeParts.map(() => false),
         seenIntro: false,
+        ads: { day: "", count: 0 },
       };
     },
 
@@ -59,19 +60,34 @@
       try {
         const raw = localStorage.getItem(SAVE_KEY);
         if (raw) {
-          const d = JSON.parse(raw);
+          let d = null;
+          try { d = JSON.parse(raw); } catch (e) { d = null; }
           const size = cfg().cols * cfg().rows;
           if (d && d.version === VERSION && Array.isArray(d.board) && d.board.length === size) {
             this.d = d;
             this.sanitize();
             return true;
           }
+          // Old or changed save: keep a copy, then carry over progress instead of wiping it.
+          this.backup(raw);
+          this.newGame();
+          if (d && typeof d === "object") {
+            const keep = ["stars", "energy", "energyStamp", "ordersDone", "orderSeq", "seenIntro", "dome", "ads"];
+            keep.forEach((k) => { if (d[k] !== undefined) this.d[k] = d[k]; });
+            this.sanitize();
+            console.warn("Save migrated: progress kept, board reset.");
+          }
+          return true;
         }
       } catch (e) {
         console.warn("Save could not be read, starting fresh.", e);
       }
       this.newGame();
       return false;
+    },
+
+    backup(raw) {
+      try { localStorage.setItem(SAVE_KEY + "_backup", raw); } catch (e) {}
     },
 
     /* Keep old saves working after chains.js / config.js edits. */
@@ -81,13 +97,16 @@
       const parts = cfg().domeParts.length;
       d.dome = Array.from({ length: parts }, (_, i) => !!(d.dome && d.dome[i]));
       d.orders = (d.orders || []).map((o) =>
-        o && Array.isArray(o.items) && window.CHARACTERS[o.who] && o.items.every((it) => U.item(it.chain, it.level)) ? o : null
+        o && Array.isArray(o.items) && Number.isFinite(o.stars) && window.CHARACTERS[o.who] &&
+        o.items.every((it) => U.item(it.chain, it.level)) ? o : null
       );
       d.energy = Number.isFinite(d.energy) ? d.energy : cfg().energy.start;
       d.energyStamp = Number.isFinite(d.energyStamp) ? d.energyStamp : Date.now();
       d.stars = Number.isFinite(d.stars) ? d.stars : 0;
       d.ordersDone = d.ordersDone || 0;
       d.orderSeq = d.orderSeq || 0;
+      d.seenIntro = !!d.seenIntro;
+      d.ads = d.ads && typeof d.ads === "object" ? d.ads : { day: "", count: 0 };
     },
 
     save() {
@@ -113,6 +132,7 @@
     /* Applies passive regeneration. Returns true if energy changed. */
     tickEnergy() {
       const d = this.d, e = cfg().energy, now = Date.now(), step = e.regenSeconds * 1000;
+      if (d.energyStamp > now) d.energyStamp = now; // phone clock was set back
       if (d.energy >= e.max) {
         d.energyStamp = now;
         return false;
@@ -139,6 +159,20 @@
     addEnergy(n) {
       this.tickEnergy();
       this.d.energy = Math.max(0, this.d.energy + n);
+      this.save();
+    },
+
+    /* Rewarded ads left today (energy.adsPerDay; 0 or missing = unlimited). */
+    adsLeft() {
+      const cap = cfg().energy.adsPerDay;
+      if (!cap) return Infinity;
+      const today = new Date().toDateString();
+      if (this.d.ads.day !== today) this.d.ads = { day: today, count: 0 };
+      return Math.max(0, cap - this.d.ads.count);
+    },
+    useAd() {
+      this.adsLeft();
+      this.d.ads.count++;
       this.save();
     },
 

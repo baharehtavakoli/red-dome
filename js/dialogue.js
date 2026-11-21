@@ -43,7 +43,19 @@
       this.$ = (s) => this.el.querySelector(s);
       this.actors = { left: this.$(".actor.left"), right: this.$(".actor.right") };
       this.el.addEventListener("click", (e) => {
-        if (e.target.closest(".dlg-skip")) this.end();
+        const skip = e.target.closest(".dlg-skip");
+        if (skip) {
+          // Skip sits near where players tap to advance, so it asks once
+          if (!skip.classList.contains("confirm")) {
+            skip.classList.add("confirm");
+            skip.textContent = "Skip story? Tap again";
+            clearTimeout(this._skipT);
+            this._skipT = setTimeout(() => this.resetSkip(), 2500);
+            return;
+          }
+          this.resetSkip();
+          this.end();
+        }
         else this.advance();
       });
     },
@@ -55,6 +67,7 @@
         if (!s || !s.lines || !s.lines.length) { onDone && onDone(); resolve(); return; }
         this.scene = s;
         this.idx = 0;
+        this.resetSkip();
         this.resolve = () => { onDone && onDone(); resolve(); };
         this.lastSpoke = {};
         this.slots = { left: null, right: null };
@@ -85,6 +98,13 @@
       a.classList.remove("enter");
       void a.offsetWidth;
       a.classList.add("enter");
+    },
+
+    resetSkip() {
+      clearTimeout(this._skipT);
+      const b = this.$(".dlg-skip");
+      b.classList.remove("confirm");
+      b.textContent = "Skip ›";
     },
 
     /* A portrait finished downloading after the scene started: swap the placeholder for it. */

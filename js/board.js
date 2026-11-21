@@ -239,6 +239,7 @@
       const cells = this.cells;
       if (to < 0 || to === from) { this.render(); return; }
       const a = cells[from], b = cells[to];
+      if (!a) { this.render(); return; } // the dragged item was used meanwhile (e.g. delivered with another finger)
 
       if (b && b.t === "tal") {
         this.render();
@@ -334,12 +335,14 @@
         return;
       }
       State.d.energy -= cost;
-      const level = Math.min(g.dropLevel || 1, U.maxLevel(cell.chain));
+      const lucky = Math.random() < (GAME_CONFIG.luckyDropChance || 0);
+      const level = Math.min((g.dropLevel || 1) + (lucky ? 1 : 0), U.maxLevel(cell.chain));
       this.cells[t] = { t: "item", chain: cell.chain, level };
       this.commit();
       this.fx(i, "bounce");
       Sfx.play("produce");
       this.fxDrop(t, i);
+      if (lucky) setTimeout(() => { Sfx.play("stars"); UI.floatText(this.rect(t), "Lucky! ✨"); }, 250);
     },
 
     /* Random empty cell among those closest to `i` (8-way distance). */
@@ -356,7 +359,30 @@
       return list.length ? U.pick(list) : -1;
     },
 
+    /* Selling frees space; it pays a quarter of what an order would, so it never beats delivering. */
+    sellValue(cell) {
+      if (!cell || cell.t !== "item") return 0;
+      const r = GAME_CONFIG.orders.starReward[cell.level - 1] ?? cell.level * cell.level;
+      return Math.floor(r / 4);
+    },
+
+    sell(i) {
+      const cell = this.cells[i];
+      if (!cell || cell.t !== "item") return;
+      this.onCancel();
+      const value = this.sellValue(cell), r = this.rect(i);
+      this.cells[i] = null;
+      this.selected = -1;
+      State.d.stars += value;
+      this.commit();
+      Sfx.play(value ? "stars" : "place");
+      UI.burst(r, { chars: ["·", "✦"], count: 6, spread: 26 });
+      if (value) { UI.floatText(r, `+${value} ⭐`); UI.updateTop(true); }
+      UI.showInfo(-1);
+    },
+
     activateCharm(i) {
+      this.onCancel();
       const broken = this.breakTalismans(this.neighbors(i, true));
       if (!broken.length) {
         this.fx(i, "shake");

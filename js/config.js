@@ -87,36 +87,41 @@ window.GAME_CONFIG = {
     { id: "walls", name: "Red Brick Walls", cost: 12, story: "walls", emoji: "🧱",
       box: { x: 25, y: 274, w: 311, h: 147 }, button: { x: 176, y: 321 },
       ruined: "assets/scenes/parts/walls_ruined.png", restored: "assets/scenes/parts/walls_restored.png" },
-    { id: "arch", name: "Iwan & Doors", cost: 16, story: "arch", emoji: "🚪",
+    { id: "arch", name: "Iwan & Doors", cost: 18, story: "arch", emoji: "🚪",
       box: { x: 116, y: 281, w: 124, h: 140 }, button: { x: 178, y: 349 },
       ruined: "assets/scenes/parts/arch_ruined.png", restored: "assets/scenes/parts/arch_restored.png" },
-    { id: "balcony", name: "Balcony", cost: 20, story: "balcony", emoji: "🏛️",
+    { id: "balcony", name: "Balcony", cost: 24, story: "balcony", emoji: "🏛️",
       box: { x: 20, y: 184, w: 319, h: 109 }, button: { x: 180, y: 231 },
       ruined: "assets/scenes/parts/balcony_ruined.png", restored: "assets/scenes/parts/balcony_restored.png" },
-    { id: "dome", name: "Red Dome", cost: 26, story: "dome", emoji: "🕌",
+    { id: "dome", name: "Red Dome", cost: 32, story: "dome", emoji: "🕌",
       box: { x: 55, y: 59, w: 250, h: 146 }, button: { x: 179, y: 152 },
       ruined: "assets/scenes/parts/dome_ruined.png", restored: "assets/scenes/parts/dome_restored.png" },
-    { id: "tiles", name: "Tilework", cost: 32, story: "tiles", emoji: "💠",
+    { id: "tiles", name: "Tilework", cost: 42, story: "tiles", emoji: "💠",
       box: { x: 40, y: 259, w: 279, h: 99 }, button: { x: 179, y: 302 },
       ruined: "assets/scenes/parts/tiles_ruined.png", restored: "assets/scenes/parts/tiles_restored.png" },
-    { id: "towers", name: "Towers", cost: 38, story: "towers", emoji: "🗼",
+    { id: "towers", name: "Towers", cost: 52, story: "towers", emoji: "🗼",
       box: { x: 20, y: 127, w: 320, h: 154 }, button: { x: 62, y: 184 },
       ruined: "assets/scenes/parts/towers_ruined.png", restored: "assets/scenes/parts/towers_restored.png" },
-    { id: "pool", name: "Pool & Fountain", cost: 45, story: "pool", emoji: "⛲",
+    { id: "pool", name: "Pool & Fountain", cost: 64, story: "pool", emoji: "⛲",
       box: { x: 87, y: 431, w: 186, h: 80 }, button: { x: 180, y: 477 },
       ruined: "assets/scenes/parts/pool_ruined.png", restored: "assets/scenes/parts/pool_restored.png" },
-    { id: "garden", name: "Garden", cost: 55, story: "garden", emoji: "🌳",
+    { id: "garden", name: "Garden", cost: 80, story: "garden", emoji: "🌳",
       box: { x: 0, y: 197, w: 360, h: 260 }, button: { x: 62, y: 342 },
       ruined: "assets/scenes/parts/garden_ruined.png", restored: "assets/scenes/parts/garden_restored.png" },
   ],
 
   energy: {
-    max: 100,
-    start: 100,
+    max: 60,           // regen stops here (rewards and the start can go above it)
+    start: 100,        // a long first session, then refills every ~2 h
     regenSeconds: 120, // +1 energy every 2 minutes
     adReward: 20,
     adSeconds: 2.5,    // length of the fake ad
+    adsPerDay: 4,      // rewarded ads per day (0 = unlimited)
+    partReward: 20,    // energy gift for every dome part built
   },
+
+  /* Chance that a generator drops an item one level higher than usual. */
+  luckyDropChance: 0.12,
 
   startStars: 0,
 
@@ -124,19 +129,19 @@ window.GAME_CONFIG = {
     name: "Talisman",
     icon: "assets/tiles/talisman.png",
     emoji: "🔯",
-    revealChance: 0.35, // chance a broken talisman leaves a random level-1 item
+    revealChance: 0.6, // chance a broken talisman leaves a random level-1 item
   },
 
   /* Merge board layout, one string per row (7 chars each). */
   layout: [
     "TTTTTTT",
-    "TTT.TTT",
+    "TXT.TYT",
     "T.a.b.T",
     "..Q.F..",
     ".c...d.",
     "..J.S..",
     ".......",
-    "TT...TT",
+    "TZ...WT",
     "TTTTTTT",
   ],
   legend: {
@@ -150,7 +155,11 @@ window.GAME_CONFIG = {
     b: { chain: "garden", level: 1 },
     c: { chain: "jewel", level: 1 },
     d: { chain: "magic", level: 1 },
-    // A talisman hiding a specific item:  X: { talisman: true, hides: { chain: "jewel", level: 2 } },
+    // Talismans hiding a better item, so breaking the inner ring pays off:
+    X: { talisman: true, hides: { chain: "stone", level: 3 } },
+    Y: { talisman: true, hides: { chain: "garden", level: 3 } },
+    Z: { talisman: true, hides: { chain: "jewel", level: 2 } },
+    W: { talisman: true, hides: { chain: "stone", level: 2 } },
   },
 
   orders: {
@@ -158,9 +167,9 @@ window.GAME_CONFIG = {
     refillDelayMs: 700,
     twoItemChance: 0.45,
     baseMaxLevel: 2,   // highest level requested before any dome part is restored
-    levelPerPart: 1,   // +1 max level per restored dome part
-    starReward: [1, 2, 4, 8, 16, 32, 64], // stars per item, by level (index 0 = level 1)
-    twoItemBonus: 1,
+    levelPerPart: 0.5, // max level rises by 1 every 2 dome parts
+    starReward: [1, 2, 5, 11, 24, 50, 100], // stars per item, by level (index 0 = level 1); higher levels pay better
+    twoItemBonus: 2,
     /* Who gives orders, and which chains they like to ask for. */
     givers: {
       mehrab: { chains: ["stone", "magic", "stone"] },

@@ -214,3 +214,17 @@ licences to track. Melodic sounds use a plucked-string tone (close to a santur) 
   `Sfx.play("build")`. Sound needs one tap on the page first; browsers block it before that.
 - Settings has a Sound on/off switch. The choice is saved on each device.
 - No music yet. A music track can be added later as an audio file.
+
+## Phase 1 changes (economy, selling, safety)
+
+- **Economy** (`js/config.js`): higher-level orders pay better (`starReward`), part costs rise
+  to 80 (337 total), order level grows every 2 parts (`levelPerPart: 0.5`), energy refills to 60
+  (start 100), 4 ads a day (`adsPerDay`), +20 energy per built part (`partReward`), 12% lucky
+  drops (`luckyDropChance`), and inner talismans hide better items (legend X/Y/Z/W).
+- **Sell / Remove**: the info bar has a 🗑 button for any item (tap twice). It pays a quarter of
+  the order value (`Board.sellValue`), so it frees space without beating deliveries.
+- **Saves**: an old or changed save is migrated (stars, dome, energy kept; board rebuilt) and the
+  original is copied to `reddome_save_v1_backup`. Setting the phone clock back no longer stops regen.
+- **Phone**: Back closes the top window / story / board; on the main screen a second Back leaves.
+  Pinch zoom is allowed. Skip asks once. A grey Deliver says which item is missing.
+- **Debug** 🐞 only shows on localhost or with `?debug` in the address.

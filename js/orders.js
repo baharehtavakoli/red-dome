@@ -121,7 +121,7 @@
             <div class="who-name">${U.esc(ch.name)}</div>
           </div>
           <div class="reqs">${reqs}</div>
-          <button class="deliver" data-deliver="${s}"${ready ? "" : " disabled"}>${ready ? "Deliver " : ""}⭐${o.stars}</button>
+          <button class="deliver${ready ? "" : " off"}" data-deliver="${s}" aria-disabled="${!ready}">${ready ? "Deliver " : ""}⭐${o.stars}</button>
         </div>`;
       }
       if (el._html !== html) {
@@ -133,8 +133,16 @@
     deliver(s) {
       const o = State.d.orders[s];
       if (!o) return;
+      Board.onCancel(); // a drag in progress with another finger must not drop a delivered item
       const idx = this.find(o);
-      if (!idx) { Sfx.play("error"); UI.toast("Some items are still missing."); return; }
+      if (!idx) {
+        Sfx.play("error");
+        const missing = o.items.filter((it) => !this.has(it)).map((it) => U.item(it.chain, it.level).name);
+        UI.toast(missing.length ? `Still missing: ${missing.join(" and ")}` : "Both items are needed at the same time.");
+        const card = this.slotEls[s].firstElementChild;
+        if (card) { card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); }
+        return;
+      }
 
       const cardRect = this.slotEls[s].getBoundingClientRect();
       idx.forEach((k) => {

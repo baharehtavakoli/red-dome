@@ -8,3 +8,5 @@ assets/scenes/*.png
 assets/scenes/stages/*
 !assets/scenes/stages/stage_00.png
 *.zip
+MUSIC_BRIEF.md
+GAME_REVIEW.md
