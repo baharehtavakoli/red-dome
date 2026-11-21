@@ -25,6 +25,14 @@
 
   const S = {
     en: {
+      obNext: "Next", obStart: "Build the Red Dome",
+      ob1a: "Once upon a time, there lived a king named Bahram, who was fascinated by the mysteries of the sky and the planets.",
+      ob1b: "He decided to visit all seven planets, and ordered a magnificent dome to be built on each one.",
+      ob2: "On each night of his stay, the lady of that planet would welcome the king and tell him the most beautiful tale of her land.",
+      ob3: "Building these domes was entrusted to Shideh, the king's architect.",
+      ob4a: "Shideh's fourth task was the Red Dome. So Shideh went to meet the Lady of the Red Dome and said:",
+      ob4b: "“Tell me the tale of your land too, and I will build you the most beautiful dome.”",
+      ob5: "Merge items to make new materials and tools, and help Shideh build the Red Dome, step by step. As you build, Nasrin-Nush will tell you her tale.",
       merge: "Merge", dome: "Dome", skip: "Skip ›", skipConfirm: "Skip story? Tap again",
       deliver: "Deliver", sure: "Sure?", remove: "Remove", lv: "Lv",
       sellFor: "Sell for {n} stars", removeItem: "Remove item", activate: "Activate",
@@ -70,6 +78,14 @@
       dailyToast: "Day {n} gift: {gift}", boardFullStars: " (board full: +{n} ⭐)",
     },
     fa: {
+      obNext: "بعدی", obStart: "ساخت گنبد سرخ",
+      ob1a: "روزی روزگاری، پادشاهی به نام بهرام زندگی می‌کرد که شیفته‌ی رازهای آسمان و سیاره‌ها بود.",
+      ob1b: "او تصمیم گرفت از هر هفت سیاره دیدن کند و فرمان داد در هر یک، گنبدی باشکوه بنا کنند.",
+      ob2: "قرار بود در هر شب اقامت، بانوی آن سیاره میزبان پادشاه باشد و زیباترین افسانه‌ی سرزمینش را برای او روایت کند.",
+      ob3: "ساخت این گنبدها به شیده، معمار پادشاه، سپرده شد.",
+      ob4a: "چهارمین مأموریت شیده، ساخت گنبد سرخ بود. شیده به دیدار بانوی گنبد سرخ رفت و گفت:",
+      ob4b: "«قصه‌ی سرزمینت را برای من هم روایت کن، تا زیباترین گنبد را برایت بسازم.»",
+      ob5: "با ترکیب آیتم‌ها، مصالح و ابزار تازه بساز و به شیده کمک کن گنبد سرخ را قدم‌به‌قدم کامل کند. در همین حین، نسرین‌نوش قصه‌اش را برایت روایت خواهد کرد.",
       merge: "ادغام", dome: "گنبد", skip: "رد شدن ›", skipConfirm: "داستان رد شود؟ دوباره بزنید",
       deliver: "تحویل", sure: "مطمئنی؟", remove: "حذف", lv: "سطح",
       sellFor: "فروش به {n} ستاره", removeItem: "حذف آیتم", activate: "فعال کن",

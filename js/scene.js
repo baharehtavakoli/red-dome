@@ -455,7 +455,7 @@
       if (this.busy) return;
       this.busy = true;
       this.el.classList.add("cinematic");
-      await Dialogue.play("intro");
+      await Onboard.play();
       this.el.classList.remove("cinematic");
       this.busy = false;
     },

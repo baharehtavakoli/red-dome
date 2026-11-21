@@ -51,8 +51,7 @@
       document.getElementById("scene-screen").classList.add("cinematic");
       // Online the art takes a moment to download: wait (up to 5 s) for the background and the
       // intro's portraits so the first scene doesn't open on placeholders.
-      const need = [GAME_CONFIG.scene.background, (GAME_CONFIG.scene.intro || {}).sky]
-        .concat(((STORY.intro && STORY.intro.cast) || []).map((w) => CHARACTERS[w] && CHARACTERS[w].portrait));
+      const need = [GAME_CONFIG.scene.background].concat(Onboard.firstImages());
       const start = () => { Scene.busy = false; return Scene.playIntro(); };
       const startIntro = () => start().then(() => { State.d.seenIntro = true; State.save(); });
       const waitForArt = () => {

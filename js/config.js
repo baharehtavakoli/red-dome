@@ -50,6 +50,8 @@ window.GAME_CONFIG = {
     background: "assets/scenes/stages/stage_00.webp", // empty plateau with the whole building as a golden blueprint
     stagedArt: true, // parts are cut from stage paintings (tools/cut_stages.py): "ruined" layers only show while building
     buildStyle: "blueprint", // "blueprint": the golden outline glows and the part rises into place; "ruin": shake + dust
+    // onboarding pictures (js/onboard.js). bahram / ladies / architect / build are optional:
+    // until their files exist, the onboarding falls back to sky, ray and the scene background.
     intro: { sky: "assets/scenes/intro/intro_sky.webp", ray: "assets/scenes/intro/intro_ray.webp" },
     maxZoom: 2.6, // how far the camera may zoom into a part
 

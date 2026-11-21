@@ -1269,3 +1269,40 @@ html[dir="rtl"] .back-btn { direction: ltr; }
   font: 700 13px/1.4 "Nunito", "Vazirmatn", sans-serif;
 }
 #lang-pick .lp-reset.confirm { background: #b8322a; border-style: solid; color: #fff; }
+
+/* ---------- onboarding: 5 picture panels before the game (js/onboard.js) ---------- */
+#onboard { position: fixed; inset: 0; z-index: 110; background: #1c0c22; opacity: 0; transition: opacity .5s; overflow: hidden; }
+#onboard.in { opacity: 1; }
+#onboard.out { opacity: 0; pointer-events: none; }
+/* same phone-width column as the game on wide screens */
+#onboard > * { left: 50%; transform: translateX(-50%); width: min(100%, 520px); }
+#onboard .ob-pic { position: absolute; top: 0; bottom: 0; overflow: hidden; opacity: 0; transition: opacity .45s ease; }
+#onboard .ob-pic.show { opacity: 1; }
+#onboard .ob-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+#onboard .ob-pic.zoom img { animation: bd-drift 14s ease-out both; }
+#onboard .ob-shade { position: absolute; top: 0; bottom: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 6, 24, .35) 0%, transparent 22%, transparent 48%, rgba(20, 6, 24, .88) 100%); }
+#onboard .ob-skip {
+  position: absolute; top: max(14px, env(safe-area-inset-top)); left: auto; right: max(14px, calc(50% - 246px)); transform: none; width: auto;
+  padding: 8px 14px; min-height: 40px; border-radius: 20px; border: 1px solid rgba(243, 210, 122, .6);
+  background: rgba(20, 6, 24, .45); color: #f7ecd5; font: 700 14px/1 "Nunito", "Vazirmatn", sans-serif;
+}
+#onboard .ob-skip.confirm { background: #b8322a; border-color: #ffd76a; }
+#onboard .ob-card { position: absolute; bottom: 0; padding: 0 22px max(22px, env(safe-area-inset-bottom)); color: #fff4d8; }
+#onboard .ob-who { display: none; align-items: center; gap: 8px; margin-bottom: 8px; font: 800 15px/1 "Nunito", "Vazirmatn", sans-serif; color: #ffd76a; }
+#onboard .ob-who.show { display: flex; }
+#onboard .ob-who .ob-face, #onboard .ob-who img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #e0b24a; background: #4a1220; font-size: 24px; display: grid; place-items: center; }
+#onboard .ob-text { margin: 0 0 18px; min-height: 5.2em; font: 700 19px/1.55 "Nunito", sans-serif; text-shadow: 0 2px 6px rgba(0, 0, 0, .7); }
+#onboard.quote .ob-text { font-style: italic; color: #ffe7a8; }
+#onboard .ob-text.in { animation: ob-in .5s ease both; }
+@keyframes ob-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+#onboard .ob-foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+#onboard .ob-dots { display: flex; gap: 7px; }
+#onboard .ob-dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(247, 236, 213, .35); transition: background .3s, transform .3s; }
+#onboard .ob-dots i.on { background: #ffd76a; }
+#onboard .ob-next { min-width: 120px; min-height: 52px; font-size: 18px; }
+#onboard .ob-next.cta { min-width: 200px; animation: ob-pulse 1.6s ease-in-out infinite; }
+@keyframes ob-pulse { 50% { transform: scale(1.05); } }
+html[dir="rtl"] #onboard .ob-card { direction: rtl; }
+html[dir="rtl"] #onboard .ob-text { font-family: "Vazirmatn", sans-serif; line-height: 1.8; font-size: 18px; }
+html[dir="rtl"] #onboard .ob-skip { right: auto; left: max(14px, calc(50% - 246px)); }
