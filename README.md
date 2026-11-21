@@ -279,8 +279,8 @@ tale "from her country", one piece per part, with a hint at the end that the pri
 day; missing a day starts it again. The chest button on the dome screen shows "!" when a gift is
 waiting, and it opens by itself once a day (after the first-time guide).
 
-**Persian** (`js/i18n.js`): Settings → Language switches English / فارسی (remembered per device;
-the first time it follows the phone's language). All UI text goes through `t("key")`; item, chain,
+**Persian** (`js/i18n.js`): on first launch the game asks for the language (English / فارسی) before the story starts; Settings → Language switches it later (remembered per device;
+the picker highlights nothing; the phone language is only a fallback). All UI text goes through `t("key")`; item, chain,
 character and part names and the whole story are swapped at start-up. Persian uses right-to-left
 text, the Vazirmatn font, and types dialogue word by word. The board and the scene keep their
 left-to-right layout.

@@ -10,8 +10,11 @@
    ===================================================================== */
 (function () {
   const KEY = "reddome_lang";
-  let lang = "en";
-  try { lang = localStorage.getItem(KEY) || ((navigator.language || "").toLowerCase().startsWith("fa") ? "fa" : "en"); } catch (e) {}
+  let lang = "en", chosen = false;
+  try {
+    chosen = !!localStorage.getItem(KEY);
+    lang = localStorage.getItem(KEY) || ((navigator.language || "").toLowerCase().startsWith("fa") ? "fa" : "en");
+  } catch (e) {}
   if (lang !== "fa") lang = "en";
 
   const S = {
@@ -224,6 +227,35 @@
   const I18N = {
     lang,
     rtl: lang === "fa",
+    chosen, // false until the player has picked a language once
+
+    /* First launch: a full-screen choice of language. Calls done() when the game can go on
+       (picking the other language reloads the page in that language). */
+    ask(done) {
+      const bg = (window.GAME_CONFIG.scene.intro || {}).sky || "";
+      const el = document.createElement("div");
+      el.id = "lang-pick";
+      el.innerHTML = `
+        ${bg ? `<img class="lp-bg" src="${bg}" alt="">` : ""}
+        <div class="lp-card">
+          <div class="lp-title">The Red Dome<br><span>گنبد سرخ</span></div>
+          <p>Choose your language<br><span>زبان بازی را انتخاب کنید</span></p>
+          <button class="btn gold wide" data-l="fa">فارسی</button>
+          <button class="btn wide" data-l="en">English</button>
+        </div>`;
+      document.body.appendChild(el);
+      el.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-l]");
+        if (!b) return;
+        const l = b.dataset.l;
+        try { localStorage.setItem(KEY, l); } catch (err) {}
+        if (l !== lang) { location.reload(); return; }
+        this.chosen = true;
+        el.classList.add("out");
+        setTimeout(() => el.remove(), 400);
+        done && done();
+      });
+    },
 
     set(l) {
       try { localStorage.setItem(KEY, l); } catch (e) {}

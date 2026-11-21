@@ -53,13 +53,20 @@
       // intro's portraits so the first scene doesn't open on placeholders.
       const need = [GAME_CONFIG.scene.background, (GAME_CONFIG.scene.intro || {}).sky]
         .concat(((STORY.intro && STORY.intro.cast) || []).map((w) => CHARACTERS[w] && CHARACTERS[w].portrait));
-      const t0 = Date.now();
       const start = () => { Scene.busy = false; return Scene.playIntro(); };
       const startIntro = () => start().then(() => { State.d.seenIntro = true; State.save(); });
-      (function wait() {
-        if (!GAME_CONFIG.tryImages || need.every((p) => !p || Art.has(p)) || Date.now() - t0 > 5000) setTimeout(startIntro, 300);
-        else setTimeout(wait, 100);
-      })();
+      const waitForArt = () => {
+        const t0 = Date.now();
+        (function wait() {
+          if (!GAME_CONFIG.tryImages || need.every((p) => !p || Art.has(p)) || Date.now() - t0 > 5000) setTimeout(startIntro, 300);
+          else setTimeout(wait, 100);
+        })();
+      };
+      // first launch: ask for the language before the story starts
+      if (!I18N.chosen) I18N.ask(waitForArt); else waitForArt();
+    } else if (!I18N.chosen) {
+      // players from before the language choice existed get asked once too
+      I18N.ask();
     }
     State.save();
 
