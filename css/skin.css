@@ -107,22 +107,38 @@
   filter: drop-shadow(0 3px 4px rgba(58, 20, 16, .3));
 }
 .ui-art .order.ready { filter: drop-shadow(0 0 4px rgba(46, 157, 88, .9)) drop-shadow(0 3px 4px rgba(58, 20, 16, .3)); }
+/* the card's crest is a medallion: the giver's face sits in it, their name on a line below */
+.ui-art .order:not(.empty) { padding-top: 33px; gap: 4px; }
+.ui-art .order-head { position: static; justify-content: center; padding: 0; }
+.ui-art .order-head .avatar {
+  position: absolute; top: -9px; left: 50%; margin-left: -17px;
+  width: 34px; height: 34px; border: 2px solid #e0b24a;
+  box-shadow: 0 2px 3px rgba(58, 20, 16, .35);
+}
+.ui-art .who-name { font-size: 11.5px; color: #5a1a12; letter-spacing: -.1px; }
+.ui-art .req { width: 46px; height: 46px; }
+.ui-art .req img.art { width: 80%; height: 80%; }
 .ui-art .order.empty { opacity: .45; }
 .ui-art .req, .ui-art .info-icon {
   border: 0; border-radius: 0; box-shadow: none;
   background: var(--slot, none) center / 100% 100% no-repeat;
 }
 .ui-art .req img.art, .ui-art .info-icon img.art { width: 74%; height: 74%; }
-.ui-art .deliver { height: 28px; border-image-width: 0 23px; }
+.ui-art .deliver, .ui-art .deliver:not([disabled]), .ui-art .deliver[disabled] { border-image-width: 0 13px; }
+.ui-art .piece .lvl, .ui-art .piece .tick, .ui-art .piece .bolt, .ui-art .req .lvl, .ui-art .req .check { z-index: 1; }
+/* pieces now fill the tile: keep the badges inside it so they don't cover the neighbour's badges */
+.ui-art .piece .bolt { top: -1px; right: -1px; }
+.ui-art .piece .tick { top: -1px; left: -1px; }
+.ui-art .deliver { height: 28px; padding: 0 13px 2px; font-size: 12px; overflow: hidden; white-space: nowrap; letter-spacing: -.2px; }
 .ui-art .deliver:not([disabled]) { border-image-source: url("../assets/ui/btn_gold.png"); color: #420a0a; text-shadow: none; animation: none; }
 .ui-art .deliver[disabled] { border-image-source: url("../assets/ui/btn_cream.png"); color: #8a6a3a; text-shadow: none; filter: none; }
 
 /* ---------- merge board ---------- */
 .ui-art #board {
-  padding: 18px;
+  padding: 12px;
   border: 0 solid transparent; border-radius: 0;
   background: #caa877;
-  border-image: url("../assets/ui/board_frame.png") 64 / 22px;
+  border-image: url("../assets/ui/board_frame.png") 64 / 16px;
   box-shadow: 0 8px 18px rgba(66, 10, 10, .35);
 }
 .ui-art .cell { background: url("../assets/ui/board_tile_light.png") center / cover; border-radius: 5px; }
@@ -132,13 +148,16 @@
 }
 /* items with real art sit straight on the tile, no coloured chip behind them */
 .ui-art .piece.item:has(img.art) { background: none; border: 0; box-shadow: none; filter: drop-shadow(0 3px 2px rgba(70, 35, 10, .35)); }
-.ui-art .piece.item:has(img.art) img.art { width: 92%; height: 92%; }
+/* art fills the whole tile (the PNGs have their own margin) */
+.ui-art .piece:has(img.art) { width: 100%; height: 100%; }
+.ui-art .piece.item:has(img.art) img.art { width: 112%; height: 112%; max-width: none; }
+.ui-art #board-wrap { padding: 4px; }
 .ui-art .piece.max:has(img.art) { filter: drop-shadow(0 0 4px #ffd76a) drop-shadow(0 3px 2px rgba(70, 35, 10, .35)); }
 .ui-art .piece.gen:has(img.art) {
   border: 0; box-shadow: none; border-radius: 0;
   background: url("../assets/ui/slot_gold.png") center / 100% 100% no-repeat;
 }
-.ui-art .piece.gen:has(img.art) img.art { width: 80%; height: 80%; }
+.ui-art .piece.gen:has(img.art) img.art { width: 90%; height: 90%; }
 .ui-art .talisman:has(img.art) { background: none; border: 0; padding: 0; overflow: hidden; }
 .ui-art .talisman img.art { width: 100%; height: 100%; object-fit: cover; }
 

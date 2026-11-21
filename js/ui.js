@@ -41,7 +41,9 @@
       const frame = parseFloat(cs.paddingLeft) * 2 + parseFloat(cs.borderLeftWidth) * 2;
       const gap = parseFloat(cs.columnGap) || 0;
       const { cols, rows } = GAME_CONFIG;
-      const availW = app.clientWidth - 16 - frame - gap * (cols - 1);
+      const ws = getComputedStyle($("#board-wrap"));
+      const side = parseFloat(ws.paddingLeft) + parseFloat(ws.paddingRight);
+      const availW = app.clientWidth - side - frame - gap * (cols - 1);
       const availH = app.clientHeight - used - 14 - frame - gap * (rows - 1);
       const cell = Math.floor(Math.max(28, Math.min(availW / cols, availH / rows, 72)));
       document.documentElement.style.setProperty("--cell", cell + "px");
