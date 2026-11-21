@@ -193,6 +193,7 @@
       this.ghost = g;
       this.ghostSize = r.width * 0.92;
       p.classList.add("lifted");
+      Sfx.play("lift");
       d.piece = p;
       if (this.selected !== d.i) {
         this.selected = d.i;
@@ -242,6 +243,7 @@
       if (b && b.t === "tal") {
         this.render();
         this.fx(from, "shake");
+        Sfx.play("error");
         UI.toast("Locked by a talisman. Merge right next to it to break it.");
         return;
       }
@@ -249,6 +251,7 @@
       if (a.t === "item" && b && b.t === "item" && a.chain === b.chain && a.level === b.level) {
         if (a.level >= U.maxLevel(a.chain)) {
           this.render();
+          Sfx.play("error");
           UI.toast(`${U.item(a.chain, a.level).name} is already at max level ✦`);
           return;
         }
@@ -260,6 +263,7 @@
       cells[to] = a;
       cells[from] = b || null;
       this.selected = to;
+      Sfx.play("place");
       this.commit();
       UI.showInfo(to);
     },
@@ -272,6 +276,8 @@
       const broken = this.breakTalismans(this.neighbors(to, false));
       this.commit();
       this.fx(to, "pop");
+      Sfx.play(a.level + 1 >= U.maxLevel(a.chain) ? "maxed" : "merge", a.level + 1);
+      if (broken.length) setTimeout(() => Sfx.play("shatter", broken.length), 120);
       UI.burst(this.rect(to), { chars: ["✨", "·", "✦"], count: 7, spread: 34 });
       broken.forEach((n) => this.fxBreak(n));
       UI.showInfo(to);
@@ -300,10 +306,12 @@
         const def = U.item(cell.chain, cell.level);
         if (def.special === "clearTalismans" && this.selected === i) { this.activateCharm(i); return; }
         this.select(i);
+        Sfx.play("select");
         this.fx(i, "tap");
         return;
       }
       this.select(i); // talisman: show info
+      Sfx.play("error");
       this.fx(i, "shake");
     },
 
@@ -314,12 +322,14 @@
       State.tickEnergy();
       if (State.d.energy < cost) {
         this.fx(i, "shake");
+        Sfx.play("error");
         UI.openEnergy(true);
         return;
       }
       const t = this.nearestEmpty(i);
       if (t < 0) {
         this.fx(i, "shake");
+        Sfx.play("error");
         UI.toast("The board is full! Merge or deliver some items.");
         return;
       }
@@ -328,6 +338,7 @@
       this.cells[t] = { t: "item", chain: cell.chain, level };
       this.commit();
       this.fx(i, "bounce");
+      Sfx.play("produce");
       this.fxDrop(t, i);
     },
 
@@ -349,6 +360,7 @@
       const broken = this.breakTalismans(this.neighbors(i, true));
       if (!broken.length) {
         this.fx(i, "shake");
+        Sfx.play("error");
         UI.toast("No talismans around the charm. Move it next to one, then tap it.");
         return;
       }
@@ -357,6 +369,8 @@
       this.selected = -1;
       this.commit();
       UI.burst(r, { chars: ["🌟", "✨", "✦"], count: 14, cls: "gold", spread: 70 });
+      Sfx.play("charm");
+      setTimeout(() => Sfx.play("shatter", broken.length), 350);
       broken.forEach((n) => this.fxBreak(n));
       UI.showInfo(-1);
       UI.toast(`The astrolabe hums... ${broken.length} talisman${broken.length > 1 ? "s" : ""} broken!`);

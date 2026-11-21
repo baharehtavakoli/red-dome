@@ -244,6 +244,7 @@
       el.classList.remove("speaking");
       void el.offsetWidth;
       el.classList.add("speaking");
+      Sfx.play("pop");
       clearTimeout(el._t);
       el._t = setTimeout(() => { el.classList.remove("speaking"); el._pose = "neutral"; this.renderResidents(); }, 4200);
       this.lastBark = Date.now();
@@ -352,10 +353,12 @@
       const p = parts()[i], next = this.nextIndex();
       if (State.d.dome[i]) return this.replay(i);
       if (i !== next) {
+        Sfx.play("error");
         UI.toast(`Restore the ${parts()[next].name} first.`);
         return;
       }
       if (State.d.stars < p.cost) {
+        Sfx.play("error");
         UI.toast(`${p.name} needs ${p.cost - State.d.stars} more ⭐ — merge items and deliver orders!`);
         UI.bump(document.getElementById("merge-btn"));
         return;
@@ -373,12 +376,13 @@
       await this.build(i);
       await Dialogue.play(p.story);
       await this.endCinematic();
-      if (State.partsRestored() === parts().length) UI.celebrate();
+      if (State.partsRestored() === parts().length) { Sfx.play("fanfare"); UI.celebrate(); }
     },
 
     async build(i) {
       const el = this.partEls[i];
       el.classList.add("shaking");
+      Sfx.play("build");
       this.dust(i);
       await sleep(800);
       el.classList.remove("shaking");
@@ -436,12 +440,14 @@
       if (this.busy) return;
       const app = document.getElementById("app");
       app.classList.add("open");
+      Sfx.play("whoosh");
       UI.layoutBoard();
       Board.render();
       Orders.render();
     },
 
     closeBoard() {
+      if (this.boardOpen()) Sfx.play("whooshBack");
       document.getElementById("app").classList.remove("open");
       this.render();
     },

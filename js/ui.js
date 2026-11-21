@@ -151,6 +151,7 @@
         if (e.target === back || e.target.closest("[data-close]")) this.closeModal();
       });
       requestAnimationFrame(() => back.classList.add("open"));
+      Sfx.play("open");
       return back.firstElementChild;
     },
 
@@ -199,6 +200,7 @@
       setTimeout(() => {
         this.closeModal();
         State.addEnergy(e.adReward);
+        Sfx.play("energy");
         this.updateTop();
         const pill = Scene.boardOpen() ? $("#app .energy-pill") : $("#scene-screen .energy-pill");
         this.bump(pill);
@@ -212,9 +214,16 @@
       const m = this.modal(`
         <h3>Settings</h3>
         <p class="muted">Orders delivered: ${State.d.ordersDone} · Dome: ${State.partsRestored()}/${parts}</p>
+        <button class="btn wide" data-sound>${Sfx.enabled ? "🔊 Sound: On" : "🔇 Sound: Off"}</button>
         <button class="btn wide" data-intro>📜 Replay intro</button>
         <button class="btn danger wide" data-reset>Reset progress</button>
         <button class="btn ghost wide" data-close>Close</button>`);
+      const snd = m.querySelector("[data-sound]");
+      snd.addEventListener("click", () => {
+        Sfx.enabled = !Sfx.enabled;
+        snd.textContent = Sfx.enabled ? "🔊 Sound: On" : "🔇 Sound: Off";
+        if (Sfx.enabled) setTimeout(() => Sfx.play("arrive"), 60);
+      });
       m.querySelector("[data-intro]").addEventListener("click", () => {
         this.closeModal();
         if (Scene.boardOpen()) Scene.closeBoard();

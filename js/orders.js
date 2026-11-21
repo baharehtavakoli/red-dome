@@ -134,7 +134,7 @@
       const o = State.d.orders[s];
       if (!o) return;
       const idx = this.find(o);
-      if (!idx) { UI.toast("Some items are still missing."); return; }
+      if (!idx) { Sfx.play("error"); UI.toast("Some items are still missing."); return; }
 
       const cardRect = this.slotEls[s].getBoundingClientRect();
       idx.forEach((k) => {
@@ -143,6 +143,7 @@
         State.d.board[k] = null;
         if (Board.selected === k) Board.selected = -1;
       });
+      Sfx.play("deliver");
       State.d.stars += o.stars;
       State.d.ordersDone++;
       State.d.orders[s] = null;
@@ -154,6 +155,7 @@
 
       setTimeout(() => {
         UI.sparkle(cardRect);
+        Sfx.play("stars");
         UI.floatText(cardRect, `+${o.stars} ⭐`);
       }, 260);
 
@@ -164,7 +166,7 @@
         this.render();
         Board.render();
         const card = this.slotEls[s].firstElementChild;
-        if (card) card.classList.add("arrive");
+        if (card) { card.classList.add("arrive"); Sfx.play("arrive"); }
       }, oc().refillDelayMs + 300);
     },
 

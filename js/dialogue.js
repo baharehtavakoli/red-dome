@@ -143,8 +143,10 @@
       el.textContent = "";
       this.el.classList.add("typing");
       if (this.speaker) this.speaker.classList.add("talking");
+      const voice = Object.keys(CHARACTERS).indexOf(this.scene && this.scene.lines[this.idx] && this.scene.lines[this.idx].who);
       this.timer = setInterval(() => {
         n++;
+        if (n % 3 === 1 && /\S/.test(chars[n - 1] || "")) Sfx.play("blip", (voice < 0 ? 0 : voice) % 4);
         el.textContent = chars.slice(0, n).join("");
         if (n >= chars.length) this.finishTyping();
       }, TYPE_MS);
@@ -161,6 +163,7 @@
     advance() {
       if (!this.scene) return;
       if (this.timer) { this.finishTyping(); return; }
+      Sfx.play("next");
       this.idx++;
       if (this.idx >= this.scene.lines.length) this.end();
       else this.showLine();

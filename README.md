@@ -199,3 +199,18 @@ Order-card avatars (`*_avatar.png`) were cropped from the portraits.
   - The info bar shows "2× item → next item". Tap it for the chain card, which lists the whole chain from its generator.
   - Tapping an item on an order card opens the same card with that item highlighted and says how to make it.
   - After 7 idle seconds, two items that can be merged wiggle.
+
+## Sound: `js/sound.js`
+
+All sound effects are made in code with the Web Audio API, so there are no audio files and no
+licences to track. Melodic sounds use a plucked-string tone (close to a santur) on a Persian scale
+(Homayoun on D), and merges climb the scale as items level up.
+
+- Events call `Sfx.play("name", arg)`: `merge` (level), `maxed`, `produce`, `shatter` (talismans),
+  `charm`, `deliver`, `stars`, `arrive`, `build`, `fanfare`, `energy`, `whoosh`/`whooshBack`
+  (board open/close), `open` (modal), `pop` (speech bubble), `blip` (dialogue typing), `next`,
+  `select`, `lift`, `place`, `error`, `click` (every button).
+- To change a sound, edit its function in `SOUNDS`. To try one in the browser console:
+  `Sfx.play("build")`. Sound needs one tap on the page first; browsers block it before that.
+- Settings has a Sound on/off switch. The choice is saved on each device.
+- No music yet. A music track can be added later as an audio file.
