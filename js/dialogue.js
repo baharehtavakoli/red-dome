@@ -87,6 +87,14 @@
       a.classList.add("enter");
     },
 
+    /* A portrait finished downloading after the scene started: swap the placeholder for it. */
+    refreshArt() {
+      ["left", "right"].forEach((side) => {
+        const who = this.slots[side], a = this.actors[side];
+        if (who && a.querySelector(".figure") && Art.has(CHARACTERS[who].portrait)) a.innerHTML = portraitHtml(who);
+      });
+    },
+
     /* Put the speaker on stage if needed; returns their side. */
     stageFor(line) {
       const who = line.who;

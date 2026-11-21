@@ -33,6 +33,7 @@
       Orders.render();
       Debug.build();
       UI.showInfo(Board.selected);
+      Dialogue.refreshArt();
     }, 60));
 
     setInterval(() => UI.tick(), 1000);
@@ -43,7 +44,16 @@
     window.addEventListener("pagehide", () => State.saveNow());
 
     if (!State.d.seenIntro) {
-      setTimeout(() => Scene.playIntro().then(() => { State.d.seenIntro = true; State.save(); }), 500);
+      // Online the art takes a moment to download: wait (up to 5 s) for the background and the
+      // intro's portraits so the first scene doesn't open on placeholders.
+      const need = [GAME_CONFIG.scene.background]
+        .concat(((STORY.intro && STORY.intro.cast) || []).map((w) => CHARACTERS[w] && CHARACTERS[w].portrait));
+      const t0 = Date.now();
+      const start = () => Scene.playIntro().then(() => { State.d.seenIntro = true; State.save(); });
+      (function wait() {
+        if (!GAME_CONFIG.tryImages || need.every((p) => !p || Art.has(p)) || Date.now() - t0 > 5000) setTimeout(start, 300);
+        else setTimeout(wait, 100);
+      })();
     }
     State.save();
 
