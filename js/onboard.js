@@ -14,7 +14,7 @@
     { beats: [{ key: "ob3", img: ["plateau", "ray"], cast: ["shideh"] }] },
     { beats: [
       { key: "ob4a", img: ["domeTop", "ray"] },
-      { key: "ob4b", img: ["plateau", "ray"], cast: ["shideh", "nasrin"], who: "shideh", quote: true },
+      { key: "ob4b", img: ["meet"], who: "shideh", quote: true },
     ] },
     { beats: [{ key: "ob5", img: ["build", "scene"] }], cta: "obStart" },
   ];
@@ -32,8 +32,9 @@
   const Onboard = {
     /* pictures the first screens need, for the loader in main.js */
     firstImages() {
-      return [src(SCREENS[0].beats[0].img), src(SCREENS[0].beats[1].img)]
-        .concat(["shideh", "nasrin"].map((w) => CHARACTERS[w] && CHARACTERS[w].portrait));
+      const I = GAME_CONFIG.scene.intro || {};
+      const want = (keys) => keys.map((k) => I[k]).find(Boolean);  // the picture we hope to show, loaded or not
+      return [want(SCREENS[0].beats[0].img), want(SCREENS[0].beats[1].img), want(SCREENS[1].beats[0].img)];
     },
 
     play() {
@@ -89,7 +90,7 @@
               const c = CHARACTERS[w];
               return c ? `<div class="ob-actor ${w}">${Art.html(c.portrait, c.emoji, "ob-portrait")}</div>` : "";
             }).join("");
-            if (cast && cast.length) requestAnimationFrame(() => requestAnimationFrame(() => castEl.classList.add("show")));
+            if (cast && cast.length) setTimeout(() => castEl.classList.add("show"), 40);
           }, had ? 250 : 0);
         };
 
@@ -134,7 +135,8 @@
           setTimeout(() => { skip.classList.remove("confirm"); skip.textContent = t("skip"); }, 2500);
         });
         Onboard.isOpen = () => !done;
-        requestAnimationFrame(() => { el.classList.add("in"); showScreen(0); });
+        showScreen(0);
+        setTimeout(() => el.classList.add("in"), 30);
       });
     },
     isOpen() { return false; },

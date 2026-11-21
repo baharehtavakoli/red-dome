@@ -1373,3 +1373,6 @@ html[dir="rtl"] #mission h3 { font-family: "Vazirmatn", sans-serif; font-weight:
 html[dir="rtl"] #onboard .ob-text { font-size: 17px; line-height: 1.85; }
 /* same staging in both languages: Shideh on the right, Nasrin-Nush facing her from the left */
 #onboard .ob-cast { direction: rtl; }
+/* the onboarding art is framed to the edges, so it drifts only a little */
+#onboard .ob-pic.zoom img { animation: ob-drift 12s ease-out both; }
+@keyframes ob-drift { from { transform: scale(1.05); } to { transform: scale(1); } }

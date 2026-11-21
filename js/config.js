@@ -52,7 +52,11 @@ window.GAME_CONFIG = {
     buildStyle: "blueprint", // "blueprint": the golden outline glows and the part rises into place; "ruin": shake + dust
     // onboarding pictures (js/onboard.js). bahram / ladies / architect / build are optional:
     // until their files exist, the onboarding falls back to sky, ray and the scene background.
-    intro: { sky: "assets/scenes/intro/intro_sky.webp", ray: "assets/scenes/intro/intro_ray.webp" },
+    intro: {
+      sky: "assets/scenes/intro/intro_sky.webp", ray: "assets/scenes/intro/intro_ray.webp",
+      bahram: "assets/scenes/intro/intro_bahram.webp", ladies: "assets/scenes/intro/intro_ladies.webp",
+      domeTop: "assets/scenes/intro/intro_dome_top.webp", meet: "assets/scenes/intro/intro_meet.webp",
+    },
     maxZoom: 2.6, // how far the camera may zoom into a part
 
     /* Characters standing in the scene, in one row across the courtyard.
