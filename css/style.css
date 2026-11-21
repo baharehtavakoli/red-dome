@@ -1140,3 +1140,36 @@ html { touch-action: manipulation; } /* no double-tap zoom; pinch zoom still wor
 
 /* the screen behind the other one is hidden: stop its looping animations */
 #scene-screen.behind *, #app:not(.open) * { animation-play-state: paused !important; }
+
+/* ---------- first-time guide (js/tutorial.js) ---------- */
+#tut { position: fixed; inset: 0; z-index: 75; pointer-events: none; }
+#tut.hidden { display: none; }
+.tut-ring {
+  position: absolute; transform: translate(-50%, -50%); border-radius: 999px;
+  border: 3px solid #ffd76a; box-shadow: 0 0 0 4px rgba(255, 215, 106, .25), 0 0 18px rgba(255, 200, 90, .8);
+  animation: tut-ring 1.3s ease-out infinite;
+}
+@keyframes tut-ring { 0% { opacity: .95; scale: .9; } 100% { opacity: 0; scale: 1.25; } }
+.tut-hand {
+  position: absolute; font-size: 44px; line-height: 1; margin: 6px 0 0 -14px;
+  filter: drop-shadow(0 3px 3px rgba(40, 8, 8, .5));
+  animation: tut-tap 1s ease-in-out infinite;
+}
+@keyframes tut-tap { 0%, 100% { transform: translate(0, 10px); } 50% { transform: translate(0, 0) scale(.92); } }
+#tut.dragging .tut-hand { animation: tut-drag 1.8s ease-in-out infinite; }
+@keyframes tut-drag {
+  0% { transform: translate(0, 8px); opacity: 0; } 12% { opacity: 1; transform: translate(0, 0) scale(.9); }
+  70% { transform: translate(var(--dx), var(--dy)) scale(.9); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+}
+.tut-tip {
+  position: absolute; box-sizing: border-box; padding: 12px 16px; border-radius: 14px;
+  background: linear-gradient(180deg, #7a1c2a, #4a1220); border: 2px solid #e0b24a;
+  box-shadow: 0 6px 16px rgba(40, 8, 8, .45);
+  color: #fff4d8; font: 700 15px/1.4 "Nunito", sans-serif; text-align: center;
+}
+.tut-tip b { color: #ffd76a; }
+.tut-tip.pop { animation: tut-pop .35s cubic-bezier(.2, .9, .3, 1.4); }
+@keyframes tut-pop { from { opacity: 0; transform: translateY(8px) scale(.94); } }
+@media (prefers-reduced-motion: reduce) {
+  .tut-hand, .tut-ring, #tut.dragging .tut-hand { animation: none !important; }
+}

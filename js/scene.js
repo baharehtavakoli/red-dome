@@ -252,6 +252,7 @@
 
     autoBark() {
       if (this.busy || this.boardOpen() || Dialogue.isPlaying() || document.hidden) return;
+      if (window.Tutorial && Tutorial.active()) return; // the guide is talking
       if (document.querySelector("#modal-root .modal")) return;
       if (Date.now() - this.lastBark < cfg().scene.barkEverySeconds * 1000) return;
       const here = this.resEls.map((el, i) => (el.classList.contains("away") ? -1 : i)).filter((i) => i >= 0);

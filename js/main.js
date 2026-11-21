@@ -11,6 +11,7 @@
     Dialogue.init();
     UI.init();
     Debug.init();
+    Tutorial.init();
 
     Board.render();
     Orders.render();

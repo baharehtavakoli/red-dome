@@ -247,3 +247,14 @@ intro faces first, then the board, then everything else.
 **Offline / home screen:** on the live site `sw.js` caches the game so it opens offline, and
 `manifest.webmanifest` lets phones "Add to Home screen" as an app (icon in `assets/app/`).
 After changing art, bump `VERSION` in `sw.js` so phones fetch the new images.
+
+## First-time guide: `js/tutorial.js`
+
+New players get a hand pointer and a short tip through one full loop after the intro:
+Merge button → tap the Quarry → drag pebble onto pebble → Deliver Mehrab's Stone (a guaranteed
+first order worth exactly the stairs' cost) → back to the dome → build the stairs.
+
+Steps are checked several times a second against the game state, so the guide follows what the
+player actually does and never gets stuck (if the pebbles are used elsewhere it goes back to
+"dig"). It hides during stories, cinematics and windows. Progress is `State.d.tut` (-1 = done);
+saves that already delivered an order or built a part skip it. Settings → Reset progress shows it again.

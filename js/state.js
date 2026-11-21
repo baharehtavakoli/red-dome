@@ -72,7 +72,7 @@
           this.backup(raw);
           this.newGame();
           if (d && typeof d === "object") {
-            const keep = ["stars", "energy", "energyStamp", "ordersDone", "orderSeq", "seenIntro", "dome", "ads"];
+            const keep = ["stars", "energy", "energyStamp", "ordersDone", "orderSeq", "seenIntro", "dome", "ads", "tut"];
             keep.forEach((k) => { if (d[k] !== undefined) this.d[k] = d[k]; });
             this.sanitize();
             console.warn("Save migrated: progress kept, board reset.");
