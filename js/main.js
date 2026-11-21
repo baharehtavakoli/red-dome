@@ -82,7 +82,8 @@
 
     // Offline cache + "Add to Home screen" (only on the real site; local testing stays uncached).
     if ("serviceWorker" in navigator && location.protocol === "https:") {
-      window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+      const reg = () => navigator.serviceWorker.register("sw.js").catch(() => {});
+      if (document.readyState === "complete") reg(); else window.addEventListener("load", reg, { once: true });
     }
     // Ask the browser to keep the save even when storage runs low.
     if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
