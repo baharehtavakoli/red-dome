@@ -284,3 +284,7 @@ the picker highlights nothing; the phone language is only a fallback). All UI te
 character and part names and the whole story are swapped at start-up. Persian uses right-to-left
 text, the Vazirmatn font, and types dialogue word by word. The board and the scene keep their
 left-to-right layout.
+
+**Testing from the start:** the language screen has a "⟲ Reset game" button (tap twice), Settings →
+Reset progress does the same, and opening the game with `?reset` at the end of the address
+(`.../red-dome/?reset`) wipes the save at once. All three start over at the language screen.

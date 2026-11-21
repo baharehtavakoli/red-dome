@@ -259,8 +259,7 @@
           reset.textContent = t("resetConfirm");
           return;
         }
-        State.reset();
-        location.reload();
+        I18N.resetAll(); // also asks for the language again
       });
     },
 

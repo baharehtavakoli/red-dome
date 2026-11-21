@@ -10,6 +10,12 @@
    ===================================================================== */
 (function () {
   const KEY = "reddome_lang";
+  const SAVE_KEYS = ["reddome_save_v1", KEY];
+  // Testers: open the game with ?reset in the address to start completely fresh.
+  if (/[?&]reset\b/.test(location.search)) {
+    try { SAVE_KEYS.forEach((k) => localStorage.removeItem(k)); } catch (e) {}
+    history.replaceState(null, "", location.pathname);
+  }
   let lang = "en", chosen = false;
   try {
     chosen = !!localStorage.getItem(KEY);
@@ -242,9 +248,21 @@
           <p>Choose your language<br><span>زبان بازی را انتخاب کنید</span></p>
           <button class="btn gold wide" data-l="fa">فارسی</button>
           <button class="btn wide" data-l="en">English</button>
+          <button class="lp-reset" data-reset>⟲ Reset game · شروع از اول</button>
         </div>`;
       document.body.appendChild(el);
       el.addEventListener("click", (e) => {
+        const r = e.target.closest("[data-reset]");
+        if (r) {
+          // two taps, so it isn't hit by accident
+          if (!r.classList.contains("confirm")) {
+            r.classList.add("confirm");
+            r.textContent = "Tap again to erase everything · برای پاک شدن دوباره بزنید";
+            return;
+          }
+          this.resetAll();
+          return;
+        }
         const b = e.target.closest("[data-l]");
         if (!b) return;
         const l = b.dataset.l;
@@ -255,6 +273,13 @@
         setTimeout(() => el.remove(), 400);
         done && done();
       });
+    },
+
+    /* Erase the save and the language choice, and start again from the language screen. */
+    resetAll() {
+      if (window.State) { State.saveNow = () => {}; State.save = () => {}; } // don't write the old game back on unload
+      try { SAVE_KEYS.forEach((k) => localStorage.removeItem(k)); } catch (e) {}
+      location.reload();
     },
 
     set(l) {

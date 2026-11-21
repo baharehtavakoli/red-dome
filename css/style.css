@@ -1262,3 +1262,10 @@ html[dir="rtl"] .back-btn { direction: ltr; }
 #lang-pick p { margin: 0 0 18px; font: 700 15px/1.6 "Nunito", sans-serif; opacity: .9; }
 #lang-pick .btn { margin-top: 10px; min-height: 52px; font-size: 19px; }
 #lang-pick [data-l="fa"] { font-family: "Vazirmatn", "Nunito", sans-serif; font-weight: 800; }
+
+#lang-pick .lp-reset {
+  margin-top: 18px; padding: 8px 12px; min-height: 40px; border-radius: 12px;
+  background: rgba(0, 0, 0, .25); border: 1px dashed rgba(243, 210, 122, .6); color: #f3d6a0;
+  font: 700 13px/1.4 "Nunito", "Vazirmatn", sans-serif;
+}
+#lang-pick .lp-reset.confirm { background: #b8322a; border-style: solid; color: #fff; }
