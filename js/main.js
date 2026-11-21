@@ -12,6 +12,7 @@
     UI.init();
     Debug.init();
     Tutorial.init();
+    Daily.init();
 
     Board.render();
     Orders.render();
@@ -50,7 +51,7 @@
       document.getElementById("scene-screen").classList.add("cinematic");
       // Online the art takes a moment to download: wait (up to 5 s) for the background and the
       // intro's portraits so the first scene doesn't open on placeholders.
-      const need = [GAME_CONFIG.scene.background]
+      const need = [GAME_CONFIG.scene.background, (GAME_CONFIG.scene.intro || {}).sky]
         .concat(((STORY.intro && STORY.intro.cast) || []).map((w) => CHARACTERS[w] && CHARACTERS[w].portrait));
       const t0 = Date.now();
       const start = () => { Scene.busy = false; return Scene.playIntro(); };
@@ -76,7 +77,7 @@
         Scene.closeBoard();
         arm();
       } else {
-        UI.toast("Press Back again to leave the game");
+        UI.toast(t("backAgain"));
         setTimeout(arm, 2500); // after a while, Back is caught again
       }
     });

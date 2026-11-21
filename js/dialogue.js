@@ -29,12 +29,13 @@
     init() {
       this.el = document.getElementById("dialogue");
       this.el.innerHTML = `
+        <div class="dlg-backdrop"><img alt="" draggable="false"></div>
         <div class="dlg-stage">
           <div class="actor left" data-side="left"></div>
           <div class="actor right" data-side="right"></div>
         </div>
         <div class="dlg-title"><small data-chapter></small><span data-title></span></div>
-        <button class="dlg-skip">Skip ›</button>
+        <button class="dlg-skip">${t("skip")}</button>
         <div class="dlg-box">
           <div class="dlg-name" data-name></div>
           <div class="dlg-text" data-text></div>
@@ -48,7 +49,7 @@
           // Skip sits near where players tap to advance, so it asks once
           if (!skip.classList.contains("confirm")) {
             skip.classList.add("confirm");
-            skip.textContent = "Skip story? Tap again";
+            skip.textContent = t("skipConfirm");
             clearTimeout(this._skipT);
             this._skipT = setTimeout(() => this.resetSkip(), 2500);
             return;
@@ -68,6 +69,7 @@
         this.scene = s;
         this.idx = 0;
         this.resetSkip();
+        this.setBackdrop("none");
         this.resolve = () => { onDone && onDone(); resolve(); };
         this.lastSpoke = {};
         this.slots = { left: null, right: null };
@@ -104,7 +106,7 @@
       clearTimeout(this._skipT);
       const b = this.$(".dlg-skip");
       b.classList.remove("confirm");
-      b.textContent = "Skip ›";
+      b.textContent = t("skip");
     },
 
     /* A portrait finished downloading after the scene started: swap the placeholder for it. */
@@ -133,11 +135,26 @@
       return side;
     },
 
+    /* Full-screen picture behind the dialogue: a key of GAME_CONFIG.scene.intro, or "none". */
+    setBackdrop(key) {
+      const bd = this.$(".dlg-backdrop"), img = bd.querySelector("img");
+      const src = key && key !== "none" && (GAME_CONFIG.scene.intro || {})[key];
+      if (!src) { bd.classList.remove("show"); return; }
+      if (img.getAttribute("src") !== src) {
+        img.setAttribute("src", src);
+        bd.classList.remove("zoom"); void bd.offsetWidth; bd.classList.add("zoom");
+      }
+      bd.classList.add("show");
+    },
+
     showLine() {
       const line = this.scene.lines[this.idx];
-      const who = CHARACTERS[line.who] || { name: line.who || "", color: "#9b1c1c" };
-      const side = this.stageFor(line);
-      this.lastSpoke[line.who] = this.idx;
+      if (line.bg !== undefined) this.setBackdrop(line.bg);
+      const narr = line.who === "narrator";
+      const who = narr ? { name: "", color: "#3a1450" } : CHARACTERS[line.who] || { name: line.who || "", color: "#9b1c1c" };
+      const side = narr ? null : this.stageFor(line);
+      if (!narr) this.lastSpoke[line.who] = this.idx;
+      this.el.classList.toggle("narrating", narr);
       ["left", "right"].forEach((s) => {
         const a = this.actors[s];
         a.classList.toggle("active", s === side);
@@ -150,13 +167,14 @@
       box.classList.remove("line-in");
       void box.offsetWidth;
       box.classList.add("line-in");
-      this.speaker = this.actors[side];
+      this.speaker = narr ? null : this.actors[side];
       this.type(line.text);
     },
 
     type(text) {
       clearInterval(this.timer);
-      const chars = Array.from(text);
+      // Persian letters change shape with their neighbours, so it types word by word
+      const chars = window.I18N && I18N.rtl ? text.split(/(\s+)/) : Array.from(text);
       const el = this.$("[data-text]");
       this.full = text;
       let n = 0;
@@ -194,7 +212,8 @@
       clearInterval(this.timer);
       this.timer = null;
       this.scene = null;
-      this.el.classList.remove("open");
+      this.el.classList.remove("open", "narrating");
+      this.setBackdrop("none");
       this.hideTimer = setTimeout(() => this.el.classList.add("hidden"), 300);
       const done = this.resolve;
       this.resolve = null;

@@ -258,3 +258,29 @@ Steps are checked several times a second against the game state, so the guide fo
 player actually does and never gets stuck (if the pebbles are used elsewhere it goes back to
 "dig"). It hides during stories, cinematics and windows. Progress is `State.d.tut` (-1 = done);
 saves that already delivered an order or built a part skip it. Settings → Reset progress shows it again.
+
+## The build story (blueprint art), daily gift, Persian
+
+**Building, not restoring.** `assets/scenes/stages/stage_00..10.png` start from an empty plateau
+with the whole building drawn as a golden blueprint, and add one part per stage in this order:
+terrace, stairs, walls, iwan & doors, balcony, dome, tilework, towers, pool, garden.
+`python tools/cut_stages.py` cuts the parts (it compares each stage with what is already on screen,
+so small drifts between AI edits don't pile up), then `python tools/optimize_assets.py`.
+In `config.js` each part has `box` (where its layers sit, from `tools/stage_parts.json`), `focus`
+(what the camera frames) and `button`. `scene.buildStyle: "blueprint"` makes the outline glow and
+the part rise into place with golden motes. The old ruin art is kept in `art-refs/old_ruin/`.
+
+**Intro.** The prologue opens over `assets/scenes/intro/intro_sky` (the planets) and `intro_ray`
+(Mars's ray on the mountain), then cuts to the scene. A story line can set `bg: "sky" | "ray" | "none"`,
+and `who: "narrator"` has no portrait or name. The story follows the brief: Nasrin-Nush tells a
+tale "from her country", one piece per part, with a hint at the end that the princess was her.
+
+**Daily gift** (`js/daily.js`, rewards in `config.js -> daily`): a 7-day calendar, one claim per
+day; missing a day starts it again. The chest button on the dome screen shows "!" when a gift is
+waiting, and it opens by itself once a day (after the first-time guide).
+
+**Persian** (`js/i18n.js`): Settings → Language switches English / فارسی (remembered per device;
+the first time it follows the phone's language). All UI text goes through `t("key")`; item, chain,
+character and part names and the whole story are swapped at start-up. Persian uses right-to-left
+text, the Vazirmatn font, and types dialogue word by word. The board and the scene keep their
+left-to-right layout.

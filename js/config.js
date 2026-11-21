@@ -47,8 +47,10 @@ window.GAME_CONFIG = {
   scene: {
     width: 360,
     height: 640,
-    background: "assets/scenes/stages/stage_00.webp", // the full ruin; restored parts fade in over it
-    stagedArt: true, // parts are cut from stage paintings (tools/cut_stages.py): ruined layers only show while building
+    background: "assets/scenes/stages/stage_00.webp", // empty plateau with the whole building as a golden blueprint
+    stagedArt: true, // parts are cut from stage paintings (tools/cut_stages.py): "ruined" layers only show while building
+    buildStyle: "blueprint", // "blueprint": the golden outline glows and the part rises into place; "ruin": shake + dust
+    intro: { sky: "assets/scenes/intro/intro_sky.webp", ray: "assets/scenes/intro/intro_ray.webp" },
     maxZoom: 2.6, // how far the camera may zoom into a part
 
     /* Characters standing in the scene, in one row across the courtyard.
@@ -71,42 +73,43 @@ window.GAME_CONFIG = {
      Restored in this order. Each has:
        cost      stars needed
        story     scene key in story.js, played after the build animation
-       box       where the part sits in the world {x, y, w, h}
+       box       where the part's art layers sit in the world {x, y, w, h} (from tools/stage_parts.json)
+       focus     what the camera frames while it's being built (defaults to box)
        button    centre of its task button in world units {x, y}
-       ruined    art for the ruined state  (drawn to fill `box`)
-       restored  art for the restored state (drawn to fill `box`)
+       ruined    art before it's built: the golden blueprint (drawn to fill `box`)
+       restored  art once it's built (drawn to fill `box`)
        emoji     shown on the task button
      Parts are layered in list order (later = on top). */
   domeParts: [
-    { id: "stairs", name: "Stone Stairs", cost: 5, story: "stairs", emoji: "🪜",
-      box: { x: 48, y: 407, w: 261, h: 79 }, button: { x: 177, y: 441 },
-      ruined: "assets/scenes/parts/stairs_ruined.webp", restored: "assets/scenes/parts/stairs_restored.webp" },
-    { id: "terrace", name: "Terrace", cost: 8, story: "terrace", emoji: "🧱",
-      box: { x: 0, y: 409, w: 360, h: 65 }, button: { x: 174, y: 434 },
+    { id: "terrace", name: "Terrace", cost: 5, story: "terrace", emoji: "🧱",
+      box: { x: 0, y: 161, w: 360, h: 371 }, focus: { x: 20, y: 430, w: 320, h: 80 }, button: { x: 180, y: 476 },
       ruined: "assets/scenes/parts/terrace_ruined.webp", restored: "assets/scenes/parts/terrace_restored.webp" },
+    { id: "stairs", name: "Stone Stairs", cost: 8, story: "stairs", emoji: "🪜",
+      box: { x: 31, y: 163, w: 298, h: 319 }, focus: { x: 70, y: 420, w: 220, h: 85 }, button: { x: 180, y: 440 },
+      ruined: "assets/scenes/parts/stairs_ruined.webp", restored: "assets/scenes/parts/stairs_restored.webp" },
     { id: "walls", name: "Red Brick Walls", cost: 12, story: "walls", emoji: "🧱",
-      box: { x: 25, y: 274, w: 311, h: 147 }, button: { x: 176, y: 321 },
+      box: { x: 0, y: 34, w: 360, h: 406 }, focus: { x: 25, y: 265, w: 310, h: 185 }, button: { x: 90, y: 360 },
       ruined: "assets/scenes/parts/walls_ruined.webp", restored: "assets/scenes/parts/walls_restored.webp" },
     { id: "arch", name: "Iwan & Doors", cost: 18, story: "arch", emoji: "🚪",
-      box: { x: 116, y: 281, w: 124, h: 140 }, button: { x: 178, y: 349 },
+      box: { x: 31, y: 163, w: 273, h: 260 }, focus: { x: 120, y: 290, w: 120, h: 160 }, button: { x: 180, y: 330 },
       ruined: "assets/scenes/parts/arch_ruined.webp", restored: "assets/scenes/parts/arch_restored.webp" },
     { id: "balcony", name: "Balcony", cost: 24, story: "balcony", emoji: "🏛️",
-      box: { x: 20, y: 184, w: 319, h: 109 }, button: { x: 180, y: 231 },
+      box: { x: 22, y: 36, w: 337, h: 404 }, focus: { x: 30, y: 210, w: 300, h: 100 }, button: { x: 180, y: 250 },
       ruined: "assets/scenes/parts/balcony_ruined.webp", restored: "assets/scenes/parts/balcony_restored.webp" },
     { id: "dome", name: "Red Dome", cost: 32, story: "dome", emoji: "🕌",
-      box: { x: 55, y: 59, w: 250, h: 146 }, button: { x: 179, y: 152 },
+      box: { x: 0, y: 34, w: 360, h: 425 }, focus: { x: 95, y: 60, w: 170, h: 160 }, button: { x: 180, y: 140 },
       ruined: "assets/scenes/parts/dome_ruined.webp", restored: "assets/scenes/parts/dome_restored.webp" },
     { id: "tiles", name: "Tilework", cost: 42, story: "tiles", emoji: "💠",
-      box: { x: 40, y: 259, w: 279, h: 99 }, button: { x: 179, y: 302 },
+      box: { x: 0, y: 5, w: 360, h: 502 }, focus: { x: 30, y: 250, w: 300, h: 200 }, button: { x: 270, y: 360 },
       ruined: "assets/scenes/parts/tiles_ruined.webp", restored: "assets/scenes/parts/tiles_restored.webp" },
     { id: "towers", name: "Towers", cost: 52, story: "towers", emoji: "🗼",
-      box: { x: 20, y: 127, w: 320, h: 154 }, button: { x: 62, y: 184 },
+      box: { x: 0, y: 0, w: 360, h: 513 }, focus: { x: 20, y: 150, w: 320, h: 150 }, button: { x: 62, y: 210 },
       ruined: "assets/scenes/parts/towers_ruined.webp", restored: "assets/scenes/parts/towers_restored.webp" },
     { id: "pool", name: "Pool & Fountain", cost: 64, story: "pool", emoji: "⛲",
-      box: { x: 87, y: 431, w: 186, h: 80 }, button: { x: 180, y: 477 },
+      box: { x: 69, y: 0, w: 291, h: 513 }, focus: { x: 90, y: 450, w: 180, h: 75 }, button: { x: 180, y: 488 },
       ruined: "assets/scenes/parts/pool_ruined.webp", restored: "assets/scenes/parts/pool_restored.webp" },
     { id: "garden", name: "Garden", cost: 80, story: "garden", emoji: "🌳",
-      box: { x: 0, y: 197, w: 360, h: 260 }, button: { x: 62, y: 342 },
+      box: { x: 0, y: 15, w: 360, h: 443 }, focus: { x: 0, y: 280, w: 360, h: 220 }, button: { x: 84, y: 430 },
       ruined: "assets/scenes/parts/garden_ruined.webp", restored: "assets/scenes/parts/garden_restored.webp" },
   ],
 
@@ -119,6 +122,17 @@ window.GAME_CONFIG = {
     adsPerDay: 4,      // rewarded ads per day (0 = unlimited)
     partReward: 20,    // energy gift for every dome part built
   },
+
+  /* Daily gift calendar (js/daily.js): one entry per day, energy / stars / an item for the board. */
+  daily: [
+    { energy: 20 },
+    { stars: 3 },
+    { energy: 30 },
+    { item: { chain: "stone", level: 3 } },
+    { stars: 6 },
+    { energy: 40, item: { chain: "jewel", level: 3 } },
+    { energy: 60, stars: 10 },
+  ],
 
   /* Chance that a generator drops an item one level higher than usual. */
   luckyDropChance: 0.12,

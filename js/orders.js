@@ -24,12 +24,12 @@
           const [s, k] = req.dataset.req.split(":").map(Number);
           const it = State.d.orders[s].items[k];
           const def = U.item(it.chain, it.level), who = CHARACTERS[State.d.orders[s].who];
-          return UI.openChain(it.chain, it.level, `${who ? who.name : "Someone"} wants a ${def.name}.`);
+          return UI.openChain(it.chain, it.level, t("wants", { who: who ? who.name : t("someone"), item: def.name }));
         }
         const who = e.target.closest("[data-who]");
         if (who) {
           const o = State.d.orders[+who.dataset.who];
-          if (o) UI.toast(`${CHARACTERS[o.who].name}: “${o.line}”`);
+          if (o) UI.toast(t("orderLine", { who: CHARACTERS[o.who].name, line: o.line }));
         }
       });
     },
@@ -121,7 +121,7 @@
             <div class="who-name">${U.esc(ch.name)}</div>
           </div>
           <div class="reqs">${reqs}</div>
-          <button class="deliver${ready ? "" : " off"}" data-deliver="${s}" aria-disabled="${!ready}">${ready ? "Deliver " : ""}⭐${o.stars}</button>
+          <button class="deliver${ready ? "" : " off"}" data-deliver="${s}" aria-disabled="${!ready}">${ready ? t("deliver") + " " : ""}⭐${o.stars}</button>
         </div>`;
       }
       if (el._html !== html) {
@@ -138,7 +138,7 @@
       if (!idx) {
         Sfx.play("error");
         const missing = o.items.filter((it) => !this.has(it)).map((it) => U.item(it.chain, it.level).name);
-        UI.toast(missing.length ? `Still missing: ${missing.join(" and ")}` : "Both items are needed at the same time.");
+        UI.toast(missing.length ? t("missing", { items: missing.join(t("and")) }) : t("bothNeeded"));
         const card = this.slotEls[s].firstElementChild;
         if (card) { card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); }
         return;

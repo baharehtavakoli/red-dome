@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=9">
-  <link rel="stylesheet" href="css/skin.css?v=6">
+  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/skin.css?v=10">
 </head>
 <body>
   <!-- ============ MAIN SCREEN: the Dome Scene ============ -->
@@ -33,14 +33,14 @@
     </header>
 
     <div class="scene-bottom">
-      <button id="merge-btn" class="merge-btn"><span class="merge-ic">⚒️</span>Merge<span class="badge"></span></button>
+      <button id="merge-btn" class="merge-btn"><span class="merge-ic">⚒️</span><span data-i18n="merge">Merge</span><span class="badge"></span></button>
     </div>
   </div>
 
   <!-- ============ MERGE BOARD SCREEN ============ -->
   <div id="app" class="board-screen">
     <header id="topbar">
-      <button id="back-btn" class="back-btn" aria-label="Back to the dome"><span class="bb-ic">‹ 🕌</span><span>Dome</span></button>
+      <button id="back-btn" class="back-btn" aria-label="Back to the dome"><span class="bb-ic">‹ 🕌</span><span data-i18n="dome">Dome</span></button>
       <button class="pill energy-pill" aria-label="Energy">
         <span class="pill-icon">⚡</span>
         <span class="pill-main"><b data-hud="energy">0</b><small data-hud="timer"></small></span>
@@ -67,20 +67,22 @@
   <div id="debug-panel" class="hidden"></div>
 
   <!-- Editable content -->
-  <script src="js/chains.js?v=6"></script>
-  <script src="js/story.js?v=6"></script>
-  <script src="js/config.js?v=6"></script>
+  <script src="js/chains.js?v=10"></script>
+  <script src="js/story.js?v=10"></script>
+  <script src="js/config.js?v=10"></script>
+  <script src="js/i18n.js?v=10"></script>
   <!-- Engine -->
-  <script src="js/util.js?v=6"></script>
-  <script src="js/sound.js?v=6"></script>
-  <script src="js/state.js?v=9"></script>
-  <script src="js/board.js?v=6"></script>
-  <script src="js/orders.js?v=6"></script>
-  <script src="js/scene.js?v=9"></script>
-  <script src="js/dialogue.js?v=6"></script>
-  <script src="js/ui.js?v=6"></script>
-  <script src="js/debug.js?v=6"></script>
-  <script src="js/tutorial.js?v=9"></script>
-  <script src="js/main.js?v=9"></script>
+  <script src="js/util.js?v=10"></script>
+  <script src="js/sound.js?v=10"></script>
+  <script src="js/state.js?v=10"></script>
+  <script src="js/board.js?v=10"></script>
+  <script src="js/orders.js?v=10"></script>
+  <script src="js/scene.js?v=10"></script>
+  <script src="js/dialogue.js?v=10"></script>
+  <script src="js/ui.js?v=10"></script>
+  <script src="js/debug.js?v=10"></script>
+  <script src="js/tutorial.js?v=10"></script>
+  <script src="js/daily.js?v=10"></script>
+  <script src="js/main.js?v=10"></script>
 </body>
 </html>

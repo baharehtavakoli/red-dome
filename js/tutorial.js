@@ -15,21 +15,21 @@
     {
       id: "open",
       where: "scene",
-      text: "Let's gather materials. Tap <b>Merge</b>!",
+      text: t("tutOpen"),
       target: () => $("#merge-btn"),
       done: () => Scene.boardOpen(),
     },
     {
       id: "dig",
       where: "board",
-      text: "Tap the <b>Quarry</b> to dig up pebbles. Each tap costs 1 ⚡.",
+      text: t("tutDig"),
       target: () => pieceEl(board().findIndex((c) => c && c.t === "gen" && c.chain === "stone")),
       done: () => count("stone", 1) >= 2 || count("stone", 2) > 0,
     },
     {
       id: "merge",
       where: "board",
-      text: "Two of a kind make something better. <b>Drag one pebble onto the other.</b>",
+      text: t("tutMerge"),
       drag: () => {
         const ids = board().map((c, i) => (c && c.t === "item" && c.chain === "stone" && c.level === 1 ? i : -1)).filter((i) => i >= 0);
         return ids.length >= 2 ? [pieceEl(ids[0]), pieceEl(ids[1])] : null;
@@ -41,7 +41,7 @@
     {
       id: "deliver",
       where: "board",
-      text: "Mehrab needs a <b>Stone</b>. Tap <b>Deliver</b>!",
+      text: t("tutDeliver"),
       target: () => { const s = tutOrderSlot(); return s >= 0 ? Orders.slotEls[s].querySelector(".deliver") : null; },
       done: () => State.d.ordersDone > 0,
       fallback: 1, // the Stone was sold or used: make another
@@ -50,14 +50,14 @@
     {
       id: "back",
       where: "board",
-      text: "Orders pay ⭐ stars. You have enough for the stairs. <b>Back to the dome!</b>",
+      text: t("tutBack"),
       target: () => $("#back-btn"),
       done: () => !Scene.boardOpen() || State.d.dome[0],
     },
     {
       id: "build",
       where: "scene",
-      text: "Tap the stairs to <b>build</b> them!",
+      text: t("tutBuild"),
       target: () => Scene.taskEls[0],
       done: () => State.d.dome[0],
     },
@@ -111,8 +111,8 @@
 
       const onBoard = Scene.boardOpen();
       let text = step.text, from = null, to = null;
-      if (step.where === "board" && !onBoard) { text = "Back to the board: tap <b>Merge</b>."; from = $("#merge-btn"); }
-      else if (step.where === "scene" && onBoard) { text = "Tap here to go back to the dome."; from = $("#back-btn"); }
+      if (step.where === "board" && !onBoard) { text = t("tutToBoard"); from = $("#merge-btn"); }
+      else if (step.where === "scene" && onBoard) { text = t("tutToScene"); from = $("#back-btn"); }
       else if (step.drag) { const d = step.drag(); if (d) [from, to] = d; }
       else from = step.target();
       if (!from || !from.isConnected) return this.hide();
@@ -148,7 +148,7 @@
       State.d.tut = -1;
       State.save();
       this.hide();
-      setTimeout(() => UI.toast("Well done! Merge, deliver orders and build the whole Red Dome."), 600);
+      setTimeout(() => UI.toast(t("tutDone")), 600);
     },
   };
 

@@ -15,110 +15,119 @@
    ORDER_LINES  characterKey -> short lines shown when tapping an order card.
    ===================================================================== */
 window.STORY = {
+  /* bg: "sky" / "ray" shows a full-screen picture behind the dialogue (config.js -> scene.intro),
+     bg: "none" goes back to the Dome Scene. who: "narrator" has no portrait and no name tag. */
   intro: {
     chapter: "Prologue",
-    title: "The Ruin on the Mountain",
+    title: "Seven Lights",
     cast: ["shideh", "mehrab"],
     lines: [
-      { who: "shideh", text: "So this is the Red Dome. Or what's left of it." },
-      { who: "mehrab", text: "Locals say the stones are cursed. There are glowing symbols all over the site." },
-      { who: "nasrin", side: "right", text: "Not cursed. Guarded. I set those talismans myself, a long time ago." },
-      { who: "nasrin", text: "Rebuild my dome, architect, and I'll tell you how it all began." },
-    ],
-  },
-
-  stairs: {
-    chapter: "Chapter 1",
-    title: "A Castle Above the Clouds",
-    cast: ["shideh", "nasrin"],
-    lines: [
-      { who: "nasrin", text: "When I was young, every king wanted my hand. Mostly they wanted my kingdom." },
-      { who: "nasrin", text: "So I used what my teachers gave me: sorcery. I raised a castle on a mountain no army could climb." },
-      { who: "shideh", text: "That explains these stairs. They're cut straight into the rock." },
-      { who: "nasrin", text: "I wanted a home only the worthy could reach." },
+      { who: "narrator", bg: "sky", text: "Long ago, King Bahram asked for seven domes: one for each light that wanders the sky." },
+      { who: "narrator", text: "Saturn, Jupiter, the Sun, Venus, Mercury, the Moon... and Mars, the red one, whose other name is Bahram." },
+      { who: "narrator", bg: "ray", text: "One evening the red star sent down a single ray, onto a bare mountain plateau." },
+      { who: "shideh", bg: "none", text: "This is the place. Mars pointed right at it." },
+      { who: "mehrab", text: "There's nothing here but stones, master. And that glowing... drawing?" },
+      { who: "shideh", text: "My plan, drawn with the astrolabe. Now we turn light into stone." },
+      { who: "nasrin", side: "right", text: "So you're the architect. I am Nasrin-Nush, from the lands of the north. This dome will be mine." },
+      { who: "nasrin", text: "Build it well, and I'll tell you a tale from my country. One piece for every part you build." },
+      { who: "mehrab", side: "right", text: "And the golden seals all over the site?" },
+      { who: "shideh", text: "Mars-light caught in the plan. Merge two of a kind right next to one, and it breaks open." },
     ],
   },
 
   terrace: {
-    chapter: "Chapter 2",
-    title: "A Place to Stand",
-    cast: ["shideh", "mehrab"],
+    chapter: "Chapter 1",
+    title: "The First Stone",
+    cast: ["shideh", "nasrin"],
     lines: [
-      { who: "mehrab", text: "The terrace is level again. You can finally stand here without sliding down the mountain." },
-      { who: "shideh", text: "Every palace needs a good place to stand. Even a sorceress's." },
-      { who: "nasrin", side: "right", text: "Especially a sorceress's. Princes used to wait right there, hoping I'd come out." },
+      { who: "shideh", text: "The terrace is down, right where the ray fell." },
+      { who: "nasrin", text: "Then my tale begins. In my country there was a princess, as clever as she was beautiful." },
+      { who: "nasrin", text: "Every king wanted her hand. Mostly, they wanted her kingdom." },
+      { who: "shideh", text: "So she needed a strong foundation. Like this one." },
+    ],
+  },
+
+  stairs: {
+    chapter: "Chapter 2",
+    title: "The Talisman Road",
+    cast: ["mehrab", "nasrin"],
+    lines: [
+      { who: "nasrin", text: "She raised a castle on a mountain, and set talismans along the road: bronze guardians that woke when a stranger passed." },
+      { who: "mehrab", text: "Like the golden seals on our board!" },
+      { who: "shideh", side: "left", text: "The same idea. Light caught in a pattern. Break the pattern and it lets you through." },
+      { who: "nasrin", text: "Few suitors made it past the first one." },
     ],
   },
 
   walls: {
     chapter: "Chapter 3",
-    title: "The Talisman Road",
-    cast: ["mehrab", "nasrin"],
+    title: "Names on the Gate",
+    cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "On the road up I placed talismans. Bronze guardians that wake when a stranger passes." },
-      { who: "mehrab", text: "Like the tiles that lock half our worksite?" },
-      { who: "nasrin", text: "The very same. A suitor had to break them one by one." },
-      { who: "shideh", text: "And most of them never made it past the first." },
+      { who: "nasrin", text: "Those who failed had their names hung on the city gate, for everyone to read." },
+      { who: "shideh", text: "Harsh. But walls keep things out as well as in." },
+      { who: "nasrin", text: "The princess knew that better than anyone." },
     ],
   },
 
   arch: {
     chapter: "Chapter 4",
-    title: "The Hidden Door",
+    title: "The Door Found by Ear",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "Get past the talismans, and you still face a wall with no door." },
-      { who: "shideh", text: "The arch! It was bricked over on purpose." },
-      { who: "nasrin", text: "A drum hung on the wall. Only someone patient enough to listen found where the door was." },
-      { who: "mehrab", text: "So that's why the arch rings when you knock on it." },
+      { who: "nasrin", text: "Past the talismans stood a wall with no door. Only a drum, hanging there." },
+      { who: "shideh", text: "And whoever listened found the door?" },
+      { who: "nasrin", text: "Only the patient ones." },
+      { who: "mehrab", side: "left", text: "Then let's build a door you can find by ear, master!" },
+      { who: "shideh", text: "Already in the plan. Knock on the left panel." },
     ],
   },
 
   balcony: {
     chapter: "Chapter 5",
-    title: "The Watching Balcony",
-    cast: ["shideh", "nasrin"],
+    title: "The Portrait",
+    cast: ["golnar", "nasrin"],
     lines: [
-      { who: "nasrin", text: "From this balcony I watched every suitor climb the road." },
-      { who: "nasrin", text: "Most turned back at the first talisman. I never had to say a word." },
-      { who: "shideh", text: "So you tested their patience before they ever met you." },
-      { who: "nasrin", text: "Patience and courage. Cleverness was a bonus." },
+      { who: "golnar", text: "My grandmother tells this part! A prince saw a painting of the princess..." },
+      { who: "nasrin", text: "...and could not forget her face. Yes. Your grandmother tells it well." },
+      { who: "golnar", text: "She says he wore red from that day on, like a man asking for justice." },
+      { who: "shideh", side: "left", text: "Red. Like this dome will be." },
     ],
   },
 
   dome: {
     chapter: "Chapter 6",
-    title: "Stars Under the Dome",
+    title: "The Sage of the Hills",
     cast: ["shideh", "sage"],
     lines: [
-      { who: "sage", text: "Under this dome the princess read the stars, and learned to bind them into talismans." },
-      { who: "nasrin", side: "left", text: "Old friend. You taught me half of what I know." },
-      { who: "sage", text: "And you kept the other half secret, as you should." },
-      { who: "shideh", side: "left", text: "The dome is back. It feels like the whole mountain is breathing again." },
+      { who: "sage", text: "The dome is closed. Good. Now the red light has a home." },
+      { who: "shideh", text: "You've come a long way, old man." },
+      { who: "sage", text: "In the tale, the prince came to me too, before he climbed the mountain." },
+      { who: "sage", text: "I'll tell you what I told him, once the tiles are ready." },
     ],
   },
 
   tiles: {
     chapter: "Chapter 7",
-    title: "Patterns That Bind",
-    cast: ["shideh", "nasrin"],
+    title: "Every Talisman Has a Twin",
+    cast: ["mehrab", "sage"],
     lines: [
-      { who: "shideh", text: "These tile patterns repeat like a lock and a key." },
-      { who: "nasrin", text: "They are a lock. Each talisman on the road answers to one panel here." },
-      { who: "mehrab", side: "left", text: "So fixing the tiles calms the talismans?" },
-      { who: "nasrin", text: "It lets them rest. They've guarded this mountain long enough." },
+      { who: "sage", text: "Listen: every talisman has a twin. Bring matching pieces together and the spell undoes itself." },
+      { who: "mehrab", text: "Matching pieces... that's exactly how we work the board!" },
+      { who: "shideh", side: "left", text: "And these tiles are the lock pattern. Each star answers to a seal on the road." },
+      { who: "sage", text: "Now you know the prince's secret." },
     ],
   },
 
   towers: {
     chapter: "Chapter 8",
-    title: "The Prince and the Sage",
-    cast: ["golnar", "sage"],
+    title: "The Prince in Red",
+    cast: ["shideh", "nasrin"],
     lines: [
-      { who: "golnar", text: "My grandmother told this part. A prince saw a painting of the princess and couldn't forget her." },
-      { who: "golnar", text: "Before he climbed the mountain, he went to a sage who lived in the hills." },
-      { who: "sage",   text: "Every talisman has a twin, boy. Bring matching pieces together and the spell undoes itself." },
-      { who: "shideh", text: "Matching pieces... Huh. That's exactly how we've been working." },
+      { who: "nasrin", text: "The prince climbed in red. He broke the talismans two by two, as the sage had taught him." },
+      { who: "nasrin", text: "He listened to the drum, and he found the door." },
+      { who: "shideh", text: "And the princess?" },
+      { who: "nasrin", text: "She was waiting. With riddles." },
     ],
   },
 
@@ -127,9 +136,9 @@ window.STORY = {
     title: "Riddles in Pearls",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "Whoever found the door sat with me here, by the pool, for my riddles." },
-      { who: "nasrin", text: "I didn't ask with words. I sent pearls, and waited to see what came back." },
-      { who: "shideh", text: "A whole conversation in pearls. Bold." },
+      { who: "nasrin", text: "She sent him two pearls: life is short. He sent back three: then let it be sweet." },
+      { who: "nasrin", text: "She ground them with sugar, and he poured in milk and drank it all. She sent one pearl; he found its perfect twin." },
+      { who: "shideh", text: "And she knew he was the one." },
       { who: "nasrin", text: "Words lie easily. Pearls don't." },
     ],
   },
@@ -139,13 +148,14 @@ window.STORY = {
     title: "The Red Dome",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "He broke every talisman, found the door, and answered every pearl with the right one." },
-      { who: "nasrin", text: "So I called off my guardians and painted this dome red. The color of a happy ending." },
-      { who: "shideh", text: "Then let's finish the garden. The very last piece." },
-      { who: "nasrin", text: "Thank you, Shideh. The Red Dome is home again." },
+      { who: "nasrin", text: "They married, and she let her guardians rest." },
+      { who: "golnar", side: "left", text: "And they lived in a garden like this one!" },
+      { who: "mehrab", side: "left", text: "Master! A herald from King Bahram. He comes on Tuesday, the day of Mars." },
+      { who: "nasrin", text: "Then he'll find his red dome finished. And a bride who knows this tale... rather well." },
+      { who: "shideh", side: "left", text: "Rather well? Nasrin... was that princess you?" },
+      { who: "nasrin", text: "Every tale needs a little mystery, architect. Six more domes are waiting for you." },
     ],
   },
-
 };
 
 window.ORDER_LINES = {
@@ -168,17 +178,17 @@ window.ORDER_LINES = {
 
 /* BARKS: short lines characters say in their speech bubble when you tap them
    in the Dome Scene (or now and then on their own).
-   Shideh also says a live hint about the next part to rebuild (see scene.js). */
+   Shideh also says a live hint about the next part to build (see scene.js). */
 window.BARKS = {
   shideh: [
     "Every merge gets us closer.",
-    "I can already picture the dome glowing red again.",
+    "I can already see the dome glowing red.",
     "Tap a generator on the board to get materials.",
   ],
   mehrab: [
     "Master, the board is full of pebbles again!",
     "Two of the same make something better. I'm learning!",
-    "The orders pay in stars. Stars buy repairs.",
+    "The orders pay in stars. Stars buy stone and gold.",
     "Did you hear that? The talismans hum at night.",
   ],
   golnar: [
@@ -186,7 +196,7 @@ window.BARKS = {
     "Bring me seeds and I'll show you a miracle.",
   ],
   nasrin: [
-    "My dome, red again. I never thought I'd see it.",
+    "A red dome... just like in the tale from my country.",
     "Not every riddle is answered with words.",
   ],
 };

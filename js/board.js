@@ -245,7 +245,7 @@
         this.render();
         this.fx(from, "shake");
         Sfx.play("error");
-        UI.toast("Locked by a talisman. Merge right next to it to break it.");
+        UI.toast(window.t("locked"));
         return;
       }
 
@@ -253,7 +253,7 @@
         if (a.level >= U.maxLevel(a.chain)) {
           this.render();
           Sfx.play("error");
-          UI.toast(`${U.item(a.chain, a.level).name} is already at max level ✦`);
+          UI.toast(window.t("maxed", { item: U.item(a.chain, a.level).name }));
           return;
         }
         this.merge(from, to);
@@ -331,7 +331,7 @@
       if (t < 0) {
         this.fx(i, "shake");
         Sfx.play("error");
-        UI.toast("The board is full! Merge or deliver some items.");
+        UI.toast(window.t("boardFull"));
         return;
       }
       State.d.energy -= cost;
@@ -342,7 +342,7 @@
       this.fx(i, "bounce");
       Sfx.play("produce");
       this.fxDrop(t, i);
-      if (lucky) setTimeout(() => { Sfx.play("stars"); UI.floatText(this.rect(t), "Lucky! ✨"); }, 250);
+      if (lucky) setTimeout(() => { Sfx.play("stars"); UI.floatText(this.rect(t), window.t("lucky")); }, 250);
     },
 
     /* Random empty cell among those closest to `i` (8-way distance). */
@@ -387,7 +387,7 @@
       if (!broken.length) {
         this.fx(i, "shake");
         Sfx.play("error");
-        UI.toast("No talismans around the charm. Move it next to one, then tap it.");
+        UI.toast(window.t("noTalismans"));
         return;
       }
       const r = this.rect(i);
@@ -399,7 +399,7 @@
       setTimeout(() => Sfx.play("shatter", broken.length), 350);
       broken.forEach((n) => this.fxBreak(n));
       UI.showInfo(-1);
-      UI.toast(`The astrolabe hums... ${broken.length} talisman${broken.length > 1 ? "s" : ""} broken!`);
+      UI.toast(broken.length > 1 ? window.t("charmBrokeN", { n: broken.length }) : window.t("charmBroke1"));
     },
 
     /* After a few idle seconds on the board, wiggle two items that can be merged. */

@@ -86,7 +86,9 @@
       const intro = (window.STORY && STORY.intro && STORY.intro.cast) || [];
       const done = (window.State && State.d && State.d.dome) || [];
       const next = G.domeParts.findIndex((p, i) => !done[i]);
-      // 1. what the first screen shows
+      // 1. what the first screen shows (the intro's sky pictures first, for new players)
+      const firstTime = !(window.State && State.d && State.d.seenIntro);
+      if (firstTime && G.scene.intro) Object.values(G.scene.intro).forEach((p) => out.push(p));
       out.push(G.scene.background);
       intro.forEach((w) => C[w] && out.push(C[w].portrait));
       (G.scene.residents || []).forEach((r) => C[r.who] && C[r.who].body && out.push(C[r.who].body + "neutral.webp"));
@@ -105,6 +107,7 @@
         if (c.body) (window.POSES || []).forEach((p) => out.push(c.body + p + ".webp"));
       });
       G.domeParts.forEach((p) => out.push(p.restored, p.ruined));
+      if (G.scene.intro) Object.values(G.scene.intro).forEach((p) => out.push(p)); // for "Replay intro"
       return out;
     },
     has(path) {

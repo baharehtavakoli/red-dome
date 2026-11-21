@@ -135,6 +135,7 @@
       this.world.style.width = width + "px";
       this.world.style.height = height + "px";
       this.world.classList.toggle("staged", !!cfg().scene.stagedArt);
+      this.world.classList.toggle("blueprint", cfg().scene.buildStyle === "blueprint");
       this.world.innerHTML = `${DEFS}<div class="bg-layer"></div><div class="parts-layer"></div><div class="residents-layer"></div>
         <div class="wfx-layer"></div><div class="tasks-layer"></div>`;
 
@@ -214,13 +215,12 @@
       });
     },
 
-    /* Shideh's live hint about what to rebuild next. */
+    /* Shideh's live hint about what to build next. */
     hintLine() {
       const n = this.nextIndex();
       if (n < 0) return "The Red Dome is whole again. Thank you!";
       const p = parts()[n], need = p.cost - State.d.stars;
-      return need <= 0 ? `We have the stars! Tap the ${p.name} to rebuild it.`
-        : `Next: the ${p.name}. We need ${need} more ⭐, so let's merge!`;
+      return need <= 0 ? t("hintReady", { part: p.name }) : t("hintNeed", { part: p.name, n: need });
     },
 
     bark(i, text) {
@@ -323,7 +323,7 @@
     focusCam(i) {
       const { width: W, height: H, maxZoom } = cfg().scene;
       const vw = this.el.clientWidth, vh = this.el.clientHeight;
-      const base = this.overviewCam().s, box = parts()[i].box;
+      const base = this.overviewCam().s, box = parts()[i].focus || parts()[i].box;
       const FOCUS_Y = 0.34; // where the part should sit on screen (above portraits + dialogue)
       const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
       let s = Math.min((vw * 0.8) / box.w, (vh * 0.36) / box.h);
@@ -355,12 +355,12 @@
       if (State.d.dome[i]) return this.replay(i);
       if (i !== next) {
         Sfx.play("error");
-        UI.toast(`Restore the ${parts()[next].name} first.`);
+        UI.toast(t("buildFirst", { part: parts()[next].name }));
         return;
       }
       if (State.d.stars < p.cost) {
         Sfx.play("error");
-        UI.toast(`${p.name} needs ${p.cost - State.d.stars} more ⭐ — merge items and deliver orders!`);
+        UI.toast(t("needMore", { part: p.name, n: p.cost - State.d.stars }));
         UI.bump(document.getElementById("merge-btn"));
         return;
       }
@@ -390,16 +390,39 @@
 
     async build(i) {
       const el = this.partEls[i];
+      const blueprint = cfg().scene.buildStyle === "blueprint";
       el.classList.add("shaking");
       Sfx.play("build");
-      this.dust(i);
+      if (blueprint) this.goldDust(i); else this.dust(i);
       await sleep(800);
       el.classList.remove("shaking");
       this.animating = -1;
       el.classList.add("restored", "reveal");
-      UI.sparkle(el.getBoundingClientRect(), 20);
-      await sleep(1150);
+      UI.sparkle(this.focusRect(i), 20);
+      await sleep(blueprint ? 1500 : 1150);
       el.classList.remove("reveal");
+    },
+
+    /* Screen rectangle of the part's focus area (for sparkles). */
+    focusRect(i) {
+      const f = parts()[i].focus || parts()[i].box, w = this.world.getBoundingClientRect();
+      const k = w.width / cfg().scene.width;
+      return { left: w.left + f.x * k, top: w.top + f.y * k, width: f.w * k, height: f.h * k,
+        right: w.left + (f.x + f.w) * k, bottom: w.top + (f.y + f.h) * k };
+    },
+
+    /* Golden motes rising from the blueprint while it turns into stone. */
+    goldDust(i) {
+      const f = parts()[i].focus || parts()[i].box, layer = this.world.querySelector(".wfx-layer");
+      for (let k = 0; k < 18; k++) {
+        const d = document.createElement("div");
+        d.className = "gold-mote";
+        d.style.left = f.x + Math.random() * f.w + "px";
+        d.style.top = f.y + f.h * (0.3 + Math.random() * 0.7) + "px";
+        d.style.animationDelay = Math.random() * 700 + "ms";
+        layer.appendChild(d);
+        setTimeout(() => d.remove(), 2200);
+      }
     },
 
     dust(i) {

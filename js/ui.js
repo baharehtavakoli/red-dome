@@ -17,7 +17,7 @@
           // two taps: the first one asks
           if (!b.classList.contains("confirm")) {
             b.classList.add("confirm");
-            b.querySelector("span").textContent = "Sure?";
+            b.querySelector("span").textContent = t("sure");
             clearTimeout(this._sellT);
             this._sellT = setTimeout(() => this.showInfo(Board.selected), 2500);
             return;
@@ -70,6 +70,7 @@
       if (State.tickEnergy()) State.save();
       this.updateTop();
       Board.idleHint();
+      if (window.Daily) { Daily.refresh(); Daily.maybeAutoOpen(); }
     },
 
     /* ---------- info bar ---------- */
@@ -77,27 +78,27 @@
       const el = this.infoEl;
       const cell = i >= 0 ? State.d.board[i] : null;
       if (!cell) {
-        el.innerHTML = `<div class="info-hint">Tap a <b>generator ⚡</b> to make items. Drag two matching items together to <b>merge</b>.</div>`;
+        el.innerHTML = `<div class="info-hint">${t("infoHint")}</div>`;
         return;
       }
       if (cell.t === "tal") {
         const t = GAME_CONFIG.talisman;
         el.innerHTML = `<div class="info-icon tal">${Art.html(t.icon, t.emoji)}</div>
-          <div class="info-text"><b>${t.name}</b><small>Merge an item right next to it, or use an Astrolabe Charm, to break it.</small></div>`;
+          <div class="info-text"><b>${t.name}</b><small>${window.t("talismanInfo")}</small></div>`;
         return;
       }
       const ch = CHAINS[cell.chain];
       if (cell.t === "gen") {
         const g = ch.generator, first = ch.items[(g.dropLevel || 1) - 1];
         el.innerHTML = `<div class="info-icon gen" style="--c:${ch.color}">${Art.html(g.icon, g.emoji)}</div>
-          <div class="info-text"><b>${U.esc(g.name)}</b><small>Tap to make ${U.esc(first.name)} · ${g.energyCost ?? 1} ⚡</small></div>
+          <div class="info-text"><b>${U.esc(g.name)}</b><small>${t("genInfo", { item: U.esc(first.name), cost: g.energyCost ?? 1 })}</small></div>
           <button class="info-chain" data-action="chain" data-chain="${cell.chain}" data-level="0">${Art.html(first.icon, first.emoji, "mini")}<span class="arrow">›</span>…<span class="ibtn">i</span></button>`;
         return;
       }
       const def = ch.items[cell.level - 1], next = ch.items[cell.level], max = ch.items.length;
       let right;
       if (def.special === "clearTalismans") {
-        right = `<button class="btn small gold" data-action="activate" data-i="${i}">Activate</button>`;
+        right = `<button class="btn small gold" data-action="activate" data-i="${i}">${t("activate")}</button>`;
       } else if (next) {
         right = `<button class="info-chain" data-action="chain" data-chain="${cell.chain}" data-level="${cell.level}" aria-label="Show the ${U.esc(ch.name)} chain">` +
           `2×${Art.html(def.icon, def.emoji, "mini")}<span class="arrow">→</span>${Art.html(next.icon, next.emoji, "mini")}<span class="ibtn">i</span></button>`;
@@ -106,10 +107,10 @@
       }
       const extra = def.description ? ` · ${U.esc(def.description)}` : "";
       const value = Board.sellValue(cell);
-      right += `<button class="info-sell" data-action="sell" data-i="${i}" aria-label="${value ? `Sell for ${value} stars` : "Remove item"}">` +
-        `<b>🗑</b><span>${value ? `+${value} ⭐` : "Remove"}</span></button>`;
+      right += `<button class="info-sell" data-action="sell" data-i="${i}" aria-label="${value ? t("sellFor", { n: value }) : t("removeItem")}">` +
+        `<b>🗑</b><span>${value ? `+${value} ⭐` : t("remove")}</span></button>`;
       el.innerHTML = `<div class="info-icon" style="--c:${ch.color};${U.slotVar(cell.chain)}">${Art.html(def.icon, def.emoji)}</div>
-        <div class="info-text"><b>${U.esc(def.name)}</b><small>${ch.name} · Lv ${cell.level}/${max}${extra}</small></div>${right}`;
+        <div class="info-text"><b>${U.esc(def.name)}</b><small>${ch.name} · ${t("lv")} ${cell.level}/${max}${extra}</small></div>${right}`;
     },
 
     /* ---------- merge chain card ---------- */
@@ -122,7 +123,7 @@
       const steps = ch.items.map((it, k) => {
         const lv = k + 1, cls = lv === level ? " cur" : lv < level ? " done" : "";
         return `${k ? '<span class="chain-arrow">›</span>' : ""}<div class="chain-step${cls}">` +
-          `<div class="chain-art" style="${slot}">${Art.html(it.icon, it.emoji)}</div><small>${U.esc(it.name)}</small><i>Lv ${lv}</i></div>`;
+          `<div class="chain-art" style="${slot}">${Art.html(it.icon, it.emoji)}</div><small>${U.esc(it.name)}</small><i>${t("lv")} ${lv}</i></div>`;
       }).join("");
       let howto = "";
       const target = ch.items[level - 1];
@@ -133,14 +134,14 @@
           : `Merge <b>two ${U.esc(prev.name)}s</b> to make a ${U.esc(target.name)}.`;
       } else howto = `Tap the <b>${U.esc(g.name)}</b> to start this chain, then merge pairs to climb it.`;
       this.modal(`
-        <h3>${U.esc(ch.name)} chain</h3>
-        <p class="muted">${intro ? U.esc(intro) : "Two of the same make the next one."}</p>
+        <h3>${t("chainTitle", { chain: U.esc(ch.name) })}</h3>
+        <p class="muted">${intro ? U.esc(intro) : t("chainSub")}</p>
         <div class="chain-flow">
           <div class="chain-step chain-gen"><div class="chain-art">${Art.html(g.icon, g.emoji)}</div><small>${U.esc(g.name)}</small><i>makes</i></div>
           <span class="chain-arrow">›</span>${steps}
         </div>
         <p class="chain-howto">${howto}</p>
-        <button class="btn gold wide" data-close>Got it</button>`, { cls: "chain-modal" });
+        <button class="btn gold wide" data-close>${t("gotIt")}</button>`, { cls: "chain-modal" });
     },
 
     /* ---------- toast ---------- */
@@ -181,12 +182,12 @@
     openEnergy(outOf) {
       const e = GAME_CONFIG.energy;
       const m = this.modal(`
-        <h3>${outOf ? "Out of energy!" : "Energy"}</h3>
+        <h3>${outOf ? t("outOfEnergy") : t("energy")}</h3>
         <div class="energy-big">⚡ <span data-e></span></div>
         <p class="muted" data-etimer></p>
-        <button class="btn gold wide" data-ad>📺 Watch ad <b>+${e.adReward} ⚡</b></button>
+        <button class="btn gold wide" data-ad>📺 ${t("watchAd")} <b>+${e.adReward} ⚡</b></button>
         <p class="muted small" data-adsleft></p>
-        <button class="btn ghost wide" data-close>Close</button>`, { onClose: () => (this.energyModal = null) });
+        <button class="btn ghost wide" data-close>${t("close")}</button>`, { onClose: () => (this.energyModal = null) });
       this.energyModal = m;
       this.refreshEnergyModal();
       m.querySelector("[data-ad]").addEventListener("click", () => { if (State.adsLeft() > 0) this.watchAd(); });
@@ -199,10 +200,10 @@
       m.querySelector("[data-e]").textContent = `${State.d.energy} / ${max}`;
       const left = State.adsLeft(), ad = m.querySelector("[data-ad]"), info = m.querySelector("[data-adsleft]");
       if (ad) { ad.disabled = left <= 0; ad.classList.toggle("dim", left <= 0); }
-      if (info) info.textContent = left === Infinity ? "" : left > 0 ? `${left} ad${left > 1 ? "s" : ""} left today` : "No more ads today. Come back tomorrow!";
+      if (info) info.textContent = left === Infinity ? "" : left > 1 ? t("adsLeftN", { n: left }) : left === 1 ? t("adsLeft1") : t("noAds");
       m.querySelector("[data-etimer]").textContent = State.d.energy >= max
-        ? "Energy is full."
-        : `+1 in ${U.fmtTime(State.secondsToNextEnergy())} · full in ${U.fmtTime(State.secondsToFull())}`;
+        ? t("energyFull")
+        : t("energyNext", { next: U.fmtTime(State.secondsToNextEnergy()), full: U.fmtTime(State.secondsToFull()) });
     },
 
     watchAd() {
@@ -211,10 +212,10 @@
       State.useAd();
       this.energyModal = null;
       const m = this.modal(`
-        <h3>Ad playing…</h3>
-        <div class="ad-fake"><div class="ad-screen">📺<small>Your ad here</small></div>
+        <h3>${t("adPlaying")}</h3>
+        <div class="ad-fake"><div class="ad-screen">📺<small>${t("adHere")}</small></div>
         <div class="ad-bar"><i style="animation-duration:${e.adSeconds}s"></i></div></div>
-        <p class="muted">Fake ad for testing — no network calls.</p>`, { cls: "ad" });
+        <p class="muted">${t("adFake")}</p>`, { cls: "ad" });
       const back = m.parentElement;
       back.style.pointerEvents = "none"; // can't dismiss mid-ad
       setTimeout(() => {
@@ -225,23 +226,25 @@
         const pill = Scene.boardOpen() ? $("#app .energy-pill") : $("#scene-screen .energy-pill");
         this.bump(pill);
         this.floatText(pill.getBoundingClientRect(), `+${e.adReward} ⚡`);
-        this.toast(`Thanks for watching! +${e.adReward} energy`);
+        this.toast(t("adThanks", { n: e.adReward }));
       }, e.adSeconds * 1000);
     },
 
     openSettings() {
       const parts = GAME_CONFIG.domeParts.length;
       const m = this.modal(`
-        <h3>Settings</h3>
-        <p class="muted">Orders delivered: ${State.d.ordersDone} · Dome: ${State.partsRestored()}/${parts}</p>
-        <button class="btn wide" data-sound>${Sfx.enabled ? "🔊 Sound: On" : "🔇 Sound: Off"}</button>
-        <button class="btn wide" data-intro>📜 Replay intro</button>
-        <button class="btn danger wide" data-reset>Reset progress</button>
-        <button class="btn ghost wide" data-close>Close</button>`);
+        <h3>${t("settings")}</h3>
+        <p class="muted">${t("stats", { orders: State.d.ordersDone, built: State.partsRestored(), parts })}</p>
+        <button class="btn wide" data-sound>${Sfx.enabled ? t("soundOn") : t("soundOff")}</button>
+        <button class="btn wide" data-lang>${t("language")}</button>
+        <button class="btn wide" data-intro>${t("replayIntro")}</button>
+        <button class="btn danger wide" data-reset>${t("reset")}</button>
+        <button class="btn ghost wide" data-close>${t("close")}</button>`);
+      m.querySelector("[data-lang]").addEventListener("click", () => { State.saveNow(); I18N.set(I18N.lang === "fa" ? "en" : "fa"); });
       const snd = m.querySelector("[data-sound]");
       snd.addEventListener("click", () => {
         Sfx.enabled = !Sfx.enabled;
-        snd.textContent = Sfx.enabled ? "🔊 Sound: On" : "🔇 Sound: Off";
+        snd.textContent = Sfx.enabled ? t("soundOn") : t("soundOff");
         if (Sfx.enabled) setTimeout(() => Sfx.play("arrive"), 60);
       });
       m.querySelector("[data-intro]").addEventListener("click", () => {
@@ -253,7 +256,7 @@
       reset.addEventListener("click", () => {
         if (!reset.classList.contains("confirm")) {
           reset.classList.add("confirm");
-          reset.textContent = "Tap again to erase everything";
+          reset.textContent = t("resetConfirm");
           return;
         }
         State.reset();
@@ -265,9 +268,9 @@
       this.sparkle(document.body.getBoundingClientRect(), 40);
       this.modal(`
         <div class="celebrate-icon">🕌</div>
-        <h3>The Red Dome is restored!</h3>
-        <p class="muted">Nasrin-Nush's home shines again. Keep merging — orders will keep coming.</p>
-        <button class="btn gold wide" data-close>Wonderful</button>`);
+        <h3>${t("builtTitle")}</h3>
+        <p class="muted">${t("builtText")}</p>
+        <button class="btn gold wide" data-close>${t("wonderful")}</button>`);
     },
 
     /* ---------- effects ---------- */
