@@ -1,0 +1,178 @@
+/* =====================================================================
+   PAINTED SKIN — uses the PNGs in assets/ui/.
+   Active only when <html> has class "ui-art", which main.js adds once
+   assets/ui/btn_gold.png loads. Without the PNGs the game keeps the plain
+   CSS look from style.css.
+
+   Stretchy pieces use 9-slice (border-image): the ornate ends/corners stay
+   the same size and only the middle stretches. Slice numbers are in the
+   PNG's own pixels; widths are the on-screen size of those ends.
+   ===================================================================== */
+
+/* ---------- shared: painted buttons ---------- */
+.ui-art .btn,
+.ui-art .deliver:not([disabled]),
+.ui-art .deliver[disabled] {
+  border: 0 solid transparent;
+  background: none;
+  box-shadow: none;
+  border-image: url("../assets/ui/btn_turquoise.png") 0 100 fill / 0 38px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(20, 40, 40, .6);
+  filter: drop-shadow(0 3px 3px rgba(58, 20, 16, .35));
+}
+.ui-art .btn:active { transform: translateY(2px) scale(.98); box-shadow: none; }
+.ui-art .btn.gold { border-image-source: url("../assets/ui/btn_gold.png"); color: #420a0a; text-shadow: 0 1px 0 rgba(255, 240, 200, .6); }
+.ui-art .btn.danger { border-image-source: url("../assets/ui/btn_red.png"); }
+.ui-art .btn.ghost { border-image-source: url("../assets/ui/btn_cream.png"); color: #3a1410; text-shadow: none; }
+.ui-art .btn.gold.dim,
+.ui-art .btn[disabled] { border-image-source: url("../assets/ui/btn_disabled.png"); color: #efe6e0; text-shadow: 0 1px 2px rgba(0, 0, 0, .4); filter: none; }
+.ui-art .btn.small { border-image-width: 0 27px; }
+.ui-art .btn.danger.confirm { background: none; filter: hue-rotate(-10deg) brightness(.85); }
+
+/* ---------- top bars: energy / stars / progress pills ---------- */
+.ui-art .pill {
+  height: 38px;
+  padding: 0 14px 0 4px;
+  border: 0 solid transparent;
+  background: none;
+  border-image: url("../assets/ui/topbar_pill.png") 0 44 0 92 fill / 0 19px 0 39px;
+  filter: drop-shadow(0 2px 3px rgba(40, 8, 8, .45));
+}
+.ui-art .pill-icon {
+  width: 31px; height: 31px; margin-right: 6px;
+  background: center / 72% auto no-repeat;
+  color: transparent; font-size: 0;
+}
+.ui-art .energy-pill .pill-icon { background-image: url("../assets/ui/icons/energy.png"); }
+.ui-art .stars-pill .pill-icon { background-image: url("../assets/ui/icons/star.png"); }
+.ui-art .progress-pill .pill-icon { background-image: url("../assets/ui/icons/dome.png"); }
+.ui-art .icon-btn {
+  width: 40px; height: 40px; border: 0; color: transparent; font-size: 0;
+  background: url("../assets/ui/icons/settings.png") center / 66% no-repeat,
+              radial-gradient(circle, rgba(74, 18, 32, .85) 0 60%, rgba(74, 18, 32, 0) 62%);
+  filter: drop-shadow(0 2px 3px rgba(40, 8, 8, .45));
+}
+
+/* board screen top bar: softer, painted wine band */
+.ui-art #topbar {
+  background: linear-gradient(180deg, #7a1c2a 0%, #4a1220 100%);
+  border-bottom: 2px solid #c99a3a;
+  box-shadow: 0 3px 10px rgba(40, 8, 8, .35);
+}
+
+/* back button: round painted arrow + label */
+.ui-art .back-btn {
+  height: 44px; padding: 0 12px 0 4px; gap: 6px;
+  background: none; border: 0; box-shadow: none;
+  color: #fff4d8; font-size: 15px; text-shadow: 0 1px 2px rgba(40, 8, 8, .6);
+}
+.ui-art .back-btn .bb-ic { display: none; }
+.ui-art .back-btn::before {
+  content: ""; width: 42px; height: 42px; flex: none;
+  background: url("../assets/ui/btn_back.png") center / contain no-repeat;
+  filter: drop-shadow(0 2px 2px rgba(40, 8, 8, .4));
+}
+.ui-art .back-btn.notify::after { top: -2px; left: 30px; right: auto; }
+
+/* ---------- Dome Scene ---------- */
+.ui-art .scene-hud { background: linear-gradient(180deg, rgba(60, 20, 40, .45), rgba(60, 20, 40, 0)); }
+.ui-art .merge-btn {
+  height: 70px; min-width: 250px; padding: 0 40px 6px 92px;
+  border: 0 solid transparent; background: none; box-shadow: none;
+  border-image: url("../assets/ui/btn_merge_big.png") 0 75 0 160 fill / 0 37px 0 79px;
+  color: #4a1208; font-size: 30px; text-shadow: 0 1px 0 rgba(255, 240, 200, .6);
+  filter: drop-shadow(0 6px 8px rgba(40, 8, 8, .45));
+}
+.ui-art .merge-btn .merge-ic { display: none; }
+.ui-art .merge-btn:active { transform: translateY(3px); box-shadow: none; }
+
+/* task chips sit in world units (they scale with the camera) */
+.ui-art .task {
+  height: 25px; min-width: 66px; padding: 0 9px 5px 7px; justify-content: center;
+  border: 0; border-radius: 0; box-shadow: none;
+  background: url("../assets/ui/task_bubble.png") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 2px 2px rgba(40, 8, 8, .35));
+}
+.ui-art .task::after { display: none; }
+.ui-art .task.ready { background: url("../assets/ui/task_bubble.png") center / 100% 100% no-repeat; filter: drop-shadow(0 0 3px #ffd76a) drop-shadow(0 0 6px rgba(255, 200, 90, .8)); }
+.ui-art .task.locked { filter: grayscale(.7) brightness(.92) drop-shadow(0 2px 2px rgba(40, 8, 8, .3)); opacity: .8; }
+.ui-art .task .t-ic { font-size: 12px; }
+
+/* ---------- orders ---------- */
+.ui-art .order {
+  min-height: 118px; padding: 20px 5px 6px;
+  border: 0 solid transparent; background: none; box-shadow: none;
+  border-image: url("../assets/ui/order_card.png") 70 40 40 40 fill / 26px 14px 14px 14px;
+  filter: drop-shadow(0 3px 4px rgba(58, 20, 16, .3));
+}
+.ui-art .order.ready { filter: drop-shadow(0 0 4px rgba(46, 157, 88, .9)) drop-shadow(0 3px 4px rgba(58, 20, 16, .3)); }
+.ui-art .order.empty { opacity: .45; }
+.ui-art .req, .ui-art .info-icon {
+  border: 0; border-radius: 0; box-shadow: none;
+  background: var(--slot, none) center / 100% 100% no-repeat;
+}
+.ui-art .req img.art, .ui-art .info-icon img.art { width: 74%; height: 74%; }
+.ui-art .deliver { height: 28px; border-image-width: 0 23px; }
+.ui-art .deliver:not([disabled]) { border-image-source: url("../assets/ui/btn_gold.png"); color: #420a0a; text-shadow: none; animation: none; }
+.ui-art .deliver[disabled] { border-image-source: url("../assets/ui/btn_cream.png"); color: #8a6a3a; text-shadow: none; filter: none; }
+
+/* ---------- merge board ---------- */
+.ui-art #board {
+  padding: 18px;
+  border: 0 solid transparent; border-radius: 0;
+  background: #caa877;
+  border-image: url("../assets/ui/board_frame.png") 64 / 22px;
+  box-shadow: 0 8px 18px rgba(66, 10, 10, .35);
+}
+.ui-art .cell { background: url("../assets/ui/board_tile_light.png") center / cover; border-radius: 5px; }
+.ui-art .cell.alt {
+  background: linear-gradient(rgba(150, 100, 50, .14), rgba(150, 100, 50, .14)),
+              url("../assets/ui/board_tile_dark.png") center / cover;
+}
+/* items with real art sit straight on the tile, no coloured chip behind them */
+.ui-art .piece.item:has(img.art) { background: none; border: 0; box-shadow: none; filter: drop-shadow(0 3px 2px rgba(70, 35, 10, .35)); }
+.ui-art .piece.item:has(img.art) img.art { width: 92%; height: 92%; }
+.ui-art .piece.max:has(img.art) { filter: drop-shadow(0 0 4px #ffd76a) drop-shadow(0 3px 2px rgba(70, 35, 10, .35)); }
+.ui-art .piece.gen:has(img.art) {
+  border: 0; box-shadow: none; border-radius: 0;
+  background: url("../assets/ui/slot_gold.png") center / 100% 100% no-repeat;
+}
+.ui-art .piece.gen:has(img.art) img.art { width: 80%; height: 80%; }
+.ui-art .talisman:has(img.art) { background: none; border: 0; padding: 0; overflow: hidden; }
+.ui-art .talisman img.art { width: 100%; height: 100%; object-fit: cover; }
+
+/* info bar */
+.ui-art #infobar { background: linear-gradient(180deg, #6a1826, #3d0d17); border-top: 2px solid #c99a3a; }
+.ui-art .info-icon.tal { background: url("../assets/ui/slot_locked.png") center / 100% 100% no-repeat; }
+.ui-art .info-icon.gen { background: url("../assets/ui/slot_gold.png") center / 100% 100% no-repeat; }
+
+/* ---------- story scenes ---------- */
+.ui-art .dlg-box {
+  padding: 30px 26px 58px;
+  border: 0 solid transparent; border-radius: 0; background: none; box-shadow: none;
+  border-image: url("../assets/ui/dialogue_box.png") 90 fill / 30px;
+  filter: drop-shadow(0 8px 14px rgba(40, 8, 8, .45));
+}
+.ui-art .dlg-name {
+  top: -20px; left: 10px; padding: 7px 40px 11px;
+  border: 0 solid transparent; border-radius: 0; background: none; box-shadow: none;
+  border-image: url("../assets/ui/name_tag.png") 0 64 fill / 0 32px;
+  color: #fff8e8; text-shadow: 0 1px 2px rgba(60, 8, 8, .6);
+}
+.ui-art .dlg-box.from-right .dlg-name { left: auto; right: 10px; }
+.ui-art .dlg-next { right: 22px; bottom: 16px; }
+/* portraits all face right: mirror the one standing on the right so both face the middle */
+.actor.right .portrait-img { transform: scaleX(-1); }
+.actor .portrait-img { height: 100%; width: auto; max-width: none; }
+.actor.left:has(.portrait-img) { justify-content: flex-start; }
+.actor.right:has(.portrait-img) { justify-content: flex-end; }
+
+/* ---------- modals ---------- */
+.ui-art .modal {
+  padding: 54px 26px 24px;
+  border: 0 solid transparent; border-radius: 0; background: none; box-shadow: none;
+  border-image: url("../assets/ui/order_card.png") 70 40 40 40 fill / 44px 22px 22px 22px;
+  filter: drop-shadow(0 12px 24px rgba(40, 8, 8, .5));
+}
+.ui-art .modal h3 { color: #8a1c1c; }

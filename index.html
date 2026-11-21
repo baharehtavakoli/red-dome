@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#7a1414">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>The Red Dome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/skin.css">
+</head>
+<body>
+  <!-- ============ MAIN SCREEN: the Dome Scene ============ -->
+  <div id="scene-screen">
+    <div id="world"></div>
+
+    <header class="scene-hud">
+      <button class="pill energy-pill" aria-label="Energy">
+        <span class="pill-icon">⚡</span>
+        <span class="pill-main"><b data-hud="energy">0</b><small data-hud="timer"></small></span>
+        <span class="pill-plus">+</span>
+      </button>
+      <div class="pill stars-pill" aria-label="Stars"><span class="pill-icon">⭐</span><b data-hud="stars">0</b></div>
+      <div class="pill progress-pill" aria-label="Dome progress"><span class="pill-icon">🕌</span><b id="progress-val">0/6</b></div>
+      <button id="settings-btn" class="icon-btn" aria-label="Settings">⚙️</button>
+    </header>
+
+    <div class="scene-bottom">
+      <button id="merge-btn" class="merge-btn"><span class="merge-ic">⚒️</span>Merge<span class="badge"></span></button>
+    </div>
+  </div>
+
+  <!-- ============ MERGE BOARD SCREEN ============ -->
+  <div id="app" class="board-screen">
+    <header id="topbar">
+      <button id="back-btn" class="back-btn" aria-label="Back to the dome"><span class="bb-ic">‹ 🕌</span><span>Dome</span></button>
+      <button class="pill energy-pill" aria-label="Energy">
+        <span class="pill-icon">⚡</span>
+        <span class="pill-main"><b data-hud="energy">0</b><small data-hud="timer"></small></span>
+        <span class="pill-plus">+</span>
+      </button>
+      <div class="pill stars-pill" aria-label="Stars"><span class="pill-icon">⭐</span><b data-hud="stars">0</b></div>
+    </header>
+
+    <section id="orders" aria-label="Orders"></section>
+
+    <main id="board-wrap">
+      <div id="board"></div>
+    </main>
+
+    <footer id="infobar"></footer>
+  </div>
+
+  <div id="dialogue" class="hidden"></div>
+  <div id="modal-root"></div>
+  <div id="toast-root"></div>
+  <div id="fx-layer"></div>
+
+  <button id="debug-toggle" aria-label="Debug panel">🐞</button>
+  <div id="debug-panel" class="hidden"></div>
+
+  <!-- Editable content -->
+  <script src="js/chains.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/config.js"></script>
+  <!-- Engine -->
+  <script src="js/util.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/dialogue.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/debug.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
