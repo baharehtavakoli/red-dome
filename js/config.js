@@ -86,7 +86,7 @@ window.GAME_CONFIG = {
     { id: "terrace", name: "Terrace", cost: 5, story: "terrace", emoji: "🧱",
       box: { x: 0, y: 161, w: 360, h: 371 }, focus: { x: 20, y: 430, w: 320, h: 80 }, button: { x: 180, y: 476 },
       ruined: "assets/scenes/parts/terrace_ruined.webp", restored: "assets/scenes/parts/terrace_restored.webp" },
-    { id: "stairs", name: "Stone Stairs", cost: 8, story: "stairs", emoji: "🪜",
+    { id: "stairs", name: "Stone Stairs", cost: 8, story: "stairs", mission: "twins", emoji: "🪜",
       box: { x: 31, y: 163, w: 298, h: 319 }, focus: { x: 70, y: 420, w: 220, h: 85 }, button: { x: 180, y: 440 },
       ruined: "assets/scenes/parts/stairs_ruined.webp", restored: "assets/scenes/parts/stairs_restored.webp" },
     { id: "walls", name: "Red Brick Walls", cost: 12, story: "walls", emoji: "🧱",
@@ -140,6 +140,11 @@ window.GAME_CONFIG = {
   luckyDropChance: 0.12,
 
   startStars: 0,
+
+  /* Story missions (js/mission.js): a mini-game after a chapter, opened by domeParts[].mission. */
+  missions: {
+    twins: { host: "nasrin", reward: { energy: 20, stars: 3 } }, // after the Stone Stairs
+  },
 
   talisman: {
     name: "Talisman",

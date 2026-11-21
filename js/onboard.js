@@ -85,6 +85,7 @@
         };
 
         next.addEventListener("click", () => {
+          if (s < 0 || done) return;
           Sfx.play("next");
           const scr = SCREENS[s];
           if (b < scr.beats.length - 1) { b++; showBeat(); }

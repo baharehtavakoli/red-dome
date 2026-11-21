@@ -1306,3 +1306,45 @@ html[dir="rtl"] .back-btn { direction: ltr; }
 html[dir="rtl"] #onboard .ob-card { direction: rtl; }
 html[dir="rtl"] #onboard .ob-text { font-family: "Vazirmatn", sans-serif; line-height: 1.8; font-size: 18px; }
 html[dir="rtl"] #onboard .ob-skip { right: auto; left: max(14px, calc(50% - 246px)); }
+
+/* ---------- story missions (js/mission.js) ---------- */
+.mission-btn { display: none; bottom: calc(176px + env(safe-area-inset-bottom)); }
+.mission-btn.show { display: grid; animation: gift-wiggle 2.4s ease-in-out infinite; }
+.mission-btn .badge { display: block; }
+#scene-screen.cinematic .mission-btn { opacity: 0; pointer-events: none; }
+#mission { position: fixed; inset: 0; z-index: 105; display: grid; place-items: center; padding: 16px;
+  background: rgba(28, 8, 30, .78); opacity: 0; transition: opacity .35s; }
+#mission.in { opacity: 1; }
+#mission .ms-panel {
+  width: min(380px, 100%); max-height: calc(100% - 8px); overflow: auto; padding: 18px 16px 16px; border-radius: 18px; text-align: center;
+  background: linear-gradient(180deg, #fbf1dc, #ecd8b0); border: 2px solid #c99a3a; box-shadow: 0 14px 34px rgba(20, 4, 20, .6); color: var(--ink);
+  transform: translateY(14px) scale(.97); transition: transform .35s;
+}
+#mission.in .ms-panel { transform: none; }
+#mission .ms-kicker { font: 800 12px/1 "Nunito", "Vazirmatn", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--red-l); }
+#mission h3 { margin: 6px 0 10px; font: 400 26px/1.15 var(--head); color: var(--red-d); }
+#mission .ms-say { display: flex; gap: 10px; align-items: flex-start; text-align: start; margin-bottom: 12px; }
+#mission .ms-say p { margin: 0; font: 700 15px/1.5 "Nunito", sans-serif; font-style: italic; }
+#mission .ms-face, #mission .ms-say img { flex: 0 0 48px; width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid #e0b24a; background: #4a1220; font-size: 28px; display: grid; place-items: center; }
+#mission.playing .ms-say { display: none; }
+#mission .ms-tip { margin: 0 0 10px; font: 700 14px/1.45 "Nunito", sans-serif; }
+#mission .ms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 0 auto 10px; max-width: 300px; perspective: 600px; }
+#mission .ms-card { position: relative; aspect-ratio: 1; padding: 0; border: 0; background: none; transform-style: preserve-3d; transition: transform .35s; cursor: pointer; }
+#mission .ms-card.up { transform: rotateY(180deg); }
+#mission .ms-card > span {
+  position: absolute; inset: 0; display: grid; place-items: center; border-radius: 12px; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border: 2px solid #c99a3a; box-shadow: 0 3px 0 rgba(120, 70, 20, .35); font-size: 34px;
+}
+#mission .ms-back { background: radial-gradient(circle at 50% 40%, #8a2a3a, #4a1220); }
+#mission .ms-front { background: radial-gradient(circle at 50% 40%, #fff8e6, #f0dcb2); transform: rotateY(180deg); }
+#mission .ms-ic, #mission .ms-card img { width: 74%; height: 74%; object-fit: contain; }
+#mission .ms-card.matched .ms-front { border-color: #2e9d58; box-shadow: 0 0 0 3px rgba(46, 157, 88, .35), 0 0 14px rgba(255, 215, 106, .8); }
+#mission .ms-card.matched { animation: ms-pop .4s ease; }
+@keyframes ms-pop { 50% { transform: rotateY(180deg) scale(1.1); } }
+#mission .ms-moves { margin: 0 0 8px; font: 800 13px/1 "Nunito", "Vazirmatn", sans-serif; opacity: .7; }
+#mission .ms-gift { margin: 4px 0 14px; font: 900 28px/1.2 "Nunito", sans-serif; color: var(--red-d); }
+#mission .ms-actions { display: grid; gap: 8px; }
+#mission .ms-actions .btn { min-height: 48px; }
+html[dir="rtl"] #mission .ms-panel { direction: rtl; }
+html[dir="rtl"] #mission .ms-say p, html[dir="rtl"] #mission .ms-tip { font-family: "Vazirmatn", sans-serif; line-height: 1.8; }
+html[dir="rtl"] #mission h3 { font-family: "Vazirmatn", sans-serif; font-weight: 800; font-size: 22px; }

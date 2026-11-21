@@ -13,6 +13,7 @@
     Debug.init();
     Tutorial.init();
     Daily.init();
+    Mission.init();
 
     Board.render();
     Orders.render();

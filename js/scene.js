@@ -377,6 +377,7 @@
       await this.build(i);
       await Dialogue.play(p.story);
       await this.endCinematic();
+      if (p.mission) { this.busy = true; await Mission.play(p.mission); this.busy = false; }
       const gift = cfg().energy.partReward || 0;
       if (gift) {
         State.addEnergy(gift);
