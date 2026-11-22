@@ -130,7 +130,9 @@
         const b = toEl.getBoundingClientRect();
         this.hand.style.cssText = `left:${cx}px;top:${cy}px;--dx:${b.left + b.width / 2 - cx}px;--dy:${b.top + b.height / 2 - cy}px`;
       } else {
-        this.hand.style.cssText = `left:${cx}px;top:${cy}px`;
+        // on a wide button the hand points at its left end, so it doesn't cover the label
+        const hx = a.width > a.height * 2 ? a.left + a.width * 0.2 : cx;
+        this.hand.style.cssText = `left:${hx}px;top:${cy}px`;
       }
       if (this.tip._html !== text) { this.tip.innerHTML = text; this.tip._html = text; }
       // tip above the target when it's low on the screen, below when it's high

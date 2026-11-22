@@ -1376,3 +1376,9 @@ html[dir="rtl"] #onboard .ob-text { font-size: 17px; line-height: 1.85; }
 /* the onboarding art is framed to the edges, so it drifts only a little */
 #onboard .ob-pic.zoom img { animation: ob-drift 12s ease-out both; }
 @keyframes ob-drift { from { transform: scale(1.05); } to { transform: scale(1); } }
+
+/* the ring pulses around its own centre (transform + scale drifted it sideways) */
+.tut-ring { transform: none; translate: -50% -50%; }
+/* onboarding portrait: no box-shaped shadow, and the cut-off waist fades into the picture */
+#onboard .ob-actor img { filter: none; -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%); mask-image: linear-gradient(180deg, #000 72%, transparent 100%); }
+#onboard .ob-cast { bottom: 24%; }
