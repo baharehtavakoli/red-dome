@@ -1427,3 +1427,36 @@ html.ui-art .modal { padding-top: 40px; }
 #mission .ms-gift { display: flex; justify-content: center; gap: 22px; }
 #mission .ms-gift span { display: inline-flex; align-items: center; gap: 6px; direction: ltr; }
 #mission .ms-gic { width: 34px; height: 34px; object-fit: contain; font-size: 26px; }
+
+/* ---------- onboarding v3 ---------- */
+/* a lone portrait stands from the bottom of the screen, behind the text, fading out low down */
+#onboard .ob-cast { top: 14%; bottom: 0; }
+#onboard .ob-cast.n1 .ob-actor { width: 86%; }
+#onboard .ob-actor img { -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 96%); mask-image: linear-gradient(180deg, #000 62%, transparent 96%); }
+/* the text sits in the game's dialogue box, with the name tag on top, like the story scenes */
+#onboard .ob-box { position: relative; margin-bottom: 12px; }
+#onboard .ob-card > .ob-who, #onboard .ob-card > .ob-text { background: none; }
+#onboard .ob-box .ob-text { margin: 0; }
+html.ui-art #onboard .ob-text {
+  padding: 26px 24px 24px; border: 0 solid transparent; border-radius: 0; background: none; box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  border-image: url("../assets/ui/dialogue_box.webp") 90 fill / 30px;
+  filter: drop-shadow(0 8px 14px rgba(40, 8, 8, .45));
+  color: var(--ink); text-shadow: none;
+}
+html.ui-art #onboard.quote .ob-text { color: var(--ink); font-style: italic; }
+html.ui-art #onboard .ob-who {
+  position: absolute; top: -18px; left: 16px; z-index: 2; margin: 0; padding: 6px 36px 10px;
+  border: 0 solid transparent; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+  border-image: url("../assets/ui/name_tag.webp") 0 64 fill / 0 32px;
+  color: #fff8e8; text-shadow: 0 1px 2px rgba(60, 8, 8, .6); font: 400 17px var(--head);
+}
+html[dir="rtl"].ui-art #onboard .ob-who { left: auto; right: 16px; font: 800 15px "Vazirmatn", sans-serif; }
+html.ui-art #onboard .ob-who.show + .ob-text { padding-top: 32px; }
+#onboard .ob-foot { gap: 10px; }
+#onboard .ob-prev { min-width: 96px; min-height: 52px; font-size: 17px; }
+#onboard .ob-next { min-width: 110px; }
+#onboard .ob-next.cta { min-width: 170px; }
+#onboard .ob-cast { top: 4%; }
+#onboard .ob-cast.n1 .ob-actor { width: 100%; }
+#onboard .ob-cast.n1 .ob-actor img { width: 100%; height: auto; max-height: 100%; }

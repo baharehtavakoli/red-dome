@@ -47,9 +47,9 @@
           <div class="ob-shade"></div>
           <button class="ob-skip">${t("skip")}</button>
           <div class="ob-card">
-            <div class="ob-who"></div>
-            <p class="ob-text"></p>
+            <div class="ob-box"><div class="ob-who"></div><p class="ob-text"></p></div>
             <div class="ob-foot">
+              <button class="btn ghost ob-prev">${t("obPrev")}</button>
               <div class="ob-dots">${SCREENS.map(() => "<i></i>").join("")}</div>
               <button class="btn gold ob-next"></button>
             </div>
@@ -57,6 +57,7 @@
         document.body.appendChild(el);
         const img = el.querySelector(".ob-pic img"), pic = el.querySelector(".ob-pic"), castEl = el.querySelector(".ob-cast");
         const textEl = el.querySelector(".ob-text"), whoEl = el.querySelector(".ob-who");
+        const prev = el.querySelector(".ob-prev");
         const next = el.querySelector(".ob-next"), dots = [...el.querySelectorAll(".ob-dots i")];
         let s = -1, b = 0, done = false, castKey = "";
 
@@ -110,10 +111,11 @@
           next.textContent = last && scr.cta ? t(scr.cta) : t("obNext");
           next.classList.toggle("cta", !!(last && scr.cta));
           el.querySelector(".ob-skip").style.visibility = scr.cta ? "hidden" : "";
+          prev.style.visibility = s === 0 && b === 0 ? "hidden" : "";
         };
 
-        const showScreen = (i) => {
-          s = i; b = 0;
+        const showScreen = (i, beat = 0) => {
+          s = i; b = beat;
           dots.forEach((d, j) => d.classList.toggle("on", j <= i));
           showBeat();
         };
@@ -125,6 +127,13 @@
           if (b < scr.beats.length - 1) { b++; showBeat(); }
           else if (s < SCREENS.length - 1) showScreen(s + 1);
           else { Sfx.play("whoosh"); finish(); }
+        });
+        // Previous: one beat back, or the last beat of the screen before
+        prev.addEventListener("click", () => {
+          if (s < 0 || done) return;
+          Sfx.play("next");
+          if (b > 0) { b--; showBeat(); }
+          else if (s > 0) showScreen(s - 1, SCREENS[s - 1].beats.length - 1);
         });
         // Skip asks once, like the story's Skip
         const skip = el.querySelector(".ob-skip");
