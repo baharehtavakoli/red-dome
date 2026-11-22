@@ -13,9 +13,16 @@
     if (r.item) { const it = U.item(r.item.chain, r.item.level); if (it) out.push(it.name); }
     return out;
   }
-  function icon(r) {
-    if (r.item) { const it = U.item(r.item.chain, r.item.level); if (it) return Art.html(it.icon, it.emoji, "mini"); }
-    return r.stars && !r.energy ? "⭐" : "⚡";
+  /* One block per reward: a big icon, the amount and what it is ("20 / Energy"). */
+  function cell(r) {
+    const out = [];
+    if (r.energy) out.push(`<div class="rw">${Art.html("assets/ui/icons/energy.webp", "⚡", "rw-ic")}<b>${r.energy}</b><em>${t("rwEnergy")}</em></div>`);
+    if (r.stars) out.push(`<div class="rw">${Art.html("assets/ui/icons/star.webp", "⭐", "rw-ic")}<b>${r.stars}</b><em>${t("rwStars")}</em></div>`);
+    if (r.item) {
+      const it = U.item(r.item.chain, r.item.level);
+      if (it) out.push(`<div class="rw item">${Art.html(it.icon, it.emoji, "rw-ic")}<b>1</b><em>${U.esc(it.name)}</em></div>`);
+    }
+    return out.join("");
   }
 
   const Daily = {
@@ -30,6 +37,7 @@
       btn.addEventListener("click", () => this.open());
       document.getElementById("scene-screen").appendChild(btn);
       this.btn = btn;
+      Art.probe(["assets/ui/icons/energy.webp", "assets/ui/icons/star.webp"], () => {}); // the calendar's reward icons
       Art.probe(["assets/ui/icons/chest.webp"], () => { btn.firstElementChild.outerHTML = Art.html("assets/ui/icons/chest.webp", "🎁", "gift-ic"); });
       this.refresh();
     },
@@ -63,7 +71,7 @@
         const day = i + 1;
         const state = day < cur || (!can && day === cur) ? "got" : day === cur ? "today" : "later";
         return `<div class="day ${state}${day === days().length ? " big" : ""}">
-          <small>${t("day", { n: day })}</small><b>${icon(r)}</b><span>${describe(r).join("<br>")}</span>
+          <small class="day-n">${t("day", { n: day })}</small><div class="rws">${cell(r)}</div>
           ${state === "got" ? '<i class="check">✓</i>' : ""}</div>`;
       }).join("");
       const m = UI.modal(`

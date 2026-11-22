@@ -129,7 +129,7 @@
             State.save();
             UI.updateTop(true);
             Sfx.play("fanfare");
-            const gift = [r.energy ? `+${r.energy} ⚡` : "", r.stars ? `+${r.stars} ⭐` : ""].filter(Boolean).join("  ");
+            const gift = [r.energy ? `<span>${Art.html("assets/ui/icons/energy.webp", "⚡", "ms-gic")}+${r.energy}</span>` : "", r.stars ? `<span>${Art.html("assets/ui/icons/star.webp", "⭐", "ms-gic")}+${r.stars}</span>` : ""].filter(Boolean).join("");
             el.classList.remove("playing");
             el.classList.add("won");
             el.querySelector("h3").textContent = t(id + "WinTitle");

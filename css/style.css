@@ -1313,7 +1313,7 @@ html[dir="rtl"] #onboard .ob-skip { right: auto; left: max(14px, calc(50% - 246p
 .mission-btn .badge { display: block; }
 #scene-screen.cinematic .mission-btn { opacity: 0; pointer-events: none; }
 #mission { position: fixed; inset: 0; z-index: 105; display: grid; place-items: center; padding: 16px;
-  background: rgba(28, 8, 30, .78); opacity: 0; transition: opacity .35s; }
+  background: rgba(40, 8, 8, .6); opacity: 0; transition: opacity .35s; }
 #mission.in { opacity: 1; }
 #mission .ms-panel {
   width: min(380px, 100%); max-height: calc(100% - 8px); overflow: auto; padding: 18px 16px 16px; border-radius: 18px; text-align: center;
@@ -1382,3 +1382,48 @@ html[dir="rtl"] #onboard .ob-text { font-size: 17px; line-height: 1.85; }
 /* onboarding portrait: no box-shaped shadow, and the cut-off waist fades into the picture */
 #onboard .ob-actor img { filter: none; -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 100%); mask-image: linear-gradient(180deg, #000 72%, transparent 100%); }
 #onboard .ob-cast { bottom: 24%; }
+
+/* ---------- popup frame v2: the crest no longer stretches with the popup's width ---------- */
+html.ui-art .modal, html.ui-art #mission .ms-panel {
+  position: relative; padding: 52px 24px 22px;
+  border: 0 solid transparent; border-radius: 0; background: none; box-shadow: none;
+  border-image: url("../assets/ui/modal_frame.webp") 40 40 40 40 fill / 28px;
+  filter: drop-shadow(0 12px 24px rgba(40, 8, 8, .5));
+}
+html.ui-art .modal::before, html.ui-art #mission .ms-panel::before {
+  content: ""; position: absolute; top: -38px; left: 50%; width: 134px; height: 64px; margin-left: -67px;
+  background: url("../assets/ui/modal_crest.webp") center / 100% 100% no-repeat; pointer-events: none;
+}
+.ui-art #mission .ms-panel { overflow: visible; }
+
+/* ---------- daily gift cards v2: small framed cards like the order cards ---------- */
+.daily-grid { gap: 8px; }
+.daily-grid .day {
+  padding: 22px 3px 8px; border: 0 solid transparent; border-radius: 0; background: none;
+  border-image: url("../assets/ui/modal_frame.webp") 40 40 40 40 fill / 12px;
+  filter: drop-shadow(0 2px 3px rgba(58, 20, 16, .3));
+}
+.daily-grid .day .day-n {
+  position: absolute; top: 3px; left: 50%; transform: translateX(-50%); padding: 2px 8px; border-radius: 8px;
+  background: #7a1c2a; color: #fff4d8; font: 900 10.5px/1.3 "Nunito", "Vazirmatn", sans-serif; opacity: 1; white-space: nowrap;
+}
+.daily-grid .rws { display: flex; justify-content: center; gap: 6px; width: 100%; }
+.daily-grid .rw { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.daily-grid .rw .rw-ic { width: 34px; height: 34px; object-fit: contain; font-size: 26px; line-height: 34px; }
+.daily-grid .rw b { font: 900 17px/1.1 "Nunito", sans-serif; color: #5a1a12; margin-top: 2px; }
+.daily-grid .rw em { font: 800 10.5px/1.2 "Nunito", "Vazirmatn", sans-serif; font-style: normal; color: #7a4a20; max-width: 72px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.daily-grid .rw.item b { visibility: hidden; }
+.daily-grid .day.today { background: none; box-shadow: none; filter: drop-shadow(0 0 3px #ffd76a) drop-shadow(0 0 8px rgba(255, 200, 90, .9)); }
+.daily-grid .day.today .day-n { background: #c98a1a; color: #3a1410; }
+.daily-grid .day.got { opacity: .5; }
+.daily-grid .day .check {
+  top: auto; bottom: 5px; left: 5px; right: auto; width: 18px; height: 18px; border-radius: 50%; background: #2e9d58; color: #fff;
+  font: 900 11px/18px "Nunito", sans-serif; text-align: center;
+}
+.daily-grid .day.big .rws { gap: 14px; }
+
+html.ui-art .modal { padding-top: 40px; }
+#mission .ms-grid { max-width: 258px; gap: 8px; }
+#mission .ms-gift { display: flex; justify-content: center; gap: 22px; }
+#mission .ms-gift span { display: inline-flex; align-items: center; gap: 6px; direction: ltr; }
+#mission .ms-gic { width: 34px; height: 34px; object-fit: contain; font-size: 26px; }

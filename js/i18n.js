@@ -25,6 +25,7 @@
 
   const S = {
     en: {
+      rwEnergy: "Energy", rwStars: "Stars",
       obNext: "Next", obStart: "Build the Red Dome",
       ob1a: "Once upon a time, there lived a king named Bahram, who was fascinated by the mysteries of the sky and the planets.",
       ob1b: "He decided to visit all seven planets, and ordered a magnificent dome to be built on each one.",
@@ -83,6 +84,7 @@
       dailyToast: "Day {n} gift: {gift}", boardFullStars: " (board full: +{n} ⭐)",
     },
     fa: {
+      rwEnergy: "انرژی", rwStars: "ستاره",
       obNext: "بعدی", obStart: "ساخت گنبد سرخ",
       ob1a: "روزی روزگاری، پادشاهی به نام بهرام زندگی می‌کرد که شیفته‌ی رازهای آسمان و سیاره‌ها بود.",
       ob1b: "او تصمیم گرفت از هر هفت سیاره دیدن کند و فرمان داد در هر یک، گنبدی باشکوه بنا کنند.",
