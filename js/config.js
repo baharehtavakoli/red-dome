@@ -17,7 +17,7 @@
 window.POSES = ["neutral", "happy", "surprised", "sad", "angry", "arms_open"];
 window.CHARACTERS = {
   shideh: { name: "Shideh",      role: "Architect",           emoji: "👷‍♀️", color: "#9b1c1c",
-            portrait: "assets/characters/shideh.webp", avatar: "assets/characters/shideh_avatar.webp",
+            portrait: "assets/characters/shideh.webp?v=2", avatar: "assets/characters/shideh_avatar.webp?v=2",
             body: "assets/characters/full_body/shideh/" },
   nasrin: { name: "Nasrin-Nush", role: "Princess",            emoji: "👸",   color: "#b8860b",
             portrait: "assets/characters/nasrin.webp", avatar: "assets/characters/nasrin_avatar.webp",
@@ -55,7 +55,7 @@ window.GAME_CONFIG = {
     intro: {
       sky: "assets/scenes/intro/intro_sky.webp", ray: "assets/scenes/intro/intro_ray.webp",
       bahram: "assets/scenes/intro/intro_bahram.webp", ladies: "assets/scenes/intro/intro_ladies.webp",
-      domeTop: "assets/scenes/intro/intro_dome_top.webp", meet: "assets/scenes/intro/intro_meet.webp",
+      domeTop: "assets/scenes/intro/intro_dome_top.webp", meet: "assets/scenes/intro/intro_meet.webp?v=2",
     },
     maxZoom: 2.6, // how far the camera may zoom into a part
 
