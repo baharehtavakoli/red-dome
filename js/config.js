@@ -161,7 +161,7 @@ window.GAME_CONFIG = {
 
   /* Story missions (js/mission.js): a mini-game after a chapter, opened by domeParts[].mission. */
   missions: {
-    twins: { host: "nasrin", reward: { energy: 20, stars: 3 } }, // after the Stone Stairs
+    twins: { host: "nasrin", maxTries: 14, reward: { energy: 20, stars: 3 } }, // after the Stone Stairs; 6 pairs, 14 tries
   },
 
   talisman: {

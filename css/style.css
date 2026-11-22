@@ -1546,3 +1546,11 @@ html.ui-art #tale .tl-open { min-width: 220px; min-height: 54px; padding: 0 40px
 .gift-btn { top: calc(66px + env(safe-area-inset-top)); bottom: auto; left: 10px; width: 52px; height: 52px; }
 .gift-btn img.gift-ic { width: 36px; height: 36px; }
 .mission-btn { top: calc(126px + env(safe-area-inset-top)); bottom: auto; }
+
+/* talisman road: tries left, and the talismans closing when they run out */
+#mission .ms-moves.low { color: #b8322a; opacity: 1; animation: ms-warn .6s ease; }
+@keyframes ms-warn { 50% { transform: scale(1.15); } }
+#mission .ms-card.closing:not(.matched) { animation: ms-close .6s ease both; }
+#mission .ms-card.closing.matched { transition: transform .4s; transform: rotateY(0deg); }
+@keyframes ms-close { 30% { transform: translateX(-4px); } 60% { transform: translateX(4px); } 100% { transform: none; filter: brightness(.6); } }
+#mission.lost .ms-say p { font-style: normal; }

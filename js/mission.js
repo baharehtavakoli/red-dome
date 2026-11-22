@@ -11,7 +11,9 @@
   const TREASURES = ["pearl", "rough_gem", "red_brick", "rose_bush", "star_shard", "glazed_red_tile"];
   const EMOJI = { pearl: "⚪", rough_gem: "💎", red_brick: "🧱", rose_bush: "🌹", star_shard: "✨", glazed_red_tile: "🟥" };
 
-  function twins(body, done) {
+  /* done(tries) when every pair is found; fail() when the tries run out first (opts.maxTries). */
+  function twins(body, done, fail, opts = {}) {
+    const max = opts.maxTries || 0;
     const deck = U.shuffle ? U.shuffle(TREASURES.concat(TREASURES)) : TREASURES.concat(TREASURES).sort(() => Math.random() - 0.5);
     body.innerHTML = `
       <p class="ms-tip">${t("twinsTip")}</p>
@@ -20,7 +22,7 @@
           <span class="ms-back">${Art.html(GAME_CONFIG.talisman.icon, "🔶", "ms-ic")}</span>
           <span class="ms-front">${Art.html(`assets/items/${k}.webp`, EMOJI[k], "ms-ic")}</span>
         </button>`).join("")}</div>
-      <p class="ms-moves">${t("twinsMoves", { n: 0 })}</p>`;
+      <p class="ms-moves">${max ? t("twinsLeft", { n: max }) : t("twinsMoves", { n: 0 })}</p>`;
     const cards = [...body.querySelectorAll(".ms-card")], moves = body.querySelector(".ms-moves");
     let open = [], n = 0, found = 0, lock = false;
     cards.forEach((c) => c.addEventListener("click", async () => {
@@ -30,7 +32,8 @@
       open.push(c);
       if (open.length < 2) return;
       n++;
-      moves.textContent = t("twinsMoves", { n });
+      moves.textContent = max ? t("twinsLeft", { n: max - n }) : t("twinsMoves", { n });
+      moves.classList.toggle("low", !!max && max - n <= 3);
       const [a, b] = open;
       open = [];
       if (deck[a.dataset.i] === deck[b.dataset.i]) {
@@ -39,13 +42,22 @@
         Sfx.play("shatter");
         a.classList.add("matched"); b.classList.add("matched");
         UI.sparkle(a.getBoundingClientRect(), 8); UI.sparkle(b.getBoundingClientRect(), 8);
-        if (found === TREASURES.length) { await sleep(700); done(n); }
+        if (found === TREASURES.length) { await sleep(700); return done(n); }
       } else {
         lock = true;
         await sleep(800);
         Sfx.play("error");
         a.classList.remove("up"); b.classList.remove("up");
         lock = false;
+      }
+      // out of tries: the talismans wake up and close the road
+      if (max && n >= max && found < TREASURES.length) {
+        lock = true;
+        await sleep(400);
+        cards.forEach((c) => c.classList.add("closing"));
+        Sfx.play("shatter");
+        await sleep(700);
+        fail();
       }
     }));
   }
@@ -111,35 +123,53 @@
             </div>
           </div>`;
         document.body.appendChild(el);
-        requestAnimationFrame(() => el.classList.add("in"));
+        setTimeout(() => el.classList.add("in"), 30);
         Sfx.play("open");
         el.querySelector("[data-later]").addEventListener("click", close);
-        el.querySelector("[data-go]").addEventListener("click", () => {
+        const start = () => {
           Sfx.play("click");
+          el.classList.remove("lost");
           el.classList.add("playing");
+          el.querySelector("h3").textContent = t(id + "Title");
           el.querySelector(".ms-actions").innerHTML = `<button class="btn ghost wide" data-later>${t("missionLater")}</button>`;
           el.querySelector("[data-later]").addEventListener("click", close);
           // 2. the game
-          game(el.querySelector(".ms-body"), (moves) => {
-            // 3. done: reward and the tale goes on
-            State.d.missions[id] = "done";
-            const r = m.reward || {};
-            if (r.energy) State.addEnergy(r.energy);
-            if (r.stars) State.d.stars += r.stars;
-            State.save();
-            UI.updateTop(true);
-            Sfx.play("fanfare");
-            const gift = [r.energy ? `<span>${Art.html("assets/ui/icons/energy.webp", "⚡", "ms-gic")}+${r.energy}</span>` : "", r.stars ? `<span>${Art.html("assets/ui/icons/star.webp", "⭐", "ms-gic")}+${r.stars}</span>` : ""].filter(Boolean).join("");
-            el.classList.remove("playing");
-            el.classList.add("won");
-            el.querySelector("h3").textContent = t(id + "WinTitle");
-            el.querySelector(".ms-say p").textContent = t(id + "Win");
-            el.querySelector(".ms-body").innerHTML = `<p class="ms-moves">${t("twinsMoves", { n: moves })}</p><div class="ms-gift">${gift}</div>`;
-            el.querySelector(".ms-actions").innerHTML = `<button class="btn gold wide" data-collect>${t("missionCollect")}</button>`;
-            const b = el.querySelector("[data-collect]");
-            b.addEventListener("click", () => { UI.sparkle(b.getBoundingClientRect(), 16); Sfx.play("energy"); close(); });
-          });
-        });
+          game(el.querySelector(".ms-body"), won, lost, { maxTries: m.maxTries });
+        };
+        // out of tries: no reward, play it again (now or later)
+        const lost = () => {
+          Sfx.play("error");
+          el.classList.remove("playing");
+          el.classList.add("lost");
+          el.querySelector("h3").textContent = t(id + "FailTitle");
+          el.querySelector(".ms-say p").textContent = t(id + "Fail");
+          el.querySelector(".ms-body").innerHTML = "";
+          el.querySelector(".ms-actions").innerHTML = `
+            <button class="btn gold wide" data-retry>${t("missionRetry")}</button>
+            <button class="btn ghost wide" data-later>${t("missionLater")}</button>`;
+          el.querySelector("[data-retry]").addEventListener("click", start);
+          el.querySelector("[data-later]").addEventListener("click", close);
+        };
+        el.querySelector("[data-go]").addEventListener("click", start);
+        function won(moves) {
+          // 3. done: reward and the tale goes on
+          State.d.missions[id] = "done";
+          const r = m.reward || {};
+          if (r.energy) State.addEnergy(r.energy);
+          if (r.stars) State.d.stars += r.stars;
+          State.save();
+          UI.updateTop(true);
+          Sfx.play("fanfare");
+          const gift = [r.energy ? `<span>${Art.html("assets/ui/icons/energy.webp", "⚡", "ms-gic")}+${r.energy}</span>` : "", r.stars ? `<span>${Art.html("assets/ui/icons/star.webp", "⭐", "ms-gic")}+${r.stars}</span>` : ""].filter(Boolean).join("");
+          el.classList.remove("playing");
+          el.classList.add("won");
+          el.querySelector("h3").textContent = t(id + "WinTitle");
+          el.querySelector(".ms-say p").textContent = t(id + "Win");
+          el.querySelector(".ms-body").innerHTML = `<p class="ms-moves">${t("twinsMoves", { n: moves })}</p><div class="ms-gift">${gift}</div>`;
+          el.querySelector(".ms-actions").innerHTML = `<button class="btn gold wide" data-collect>${t("missionCollect")}</button>`;
+          const b = el.querySelector("[data-collect]");
+          b.addEventListener("click", () => { UI.sparkle(b.getBoundingClientRect(), 16); Sfx.play("energy"); close(); });
+        }
       });
     },
   };
