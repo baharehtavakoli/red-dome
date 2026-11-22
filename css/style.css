@@ -1460,3 +1460,9 @@ html.ui-art #onboard .ob-who.show + .ob-text { padding-top: 32px; }
 #onboard .ob-cast { top: 4%; }
 #onboard .ob-cast.n1 .ob-actor { width: 100%; }
 #onboard .ob-cast.n1 .ob-actor img { width: 100%; height: auto; max-height: 100%; }
+/* onboarding buttons: keep the label inside the painted middle, clear of the end ornaments */
+html.ui-art #onboard .ob-foot .btn { padding: 0 40px; white-space: nowrap; }
+#onboard.at-cta .ob-dots { display: none; }
+#onboard.at-cta .ob-next { flex: 1; font-size: 17px; }
+/* the tutorial hand above a button points down at it */
+.tut-hand.down { margin: 0 0 0 -22px; }

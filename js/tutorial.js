@@ -126,13 +126,19 @@
       this.el.classList.remove("hidden");
       this.el.classList.toggle("dragging", !!toEl);
       this.ring.style.cssText = `left:${cx}px;top:${cy}px;width:${a.width + 14}px;height:${a.height + 14}px`;
+      this._handAbove = false;
       if (toEl) {
+        this.hand.textContent = "👆"; this.hand.classList.remove("down");
         const b = toEl.getBoundingClientRect();
         this.hand.style.cssText = `left:${cx}px;top:${cy}px;--dx:${b.left + b.width / 2 - cx}px;--dy:${b.top + b.height / 2 - cy}px`;
       } else {
-        // on a wide button the hand points at its left end, so it doesn't cover the label
-        const hx = a.width > a.height * 2 ? a.left + a.width * 0.2 : cx;
-        this.hand.style.cssText = `left:${hx}px;top:${cy}px`;
+        // a tap target low on the screen gets a hand above it pointing down (and one high up gets a
+        // hand below it pointing up), so the hand never covers the button's label or icon
+        const low = cy > window.innerHeight * 0.55 && a.width > a.height * 1.6;
+        this.hand.textContent = low ? "👇" : "👆";
+        this.hand.classList.toggle("down", low);
+        this.hand.style.cssText = low ? `left:${cx}px;top:${a.top - 50}px` : `left:${cx}px;top:${cy}px`;
+        this._handAbove = low;
       }
       if (this.tip._html !== text) { this.tip.innerHTML = text; this.tip._html = text; }
       // tip above the target when it's low on the screen, below when it's high
@@ -140,7 +146,7 @@
       const below = cy < vh * 0.55;
       const left = Math.max(12, Math.min(window.innerWidth - w - 12, cx - w / 2));
       this.tip.style.cssText = `width:${w}px;left:${left}px;` +
-        (below ? `top:${a.bottom + 54}px` : `bottom:${vh - a.top + 20}px`);
+        (below ? `top:${a.bottom + 54}px` : `bottom:${vh - a.top + (this._handAbove ? 62 : 20)}px`);
       if (this._last !== id) { this._last = id; this.tip.classList.remove("pop"); void this.tip.offsetWidth; this.tip.classList.add("pop"); }
     },
 

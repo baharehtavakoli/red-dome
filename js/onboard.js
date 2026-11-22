@@ -110,6 +110,7 @@
           const last = b === scr.beats.length - 1;
           next.textContent = last && scr.cta ? t(scr.cta) : t("obNext");
           next.classList.toggle("cta", !!(last && scr.cta));
+          el.classList.toggle("at-cta", !!(last && scr.cta));
           el.querySelector(".ob-skip").style.visibility = scr.cta ? "hidden" : "";
           prev.style.visibility = s === 0 && b === 0 ? "hidden" : "";
         };
