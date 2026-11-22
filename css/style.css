@@ -1466,3 +1466,6 @@ html.ui-art #onboard .ob-foot .btn { padding: 0 40px; white-space: nowrap; }
 #onboard.at-cta .ob-next { flex: 1; font-size: 17px; }
 /* the tutorial hand above a button points down at it */
 .tut-hand.down { margin: 0 0 0 -22px; }
+/* the Merge label sits in the middle of its plate in both languages (RTL flex starts on the right) */
+.merge-btn { justify-content: center; }
+html[dir="rtl"] .merge-btn { direction: ltr; font-family: "Vazirmatn", sans-serif; font-weight: 800; }
