@@ -57,37 +57,31 @@ window.STORY = {
 
   walls: {
     chapter: "Chapter 3",
-    title: "Names on the Gate",
-    cast: ["shideh", "nasrin"],
+    title: "The Walls",
+    cast: ["shideh", "mehrab"],
     lines: [
-      { who: "nasrin", text: "Those who failed had their names hung on the city gate, for everyone to read." },
-      { who: "shideh", text: "Harsh. But walls keep things out as well as in." },
-      { who: "nasrin", text: "The princess knew that better than anyone." },
+      { who: "shideh", text: "The walls are up. Now the wind can't touch our plan." },
+      { who: "mehrab", text: "Next comes the great arch. I'll carry the bricks!" },
     ],
   },
 
   arch: {
     chapter: "Chapter 4",
-    title: "The Door Found by Ear",
-    cast: ["shideh", "nasrin"],
+    title: "The Great Arch",
+    cast: ["shideh", "mehrab"],
     lines: [
-      { who: "nasrin", text: "Past the talismans stood a wall with no door. Only a drum, hanging there." },
-      { who: "shideh", text: "And whoever listened found the door?" },
-      { who: "nasrin", text: "Only the patient ones." },
-      { who: "mehrab", side: "left", text: "Then let's build a door you can find by ear, master!" },
-      { who: "shideh", text: "Already in the plan. Knock on the left panel." },
+      { who: "shideh", text: "The arch holds. Every stone leans on the one beside it." },
+      { who: "mehrab", text: "Like us, master!" },
     ],
   },
 
   balcony: {
     chapter: "Chapter 5",
-    title: "The Portrait",
-    cast: ["golnar", "nasrin"],
+    title: "The Gardener",
+    cast: ["shideh", "golnar"],
     lines: [
-      { who: "golnar", text: "My grandmother tells this part! A prince saw a painting of the princess..." },
-      { who: "nasrin", text: "...and could not forget her face. Yes. Your grandmother tells it well." },
-      { who: "golnar", text: "She says he wore red from that day on, like a man asking for justice." },
-      { who: "shideh", side: "left", text: "Red. Like this dome will be." },
+      { who: "golnar", text: "I'm Golnar, the gardener. A balcony this beautiful needs roses under it!" },
+      { who: "shideh", text: "Then the garden is yours, Golnar, when the time comes." },
     ],
   },
 
@@ -96,46 +90,39 @@ window.STORY = {
     title: "The Sage of the Hills",
     cast: ["shideh", "sage"],
     lines: [
-      { who: "sage", text: "The dome is closed. Good. Now the red light has a home." },
-      { who: "shideh", text: "You've come a long way, old man." },
-      { who: "sage", text: "In the tale, the prince came to me too, before he climbed the mountain." },
-      { who: "sage", text: "I'll tell you what I told him, once the tiles are ready." },
+      { who: "sage", text: "I am the sage of the hills. The dome is closed: now the red light has a home." },
+      { who: "shideh", text: "You came a long way to see it." },
+      { who: "sage", text: "For a dome like this, I would walk twice as far." },
     ],
   },
 
   tiles: {
     chapter: "Chapter 7",
-    title: "Every Talisman Has a Twin",
+    title: "Crimson Tiles",
     cast: ["mehrab", "sage"],
     lines: [
-      { who: "sage", text: "Listen: every talisman has a twin. Bring matching pieces together and the spell undoes itself." },
-      { who: "mehrab", text: "Matching pieces... that's exactly how we work the board!" },
-      { who: "shideh", side: "left", text: "And these tiles are the lock pattern. Each star answers to a seal on the road." },
-      { who: "sage", text: "Now you know the prince's secret." },
+      { who: "mehrab", text: "Look how the tiles shine, master! Red like Mars." },
+      { who: "sage", text: "Each tile in its place, like the stars on their paths." },
     ],
   },
 
   towers: {
     chapter: "Chapter 8",
-    title: "The Prince in Red",
+    title: "The Towers",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "The prince climbed in red. He broke the talismans two by two, as the sage had taught him." },
-      { who: "nasrin", text: "He listened to the drum, and he found the door." },
-      { who: "shideh", text: "And the princess?" },
-      { who: "nasrin", text: "She was waiting. With riddles." },
+      { who: "shideh", text: "The towers are up. From the top you can see three valleys." },
+      { who: "nasrin", text: "Then the king will see his dome from far away." },
     ],
   },
 
   pool: {
     chapter: "Chapter 9",
-    title: "Riddles in Pearls",
+    title: "Two Domes",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "She sent him two pearls: life is short. He sent back three: then let it be sweet." },
-      { who: "nasrin", text: "She ground them with sugar, and he poured in milk and drank it all. She sent one pearl; he found its perfect twin." },
-      { who: "shideh", text: "And she knew he was the one." },
-      { who: "nasrin", text: "Words lie easily. Pearls don't." },
+      { who: "nasrin", text: "Water in front of the dome... Now there are two domes: one in the sky, one in the pool." },
+      { who: "shideh", text: "That was in the plan from the start." },
     ],
   },
 
@@ -144,12 +131,10 @@ window.STORY = {
     title: "The Red Dome",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "They married, and she let her guardians rest." },
-      { who: "golnar", side: "left", text: "And they lived in a garden like this one!" },
+      { who: "golnar", side: "left", text: "The garden is planted! Roses and pomegranates, all around the dome." },
       { who: "mehrab", side: "left", text: "Master! A herald from King Bahram. He comes on Tuesday, the day of Mars." },
-      { who: "nasrin", text: "Then he'll find his red dome finished. And a bride who knows this tale... rather well." },
-      { who: "shideh", side: "left", text: "Rather well? Nasrin... was that princess you?" },
-      { who: "nasrin", text: "Every tale needs a little mystery, architect. Six more domes are waiting for you." },
+      { who: "nasrin", text: "Then he'll find his red dome finished, and my tale ready. Thank you, Shideh." },
+      { who: "shideh", side: "left", text: "And six more domes are waiting for me." },
     ],
   },
 };
