@@ -2,7 +2,7 @@
    - Art (assets/) and fonts: served from the cache at once, refreshed in the background.
    - Page, scripts and styles: from the network when online (so updates arrive), cache when offline.
    Change VERSION to throw the whole cache away. */
-const VERSION = "reddome-v2";
+const VERSION = "reddome-v3";
 
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => {
