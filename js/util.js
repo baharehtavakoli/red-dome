@@ -108,6 +108,7 @@
       });
       G.domeParts.forEach((p) => out.push(p.restored, p.ruined));
       if (G.scene.intro) Object.values(G.scene.intro).forEach((p) => out.push(p)); // for "Replay intro"
+      Object.values(G.tales || {}).forEach((tl) => tl.pages.forEach((p) => out.push(p.img, p.fallback)));
       return out;
     },
     has(path) {

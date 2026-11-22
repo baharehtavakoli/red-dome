@@ -38,24 +38,20 @@ window.STORY = {
   terrace: {
     chapter: "Chapter 1",
     title: "The First Stone",
-    cast: ["shideh", "nasrin"],
+    cast: ["shideh", "mehrab"],
     lines: [
       { who: "shideh", text: "The terrace is down, right where the ray fell." },
-      { who: "nasrin", text: "Then my tale begins. In my country there was a princess, as clever as she was beautiful." },
-      { who: "nasrin", text: "Every king wanted her hand. Mostly, they wanted her kingdom." },
-      { who: "shideh", text: "So she needed a strong foundation. Like this one." },
+      { who: "mehrab", text: "One more part, master! Then Lady Nasrin-Nush has promised us her tale." },
     ],
   },
 
   stairs: {
     chapter: "Chapter 2",
     title: "The Talisman Road",
-    cast: ["mehrab", "nasrin"],
+    cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "She raised a castle on a mountain, and set talismans along the road: bronze guardians that woke when a stranger passed." },
-      { who: "mehrab", text: "Like the golden seals on our board!" },
-      { who: "shideh", side: "left", text: "The same idea. Light caught in a pattern. Break the pattern and it lets you through." },
-      { who: "nasrin", text: "Few suitors made it past the first one." },
+      { who: "shideh", text: "The stairs are ready. The dome has taken its first steps." },
+      { who: "nasrin", text: "Two parts built, as promised. Now it's my turn: listen to the tale of my land." },
     ],
   },
 

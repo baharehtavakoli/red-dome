@@ -25,6 +25,10 @@
 
   const S = {
     en: {
+      taleKicker1: "Nasrin-Nush's tale · Night 1", tale1Title: "The Talisman Road", taleOn: "Take the test", taleClose: "Close the book",
+      tale1p1: "In my land there lived a princess, as clever as she was beautiful. Many kings came to ask for her hand, but most of them wanted her throne, not her.",
+      tale1p2: "So the princess built a castle high on a mountain, and set talismans along the road to it, to stop every stranger who came.",
+      tale1p3: "Every talisman on that road had a twin. Only a suitor who found the twins could pass.",
       rwEnergy: "Energy", rwStars: "Stars",
       obPrev: "Back", obNext: "Next", obStart: "Build the Red Dome",
       ob1a: "Once upon a time, there lived a king named Bahram, who was fascinated by the mysteries of the sky and the planets.",
@@ -36,7 +40,7 @@
       ob5: "Merge items to make new materials and tools, and help Shideh build the Red Dome, step by step. As you build, Nasrin-Nush will tell you her tale.",
       missionKicker: "Story mission", missionStart: "Start", missionLater: "Later", missionCollect: "Collect",
       twinsTitle: "The Talisman Road", twinsTip: "Turn over two talismans. If they guard the same treasure, they are twins and the road opens.",
-      twinsIntro: "Every talisman on that road had a twin. A suitor who found the twins could pass. Could you?",
+      twinsIntro: "Now you are the suitor. Can you find the twins and open the road?",
       twinsMoves: "Tries: {n}", twinsWinTitle: "The road is open!",
       twinsWin: "You would have passed the road! But the princess had harder tests still. Keep building and I'll tell you.",
       merge: "Merge", dome: "Dome", skip: "Skip ›", skipConfirm: "Skip story? Tap again",
@@ -84,6 +88,10 @@
       dailyToast: "Day {n} gift: {gift}", boardFullStars: " (board full: +{n} ⭐)",
     },
     fa: {
+      taleKicker1: "قصه‌ی نسرین‌نوش · شب اول", tale1Title: "جاده‌ی طلسم‌ها", taleOn: "آزمون را بده", taleClose: "بستن کتاب",
+      tale1p1: "در سرزمین من بانویی بود، هم زیرک و هم زیبا. شاهان بسیاری به خواستگاری‌اش آمدند، اما بیشترشان تاج و تخت او را می‌خواستند، نه خودش را.",
+      tale1p2: "پس بانو دژی بر فراز کوه ساخت و بر سر راهش طلسم‌هایی گذاشت که هر غریبه‌ای را از رفتن بازمی‌داشتند.",
+      tale1p3: "هر طلسمِ آن جاده جفتی داشت. تنها خواستگاری که جفت‌ها را می‌یافت، می‌توانست از جاده بگذرد.",
       rwEnergy: "انرژی", rwStars: "ستاره",
       obPrev: "قبلی", obNext: "بعدی", obStart: "ساخت گنبد سرخ",
       ob1a: "روزی روزگاری، پادشاهی به نام بهرام زندگی می‌کرد که شیفته‌ی رازهای آسمان و سیاره‌ها بود.",
@@ -95,7 +103,7 @@
       ob5: "با ترکیب آیتم‌ها، مصالح و ابزار تازه بساز و به شیده کمک کن گنبد سرخ را قدم‌به‌قدم کامل کند. در همین حین، نسرین‌نوش قصه‌اش را برایت روایت خواهد کرد.",
       missionKicker: "مأموریت قصه", missionStart: "شروع", missionLater: "بعداً", missionCollect: "دریافت",
       twinsTitle: "جاده‌ی طلسم‌ها", twinsTip: "دو طلسم را برگردان. اگر از یک گنج نگهبانی کنند، جفت هم‌اند و راه باز می‌شود.",
-      twinsIntro: "هر طلسمِ آن جاده یک جفت داشت. خواستگاری که جفت‌ها را پیدا می‌کرد، از جاده می‌گذشت. تو می‌توانی؟",
+      twinsIntro: "حالا تو جای خواستگاری. می‌توانی جفت طلسم‌ها را پیدا کنی و راه را باز کنی؟",
       twinsMoves: "تلاش‌ها: {n}", twinsWinTitle: "راه باز شد!",
       twinsWin: "تو از جاده می‌گذشتی! ولی بانو آزمون‌های سخت‌تری هم داشت. بساز تا برایت بگویم.",
       merge: "ادغام", dome: "گنبد", skip: "رد شدن ›", skipConfirm: "داستان رد شود؟ دوباره بزنید",
@@ -182,16 +190,12 @@
       ],
     },
     terrace: { chapter: "فصل ۱", title: "سنگ نخست", lines: [
-      "سکو گذاشته شد؛ درست همان‌جا که پرتو افتاد.",
-      "پس قصه‌ی من شروع می‌شود. در سرزمین من شاهزاده‌ای بود، به همان اندازه زیرک که زیبا.",
-      "همه‌ی پادشاهان خواستگارش بودند. بیشترشان پادشاهی‌اش را می‌خواستند.",
-      "پس پایه‌ای محکم لازم داشت. مثل همین.",
+      "سکو گذاشته شد؛ درست همون‌جا که پرتو افتاد.",
+      "یه تیکه‌ی دیگه بسازیم، استاد! بعدش نسرین‌نوش قول داده قصه‌ش رو برامون بگه.",
     ] },
-    stairs: { chapter: "فصل ۲", title: "راه طلسم‌ها", lines: [
-      "دژی بر کوه ساخت و در راهش طلسم گذاشت: نگهبانان مفرغی که با گذر هر غریبه بیدار می‌شدند.",
-      "مثل همین مهرهای طلایی روی صفحه‌ی ما!",
-      "همان فکر است. نوری که در یک نقش گیر افتاده. نقش را بشکنی، راه باز می‌شود.",
-      "کم خواستگاری از نخستین طلسم گذشت.",
+    stairs: { chapter: "فصل ۲", title: "پله‌های سنگی", lines: [
+      "پله‌ها آماده‌ست. گنبد اولین قدم‌هاش رو برداشت.",
+      "دو تیکه ساختی، همون‌طور که قول داده بودم. حالا نوبت قصه‌ی منه: قصه‌ی سرزمینم رو گوش کن.",
     ] },
     walls: { chapter: "فصل ۳", title: "نام‌ها بر دروازه", lines: [
       "نام آن‌ها که شکست می‌خوردند بر دروازه‌ی شهر آویخته می‌شد تا همه بخوانند.",

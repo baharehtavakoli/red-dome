@@ -90,7 +90,7 @@ window.GAME_CONFIG = {
     { id: "terrace", name: "Terrace", cost: 5, story: "terrace", emoji: "🧱",
       box: { x: 0, y: 161, w: 360, h: 371 }, focus: { x: 20, y: 430, w: 320, h: 80 }, button: { x: 180, y: 476 },
       ruined: "assets/scenes/parts/terrace_ruined.webp", restored: "assets/scenes/parts/terrace_restored.webp" },
-    { id: "stairs", name: "Stone Stairs", cost: 8, story: "stairs", mission: "twins", emoji: "🪜",
+    { id: "stairs", name: "Stone Stairs", cost: 8, story: "stairs", tale: "tale1", mission: "twins", emoji: "🪜",
       box: { x: 31, y: 163, w: 298, h: 319 }, focus: { x: 70, y: 420, w: 220, h: 85 }, button: { x: 180, y: 440 },
       ruined: "assets/scenes/parts/stairs_ruined.webp", restored: "assets/scenes/parts/stairs_restored.webp" },
     { id: "walls", name: "Red Brick Walls", cost: 12, story: "walls", emoji: "🧱",
@@ -144,6 +144,19 @@ window.GAME_CONFIG = {
   luckyDropChance: 0.12,
 
   startStars: 0,
+
+  /* Tale nights (js/tale.js): Nasrin-Nush's tale as a storybook, opened by domeParts[].tale, then its mission.
+     img = the page's picture; until it exists, fallback is shown (fit: "cover" | "contain" | "portrait"). */
+  tales: {
+    tale1: {
+      host: "nasrin", kicker: "taleKicker1", title: "tale1Title", mission: "twins",
+      pages: [
+        { key: "tale1p1", img: "assets/scenes/tale/tale1_1.webp", fallback: "assets/characters/nasrin.webp", fit: "portrait" },
+        { key: "tale1p2", img: "assets/scenes/tale/tale1_2.webp", fallback: "assets/scenes/intro/intro_ladies.webp" },
+        { key: "tale1p3", img: "assets/scenes/tale/tale1_3.webp", fallback: "assets/tiles/talisman.webp", fit: "contain" },
+      ],
+    },
+  },
 
   /* Story missions (js/mission.js): a mini-game after a chapter, opened by domeParts[].mission. */
   missions: {

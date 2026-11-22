@@ -377,7 +377,8 @@
       await this.build(i);
       await Dialogue.play(p.story);
       await this.endCinematic();
-      if (p.mission) { this.busy = true; await Mission.play(p.mission); this.busy = false; }
+      if (p.tale) { this.busy = true; await Tale.play(p.tale); this.busy = false; }
+      else if (p.mission) { this.busy = true; await Mission.play(p.mission); this.busy = false; }
       const gift = cfg().energy.partReward || 0;
       if (gift) {
         State.addEnergy(gift);
@@ -449,6 +450,7 @@
       this.el.classList.add("cinematic");
       await this.setCamera("focus", i);
       await Dialogue.play(parts()[i].story);
+      if (parts()[i].tale) await Tale.play(parts()[i].tale, { replay: true });
       await this.endCinematic();
     },
 
