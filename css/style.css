@@ -1542,3 +1542,7 @@ html.ui-art #tale .tl-open { min-width: 220px; min-height: 54px; padding: 0 40px
 #tale .tl-book, #tale .tl-teller { opacity: 0; transition: opacity .45s ease .1s; }
 #tale.opened .tl-book, #tale.opened .tl-teller { opacity: 1; }
 #tale:not(.opened) .tl-book { pointer-events: none; }
+/* gift and mission buttons sit under the top bar, clear of the characters standing on the terrace */
+.gift-btn { top: calc(66px + env(safe-area-inset-top)); bottom: auto; left: 10px; width: 52px; height: 52px; }
+.gift-btn img.gift-ic { width: 36px; height: 36px; }
+.mission-btn { top: calc(126px + env(safe-area-inset-top)); bottom: auto; }
