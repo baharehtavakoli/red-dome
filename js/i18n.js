@@ -25,7 +25,7 @@
 
   const S = {
     en: {
-      taleKicker1: "Nasrin-Nush's tale · Night 1", tale1Title: "The Talisman Road", taleOn: "Take the test", taleClose: "Close the book",
+      taleKicker1: "Nasrin-Nush's tale · Night 1", tale1Title: "The Talisman Road", taleOn: "Take the test", taleOpen: "Open the book", taleClose: "Close the book",
       tale1p1: "In my land there lived a princess, as clever as she was beautiful. Many kings came to ask for her hand, but most of them wanted her throne, not her.",
       tale1p2: "So the princess built a castle high on a mountain, and set talismans along the road to it, to stop every stranger who came.",
       tale1p3: "Every talisman on that road had a twin. Only a suitor who found the twins could pass.",
@@ -88,7 +88,7 @@
       dailyToast: "Day {n} gift: {gift}", boardFullStars: " (board full: +{n} ⭐)",
     },
     fa: {
-      taleKicker1: "قصه‌ی نسرین‌نوش · شب اول", tale1Title: "جاده‌ی طلسم‌ها", taleOn: "آزمون را بده", taleClose: "بستن کتاب",
+      taleKicker1: "قصه‌ی نسرین‌نوش · شب اول", tale1Title: "جاده‌ی طلسم‌ها", taleOn: "آزمون را بده", taleOpen: "باز کردن کتاب", taleClose: "بستن کتاب",
       tale1p1: "در سرزمین من بانویی بود، هم زیرک و هم زیبا. شاهان بسیاری به خواستگاری‌اش آمدند، اما بیشترشان تاج و تخت او را می‌خواستند، نه خودش را.",
       tale1p2: "پس بانو دژی بر فراز کوه ساخت و بر سر راهش طلسم‌هایی گذاشت که هر غریبه‌ای را از رفتن بازمی‌داشتند.",
       tale1p3: "هر طلسمِ آن جاده جفتی داشت. تنها خواستگاری که جفت‌ها را می‌یافت، می‌توانست از جاده بگذرد.",

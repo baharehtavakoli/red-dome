@@ -147,6 +147,7 @@ window.GAME_CONFIG = {
 
   /* Tale nights (js/tale.js): Nasrin-Nush's tale as a storybook, opened by domeParts[].tale, then its mission.
      img = the page's picture; until it exists, fallback is shown (fit: "cover" | "contain" | "portrait"). */
+  taleBook: "assets/scenes/tale/tale_book.webp", // the storybook on the desk, shown before every tale night
   tales: {
     tale1: {
       host: "nasrin", kicker: "taleKicker1", title: "tale1Title", mission: "twins",

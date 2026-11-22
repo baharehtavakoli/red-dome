@@ -18,7 +18,16 @@
         const host = CHARACTERS[tale.host || "nasrin"];
         const el = document.createElement("div");
         el.id = "tale";
+        const book = GAME_CONFIG.taleBook;
+        const bookArt = book && (!GAME_CONFIG.tryImages || Art.has(book));
         el.innerHTML = `
+          <div class="tl-cover">
+            <div class="tl-cover-pic">${bookArt ? `<img src="${book}" alt="" draggable="false">` : '<span class="tl-cover-ic">📖</span>'}</div>
+            <div class="tl-cover-text">
+              <small>${t(tale.kicker)}</small><b>${t(tale.title)}</b>
+              <button class="btn gold tl-open">${t("taleOpen")}</button>
+            </div>
+          </div>
           <div class="tl-book">
             <div class="tl-head"><small>${t(tale.kicker)}</small><b>${t(tale.title)}</b></div>
             <div class="tl-page">
@@ -79,8 +88,14 @@
 
         next.addEventListener("click", () => { if (i < pages.length - 1) show(i + 1, 1); else close(); });
         prev.addEventListener("click", () => show(i - 1, -1));
+        // 1. the storybook on the desk, once; 2. it opens into the pages
+        el.querySelector(".tl-open").addEventListener("click", () => {
+          if (el.classList.contains("opened")) return;
+          Sfx.play("open");
+          el.classList.add("opening");
+          setTimeout(() => { el.classList.add("opened"); show(0, 0); }, 650);
+        });
         Sfx.play("whoosh");
-        show(0, 0);
         setTimeout(() => el.classList.add("in"), 30);
       });
     },

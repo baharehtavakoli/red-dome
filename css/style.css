@@ -1522,3 +1522,23 @@ html[dir="rtl"] #tale .tl-teller { left: auto; right: 12px; }
 @keyframes tl-in-prev { from { transform: rotateY(-70deg); opacity: .2; } }
 @media (prefers-reduced-motion: reduce) { #tale .tl-page[class*="turn-"] { animation: none; } }
 #tale .tl-num { direction: ltr; unicode-bidi: isolate; }
+/* the storybook on the desk, before the pages */
+#tale .tl-cover { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+  transition: opacity .6s ease; overflow: hidden; }
+#tale .tl-cover-pic { position: absolute; top: 0; bottom: 0; left: 50%; width: min(100%, 520px); transform: translateX(-50%); display: grid; place-items: center; }
+#tale .tl-cover-pic img { width: 100%; height: 100%; object-fit: cover; animation: tl-cover-in 9s ease-out both; }
+@keyframes tl-cover-in { from { transform: scale(1.12); } to { transform: scale(1); } }
+#tale .tl-cover-ic { font-size: 130px; filter: drop-shadow(0 0 24px rgba(255, 200, 90, .8)); animation: tl-glow 2.4s ease-in-out infinite; }
+@keyframes tl-glow { 50% { filter: drop-shadow(0 0 40px rgba(255, 215, 106, 1)); transform: scale(1.04); } }
+#tale .tl-cover-text { position: relative; width: min(100%, 520px); padding: 70px 22px max(26px, env(safe-area-inset-bottom)); text-align: center;
+  background: linear-gradient(180deg, transparent, rgba(20, 5, 12, .85) 45%); }
+#tale .tl-cover-text small { display: block; font: 800 12px/1.4 "Nunito", "Vazirmatn", sans-serif; letter-spacing: .06em; color: #e0b24a; }
+#tale .tl-cover-text b { display: block; margin-bottom: 16px; font: 400 30px/1.2 var(--head); color: #ffd76a; text-shadow: 0 2px 10px rgba(0, 0, 0, .6); }
+html[dir="rtl"] #tale .tl-cover-text b { font: 800 26px/1.4 "Vazirmatn", sans-serif; }
+html.ui-art #tale .tl-open { min-width: 220px; min-height: 54px; padding: 0 40px; font-size: 18px; white-space: nowrap; animation: ob-pulse 1.6s ease-in-out infinite; }
+/* opening: the camera moves into the book, then the pages appear */
+#tale.opening .tl-cover-pic img, #tale.opening .tl-cover-ic { animation: none; transform: scale(1.6); transition: transform .65s ease-in; }
+#tale.opening .tl-cover { opacity: 0; pointer-events: none; }
+#tale .tl-book, #tale .tl-teller { opacity: 0; transition: opacity .45s ease .1s; }
+#tale.opened .tl-book, #tale.opened .tl-teller { opacity: 1; }
+#tale:not(.opened) .tl-book { pointer-events: none; }
