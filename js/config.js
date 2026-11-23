@@ -212,7 +212,7 @@ window.GAME_CONFIG = {
     /* Who gives orders, and which chains they like to ask for. */
     givers: {
       mehrab: { chains: ["stone", "magic", "stone"] },
-      nasrin: { chains: ["jewel", "magic", "stone"] },
+      shideh: { chains: ["jewel", "magic", "stone"] },
       golnar: { chains: ["garden", "jewel", "garden"] },
     },
   },

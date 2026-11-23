@@ -12,7 +12,7 @@
           Scenes are triggered by "intro" (first launch) and by dome parts
           (config.js -> domeParts[].story).
 
-   ORDER_LINES  characterKey -> short lines shown when tapping an order card.
+   Order lines are built from the item asked for (orders.js -> lineFor, i18n.js -> use_ / ord_).
    ===================================================================== */
 window.STORY = {
   /* bg: "sky" / "ray" shows a full-screen picture behind the dialogue (config.js -> scene.intro),
@@ -148,45 +148,31 @@ window.STORY = {
   },
 };
 
-window.ORDER_LINES = {
-  mehrab: [
-    "The masons are waiting, master!",
-    "Can you spare these for the scaffold?",
-    "I'll carry them up, promise.",
-  ],
-  nasrin: [
-    "A princess has simple wishes.",
-    "Bring me these, architect.",
-    "The dome deserves the finest.",
-  ],
-  golnar: [
-    "My roses want company.",
-    "The soil is finally ready!",
-    "Gardens grow on patience.",
-  ],
-};
+/* ORDER_LINES are no longer fixed sentences: orders.js builds each line from the item asked for
+   and what it's for on the building (i18n.js -> use_<item> and ord_<who>0-2). */
 
 /* BARKS: short lines characters say in their speech bubble when you tap them
-   in the Dome Scene (or now and then on their own).
+   in the Dome Scene (or now and then on their own). A line can be { text, reply: { who, text } }:
+   the other character answers in their own bubble a moment later.
    Shideh also says a live hint about the next part to build (see scene.js). */
 window.BARKS = {
   shideh: [
-    "Every merge gets us closer.",
-    "I can already see the dome glowing red.",
-    "Tap a generator on the board to get materials.",
+    "Brick by brick, we'll build the dome together.",
+    "I can already see it glowing red.",
+    "We're short on materials. Pop into the workshop.",
   ],
   mehrab: [
-    "Master, the board is full of pebbles again!",
-    "Two of the same make something better. I'm learning!",
-    "The orders pay in stars. Stars buy stone and gold.",
-    "Did you hear that? The talismans hum at night.",
+    "Master, the workshop's full of pebbles again! Wasn't me.",
+    "Two sprouts side by side make a rose bush! I'm learning.",
+    "I made pearls out of these blue stones! Look, master.",
+    { text: "I hear the talismans at night. Do you hear them too, master?", reply: { who: "shideh", text: "I do. But the talismans mean us no harm." } },
   ],
   golnar: [
-    "Roses and pomegranates, that's all a garden needs.",
-    "Bring me seeds and I'll show you a miracle.",
+    "Roses and pomegranates. What more could a garden want?",
+    "Give me one seed, and I'll give you a garden.",
   ],
   nasrin: [
-    "A red dome... just like in the tale from my country.",
+    "This mountain waited a long time for a dome like this.",
     "Not every riddle is answered with words.",
   ],
 };

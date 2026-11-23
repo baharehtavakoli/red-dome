@@ -31,6 +31,7 @@
       tale1p3: "Every talisman on that road had a twin. Only a suitor who found the twins could pass.",
       twinsLeft: "Tries left: {n}", twinsFailTitle: "The talismans woke up!", missionRetry: "Try again",
       twinsFail: "The road has closed again. Talismans are not easy: try once more.",
+      use_pebble: "the foundation mortar", use_stone: "the stairs", use_red_brick: "the columns", use_red_tile: "the hall floor", use_glazed_red_tile: "the mihrab wall", use_carved_red_panel: "the porch gateway", use_rough_gem: "the turquoise patterns over the gate", use_polished_gem: "the jewels in the dome ceiling", use_pearl: "the edges of the muqarnas", use_pearl_string: "the chandelier in the hall", use_royal_pearl: "the crown on top of the dome", use_star_shard: "the dome windows", use_star: "the sunburst in the middle of the ceiling", use_astrolabe_charm: "breaking the talismans", use_seed: "the flower beds by the pool", use_sprout: "the garden beds", use_rose_bush: "the foot of the walls", use_pomegranate_tree: "the courtyard", ord_mehrab0: "Master, I need this {item} for {use}.", ord_mehrab1: "I need a {item}, master, for {use}.", ord_mehrab2: "Bring me a {item} for {use}!", ord_shideh0: "I need this {item} for {use}.", ord_shideh1: "A {item}, please, for {use}.", ord_shideh2: "We're short of a {item} for {use}.", ord_golnar0: "I want a {item} for {use}!", ord_golnar1: "Bring me a {item} for {use}!", ord_golnar2: "This {item} is for {use}!",
       rwEnergy: "Energy", rwStars: "Stars",
       obPrev: "Back", obNext: "Next", obStart: "Build the Red Dome",
       ob1a: "Once upon a time, there lived a king named Bahram, who was fascinated by the mysteries of the sky and the planets.",
@@ -45,7 +46,7 @@
       twinsIntro: "Now you are the suitor. Can you find the twins and open the road?",
       twinsMoves: "Tries: {n}", twinsWinTitle: "The road is open!",
       twinsWin: "You would have passed the road! But the princess had harder tests still. Keep building and I'll tell you.",
-      merge: "Merge", dome: "Dome", skip: "Skip ›", skipConfirm: "Skip story? Tap again",
+      merge: "Workshop", dome: "Dome", skip: "Skip ›", skipConfirm: "Skip story? Tap again",
       deliver: "Deliver", sure: "Sure?", remove: "Remove", lv: "Lv",
       sellFor: "Sell for {n} stars", removeItem: "Remove item", activate: "Activate",
       infoHint: "Tap a <b>generator ⚡</b> to make items. Drag two matching items together to <b>merge</b>.",
@@ -76,13 +77,13 @@
       hintReady: "We have the stars! Tap the {part} to build it.",
       hintNeed: "Next: the {part}. We need {n} more ⭐, so let's merge!",
       backAgain: "Press Back again to leave the game",
-      tutOpen: "Let's gather materials. Tap <b>Merge</b>!",
+      tutOpen: "Let's gather materials. Tap the <b>Workshop</b>!",
       tutDig: "Tap the <b>Quarry</b> to dig up pebbles. Each tap costs 1 ⚡.",
       tutMerge: "Two of a kind make something better. <b>Drag one pebble onto the other.</b>",
       tutDeliver: "Mehrab needs a <b>Stone</b>. Tap <b>Deliver</b>!",
       tutBack: "Orders pay ⭐ stars. You have enough for the first part. <b>Back to the dome!</b>",
       tutBuild: "Tap here to <b>build</b> the terrace!",
-      tutToBoard: "Back to the board: tap <b>Merge</b>.",
+      tutToBoard: "Back to the workshop: tap <b>Workshop</b>.",
       tutToScene: "Tap here to go back to the dome.",
       tutDone: "Well done! Merge, deliver orders and build the whole Red Dome.",
       dailyTitle: "Daily Gift", dailyText: "Come back every day. Miss a day and the calendar starts again.",
@@ -96,6 +97,7 @@
       tale1p3: "هر طلسمِ آن جاده جفتی داشت. تنها خواستگاری که جفت‌ها را می‌یافت، می‌توانست از جاده بگذرد.",
       twinsLeft: "تلاش‌های باقی‌مانده: {n}", twinsFailTitle: "طلسم‌ها بیدار شدند!", missionRetry: "دوباره امتحان کن",
       twinsFail: "راه دوباره بسته شد. طلسم‌ها آسان نیستند؛ یک بار دیگر امتحان کن.",
+      use_pebble: "ملات پی", use_stone: "پله‌ها", use_red_brick: "ستون‌ها", use_red_tile: "کف تالار", use_glazed_red_tile: "دیوار محراب", use_carved_red_panel: "سردر ایوان", use_rough_gem: "نقش‌های فیروزه‌ای سردر", use_polished_gem: "نگین‌های سقف گنبد", use_pearl: "لبه‌ی مقرنس‌ها", use_pearl_string: "آویز چلچراغ تالار", use_royal_pearl: "تاج نوک گنبد", use_star_shard: "پنجره‌های گنبد", use_star: "شمسه‌ی وسط سقف", use_astrolabe_charm: "شکستن طلسم‌ها", use_seed: "باغچه‌های کنار حوض", use_sprout: "کرت‌های باغ", use_rose_bush: "پای دیوارها", use_pomegranate_tree: "حیاط", ord_mehrab0: "استاد، این {item} رو برای {use} می‌خوام.", ord_mehrab1: "{item} لازم دارم، استاد؛ برای {use}.", ord_mehrab2: "چند تا {item} برسون، برای {use}!", ord_shideh0: "این {item} رو برای {use} لازم دارم.", ord_shideh1: "{item} می‌خوام؛ برای {use}.", ord_shideh2: "برای {use}، {item} کم داریم.", ord_golnar0: "{item} رو برای {use} می‌خوام!", ord_golnar1: "برای {use} یه {item} بیار!", ord_golnar2: "برای {use}، {item} لازمه!",
       rwEnergy: "انرژی", rwStars: "ستاره",
       obPrev: "قبلی", obNext: "بعدی", obStart: "ساخت گنبد سرخ",
       ob1a: "روزی روزگاری، پادشاهی به نام بهرام زندگی می‌کرد که شیفته‌ی رازهای آسمان و سیاره‌ها بود.",
@@ -110,7 +112,7 @@
       twinsIntro: "حالا تو جای خواستگاری. می‌توانی جفت طلسم‌ها را پیدا کنی و راه را باز کنی؟",
       twinsMoves: "تلاش‌ها: {n}", twinsWinTitle: "راه باز شد!",
       twinsWin: "تو از جاده می‌گذشتی! ولی بانو آزمون‌های سخت‌تری هم داشت. بساز تا برایت بگویم.",
-      merge: "ادغام", dome: "گنبد", skip: "رد شدن ›", skipConfirm: "داستان رد شود؟ دوباره بزنید",
+      merge: "کارگاه", dome: "گنبد", skip: "رد شدن ›", skipConfirm: "داستان رد شود؟ دوباره بزنید",
       deliver: "تحویل", sure: "مطمئنی؟", remove: "حذف", lv: "سطح",
       sellFor: "فروش به {n} ستاره", removeItem: "حذف آیتم", activate: "فعال کن",
       infoHint: "روی یک <b>مولد ⚡</b> بزنید تا آیتم بسازد. دو آیتم یکسان را روی هم بکشید تا <b>ادغام</b> شوند.",
@@ -141,13 +143,13 @@
       hintReady: "ستاره‌ها جورند! روی {part} بزن تا بسازیمش.",
       hintNeed: "بعدی: {part}. {n} ستاره‌ی دیگر لازم داریم؛ برویم سراغ ادغام!",
       backAgain: "برای خروج از بازی دوباره «بازگشت» را بزنید",
-      tutOpen: "برویم مصالح جمع کنیم. روی <b>ادغام</b> بزن!",
+      tutOpen: "برویم مصالح جمع کنیم. روی <b>کارگاه</b> بزن!",
       tutDig: "روی <b>معدن</b> بزن تا سنگریزه دربیاید. هر ضربه ۱ ⚡ است.",
       tutMerge: "دو تای یکسان، چیز بهتری می‌سازند. <b>یک سنگریزه را روی دیگری بکش.</b>",
       tutDeliver: "مهراب یک <b>سنگ</b> می‌خواهد. <b>تحویل</b> را بزن!",
       tutBack: "سفارش‌ها ⭐ ستاره می‌دهند. برای اولین بخش کافی است. <b>برگرد به گنبد!</b>",
       tutBuild: "اینجا بزن تا <b>سکو</b> ساخته شود!",
-      tutToBoard: "برگرد به صفحه‌ی ادغام: روی <b>ادغام</b> بزن.",
+      tutToBoard: "برگرد به کارگاه: روی <b>کارگاه</b> بزن.",
       tutToScene: "اینجا بزن تا به گنبد برگردی.",
       tutDone: "آفرین! ادغام کن، سفارش تحویل بده و کل گنبد سرخ را بساز.",
       dailyTitle: "هدیه‌ی روزانه", dailyText: "هر روز سر بزنید. اگر یک روز جا بیفتد، تقویم از اول شروع می‌شود.",
@@ -247,17 +249,16 @@
     ] },
   };
 
-  const FA_ORDER_LINES = {
-    mehrab: ["بناها منتظرند، استاد!", "این‌ها را برای داربست می‌دهی؟", "خودم بالا می‌برمشان، قول می‌دهم."],
-    nasrin: ["آرزوهای یک شاهزاده ساده است.", "این‌ها را برایم بیاور، معمار.", "گنبد بهترین‌ها را می‌خواهد."],
-    golnar: ["گل‌های سرخم هم‌نشین می‌خواهند.", "خاک بالاخره آماده است!", "باغ با صبر قد می‌کشد."],
-  };
-
   const FA_BARKS = {
-    shideh: ["هر ادغام ما را یک قدم نزدیک‌تر می‌کند.", "از همین حالا گنبد را سرخ و درخشان می‌بینم.", "روی یک مولد بزن تا مصالح دربیاید."],
-    mehrab: ["استاد، صفحه باز پر از سنگریزه شد!", "دو تای یکسان چیز بهتری می‌سازند. دارم یاد می‌گیرم!", "سفارش‌ها ستاره می‌دهند. ستاره، سنگ و طلا می‌خرد.", "شنیدی؟ طلسم‌ها شب‌ها زمزمه می‌کنند."],
-    golnar: ["گل سرخ و انار؛ باغ همین‌ها را می‌خواهد.", "دانه بیاور تا معجزه نشانت بدهم."],
-    nasrin: ["گنبدی سرخ... درست مثل قصه‌ی سرزمینم.", "هر معمایی با کلمه جواب داده نمی‌شود."],
+    shideh: ["آجر به آجر، گنبد رو با هم می‌سازیم.", "از همین الان سرخیش رو می‌بینم.", "مصالح کم داریم. یه سر به کارگاه بزن."],
+    mehrab: [
+      "استاد، کارگاه باز پر از سنگریزه شد! من نبودم.",
+      "دو تا جوونه کنار هم، یه بوته‌ی گل سرخ! دارم یاد می‌گیرم.",
+      "از این سنگ‌های آبی مروارید ساختم! نگاه کن، استاد.",
+      { text: "شب‌ها صدای طلسم‌ها رو می‌شنوم. شما هم می‌شنوین، استاد؟", reply: { who: "shideh", text: "می‌شنوم. ولی طلسم‌ها با ما کاری ندارن." } },
+    ],
+    golnar: ["گل سرخ و انار؛ باغ دیگه چی می‌خواد؟", "یه دونه بهم بده، یه باغ تحویل بگیر."],
+    nasrin: ["این کوه سال‌ها منتظر چنین گنبدی بود.", "هر معمایی جوابش کلمه نیست."],
   };
 
   const I18N = {
@@ -347,7 +348,6 @@
         s.title = fa.title;
         s.lines.forEach((ln, i) => { if (fa.lines[i]) ln.text = fa.lines[i]; });
       });
-      window.ORDER_LINES = FA_ORDER_LINES;
       window.BARKS = FA_BARKS;
     },
   };

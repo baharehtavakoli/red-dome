@@ -234,6 +234,11 @@
           const line = U.pick(lines.length ? lines : ["…"]);
           text = typeof line === "string" ? line : line.text;
           pose = typeof line === "string" ? null : line.pose;
+          const reply = typeof line === "object" && line.reply;
+          if (reply) {
+            const j = this.residents().findIndex((x) => x.who === reply.who);
+            if (j >= 0 && j !== i) setTimeout(() => this.bark(j, reply.text), 2200);
+          }
         }
       }
       // switch to a talking pose, back to neutral when the bubble closes

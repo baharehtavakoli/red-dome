@@ -29,7 +29,7 @@
         const who = e.target.closest("[data-who]");
         if (who) {
           const o = State.d.orders[+who.dataset.who];
-          if (o) UI.toast(t("orderLine", { who: CHARACTERS[o.who].name, line: o.line }));
+          if (o) UI.toast(t("orderLine", { who: CHARACTERS[o.who].name, line: this.lineFor(o) }));
         }
       });
     },
@@ -71,8 +71,17 @@
 
       const stars = items.reduce((s, it) => s + (cfg.starReward[it.level - 1] ?? it.level * it.level), 0) +
         (items.length > 1 ? cfg.twoItemBonus : 0);
-      const lines = (window.ORDER_LINES && ORDER_LINES[who]) || [""];
-      return { id: ++State.d.orderSeq, who, items, stars, line: U.pick(lines) };
+      return { id: ++State.d.orderSeq, who, items, stars };
+    },
+
+    /* What the giver says about an order: the (first) item and what it's for on the building,
+       in their own words. Built when shown, so it follows the current language. */
+    lineFor(o) {
+      const req = o.items[0], def = req && U.item(req.chain, req.level);
+      if (!def) return "";
+      const who = ["mehrab", "shideh", "golnar"].includes(o.who) ? o.who : "shideh";
+      const name = I18N.lang === "fa" ? def.name : def.name.toLowerCase();
+      return t(`ord_${who}${o.id % 3}`, { item: name, use: t("use_" + def.id) });
     },
 
     /* Board indices that would fill this order, or null. */

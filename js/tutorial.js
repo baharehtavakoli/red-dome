@@ -84,10 +84,9 @@
     /* The first order is an easy, generous one so the first build is one order away. */
     ensureOrder() {
       if (State.d.orders.some((o) => o && o.tut) || State.d.ordersDone > 0) return;
-      const lines = (window.ORDER_LINES && ORDER_LINES.mehrab) || [""];
       State.d.orders[0] = {
         id: ++State.d.orderSeq, who: "mehrab", items: [{ chain: "stone", level: 2 }],
-        stars: GAME_CONFIG.domeParts[0].cost, line: lines[0], tut: true,
+        stars: GAME_CONFIG.domeParts[0].cost, tut: true,
       };
       State.save();
       Orders.render();

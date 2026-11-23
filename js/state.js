@@ -100,6 +100,9 @@
         o && Array.isArray(o.items) && Number.isFinite(o.stars) && window.CHARACTERS[o.who] &&
         o.items.every((it) => U.item(it.chain, it.level)) ? o : null
       );
+      // orders from someone who no longer gives orders (Nasrin-Nush) pass to Shideh
+      const givers = cfg().orders.givers || {};
+      d.orders.forEach((o) => { if (o && !givers[o.who] && !o.tut) o.who = "shideh"; });
       d.energy = Number.isFinite(d.energy) ? d.energy : cfg().energy.start;
       d.energyStamp = Number.isFinite(d.energyStamp) ? d.energyStamp : Date.now();
       d.stars = Number.isFinite(d.stars) ? d.stars : 0;

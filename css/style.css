@@ -1554,3 +1554,4 @@ html.ui-art #tale .tl-open { min-width: 220px; min-height: 54px; padding: 0 40px
 #mission .ms-card.closing.matched { transition: transform .4s; transform: rotateY(0deg); }
 @keyframes ms-close { 30% { transform: translateX(-4px); } 60% { transform: translateX(4px); } 100% { transform: none; filter: brightness(.6); } }
 #mission.lost .ms-say p { font-style: normal; }
+html.ui-art:not([dir="rtl"]) .merge-btn { font-size: 25px; }
