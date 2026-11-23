@@ -40,21 +40,18 @@ window.STORY = {
     title: "The First Stone",
     cast: ["shideh", "mehrab"],
     lines: [
-      { who: "mehrab", text: "Master, the terrace is perfectly flat! I put a marble on it and it didn't roll." },
-      { who: "shideh", text: "Did you pick your marble up?" },
-      { who: "mehrab", text: "...Picking it up now." },
+
     ],
   },
 
   stairs: {
     chapter: "Chapter 2",
     title: "Stone Stairs",
-    cast: ["mehrab", "nasrin"],
+    cast: ["shideh", "nasrin"],
     lines: [
-      { who: "mehrab", text: "Thirty-three steps! I counted twice. Once it came to thirty-four." },
       { who: "nasrin", text: "My mother told me this tale on this very mountain. Back then there was nothing here but wind." },
-      { who: "shideh", side: "left", text: "Now it has stairs." },
-      { who: "nasrin", text: "Then sit down. It's my turn." },
+      { who: "shideh", side: "left", text: "Now it has a dome." },
+      { who: "nasrin", text: "...Sit down. It's my turn." },
     ],
   },
 
@@ -63,9 +60,7 @@ window.STORY = {
     title: "The Walls",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "From here I can't see the plain anymore." },
-      { who: "shideh", text: "You'll see a red dome instead." },
-      { who: "mehrab", side: "left", text: "I can see the plain from up here! Come on up if you like, there's room." },
+
     ],
   },
 
@@ -74,9 +69,7 @@ window.STORY = {
     title: "The Great Arch",
     cast: ["shideh", "mehrab"],
     lines: [
-      { who: "mehrab", text: "What a strong arch I built!" },
-      { who: "shideh", text: "You built?" },
-      { who: "mehrab", text: "Well... with your engineering, master." },
+
     ],
   },
 
@@ -107,8 +100,7 @@ window.STORY = {
     title: "Crimson Tiles",
     cast: ["shideh", "mehrab"],
     lines: [
-      { who: "mehrab", text: "Master, my hands are red, my clothes are red... it's like all of me has turned red!" },
-      { who: "shideh", text: "That's all right. Red is the colour of life." },
+
     ],
   },
 
@@ -128,9 +120,7 @@ window.STORY = {
     title: "Two Domes",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "Now I have two domes: one in the sky, one in the water." },
-      { who: "shideh", text: "I didn't build the one in the water." },
-      { who: "nasrin", text: "But it wouldn't be there without you." },
+
     ],
   },
 
