@@ -40,28 +40,32 @@ window.STORY = {
     title: "The First Stone",
     cast: ["shideh", "mehrab"],
     lines: [
-      { who: "shideh", text: "The terrace is down, right where the ray fell." },
-      { who: "mehrab", text: "One more part, master! Then Lady Nasrin-Nush has promised us her tale." },
+      { who: "mehrab", text: "Master, the terrace is perfectly flat! I put a marble on it and it didn't roll." },
+      { who: "shideh", text: "Did you pick your marble up?" },
+      { who: "mehrab", text: "...Picking it up now." },
     ],
   },
 
   stairs: {
     chapter: "Chapter 2",
-    title: "The Talisman Road",
-    cast: ["shideh", "nasrin"],
+    title: "Stone Stairs",
+    cast: ["mehrab", "nasrin"],
     lines: [
-      { who: "shideh", text: "The stairs are ready. The dome has taken its first steps." },
-      { who: "nasrin", text: "Two parts built, as promised. Now it's my turn: listen to the tale of my land." },
+      { who: "mehrab", text: "Thirty-three steps! I counted twice. Once it came to thirty-four." },
+      { who: "nasrin", text: "My mother told me this tale on this very mountain. Back then there was nothing here but wind." },
+      { who: "shideh", side: "left", text: "Now it has stairs." },
+      { who: "nasrin", text: "Then sit down. It's my turn." },
     ],
   },
 
   walls: {
     chapter: "Chapter 3",
     title: "The Walls",
-    cast: ["shideh", "mehrab"],
+    cast: ["shideh", "nasrin"],
     lines: [
-      { who: "shideh", text: "The walls are up. Now the wind can't touch our plan." },
-      { who: "mehrab", text: "Next comes the great arch. I'll carry the bricks!" },
+      { who: "nasrin", text: "From here I can't see the plain anymore." },
+      { who: "shideh", text: "You'll see a red dome instead." },
+      { who: "mehrab", side: "left", text: "I can see the plain from up here! Come on up if you like, there's room." },
     ],
   },
 
@@ -70,8 +74,9 @@ window.STORY = {
     title: "The Great Arch",
     cast: ["shideh", "mehrab"],
     lines: [
-      { who: "shideh", text: "The arch holds. Every stone leans on the one beside it." },
-      { who: "mehrab", text: "Like us, master!" },
+      { who: "mehrab", text: "What a strong arch I built!" },
+      { who: "shideh", text: "You built?" },
+      { who: "mehrab", text: "Well... with your engineering, master." },
     ],
   },
 
@@ -80,8 +85,9 @@ window.STORY = {
     title: "The Gardener",
     cast: ["shideh", "golnar"],
     lines: [
-      { who: "golnar", text: "I'm Golnar, the gardener. A balcony this beautiful needs roses under it!" },
-      { who: "shideh", text: "Then the garden is yours, Golnar, when the time comes." },
+      { who: "golnar", text: "Hello! I'm Golnar, the gardener from the village below." },
+      { who: "shideh", text: "Welcome, Golnar. This garden will come alive in your hands." },
+      { who: "golnar", text: "I'll plant red roses all around the dome." },
     ],
   },
 
@@ -90,19 +96,19 @@ window.STORY = {
     title: "The Sage of the Hills",
     cast: ["shideh", "sage"],
     lines: [
-      { who: "sage", text: "I am the sage of the hills. The dome is closed: now the red light has a home." },
-      { who: "shideh", text: "You came a long way to see it." },
-      { who: "sage", text: "For a dome like this, I would walk twice as far." },
+      { who: "sage", text: "Greetings, architect. I am the sage of this mountain; for thirty years I have counted the stars from here." },
+      { who: "shideh", text: "So the astrolabe was yours. It showed me exactly where the dome should go." },
+      { who: "sage", text: "I only showed you the star. Building it was your work." },
     ],
   },
 
   tiles: {
     chapter: "Chapter 7",
     title: "Crimson Tiles",
-    cast: ["mehrab", "sage"],
+    cast: ["shideh", "mehrab"],
     lines: [
-      { who: "mehrab", text: "Look how the tiles shine, master! Red like Mars." },
-      { who: "sage", text: "Each tile in its place, like the stars on their paths." },
+      { who: "mehrab", text: "Master, my hands are red, my clothes are red... it's like all of me has turned red!" },
+      { who: "shideh", text: "That's all right. Red is the colour of life." },
     ],
   },
 
@@ -111,8 +117,9 @@ window.STORY = {
     title: "The Towers",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "shideh", text: "The towers are up. From the top you can see three valleys." },
-      { who: "nasrin", text: "Then the king will see his dome from far away." },
+      { who: "nasrin", text: "From the top of the tower I can see the road the king will come by." },
+      { who: "shideh", text: "Worried?" },
+      { who: "nasrin", text: "No. I just want to see when he arrives." },
     ],
   },
 
@@ -121,8 +128,9 @@ window.STORY = {
     title: "Two Domes",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "Water in front of the dome... Now there are two domes: one in the sky, one in the pool." },
-      { who: "shideh", text: "That was in the plan from the start." },
+      { who: "nasrin", text: "Now I have two domes: one in the sky, one in the water." },
+      { who: "shideh", text: "I didn't build the one in the water." },
+      { who: "nasrin", text: "But it wouldn't be there without you." },
     ],
   },
 
@@ -131,10 +139,11 @@ window.STORY = {
     title: "The Red Dome",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "golnar", side: "left", text: "The garden is planted! Roses and pomegranates, all around the dome." },
-      { who: "mehrab", side: "left", text: "Master! A herald from King Bahram. He comes on Tuesday, the day of Mars." },
-      { who: "nasrin", text: "Then he'll find his red dome finished, and my tale ready. Thank you, Shideh." },
-      { who: "shideh", side: "left", text: "And six more domes are waiting for me." },
+      { who: "golnar", side: "left", text: "The pomegranates are in bloom! Earlier than ever." },
+      { who: "mehrab", side: "left", text: "Master! The king's herald is here. He arrives on Tuesday! I have to go to the bazaar and buy new clothes!" },
+      { who: "nasrin", text: "My tale is ready. And so is my dome." },
+      { who: "shideh", side: "left", text: "Then I'm off to the next dome." },
+      { who: "nasrin", text: "Shideh... thank you." },
     ],
   },
 };
