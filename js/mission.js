@@ -62,7 +62,60 @@
     }));
   }
 
-  const GAMES = { twins };
+  /* ---------- The wall without a door: knock on stones, the drum answers louder near the door ---------- */
+  function door(body, done, fail, opts = {}) {
+    const COLS = 4, ROWS = 4, max = opts.maxTries || 6;
+    const target = Math.floor(Math.random() * COLS * ROWS);
+    const dist = (i) => Math.abs((i % COLS) - (target % COLS)) + Math.abs(Math.floor(i / COLS) - Math.floor(target / COLS));
+    body.innerHTML = `
+      <p class="ms-tip">${t("doorTip")}</p>
+      <div class="dr-drum"><span>🥁</span></div>
+      <p class="dr-say">&nbsp;</p>
+      <div class="dr-wall">${Array.from({ length: COLS * ROWS }, (_, i) => `<button class="dr-stone" data-i="${i}" aria-label="stone"></button>`).join("")}</div>
+      <p class="ms-moves">${t("doorLeft", { n: max })}</p>`;
+    const drum = body.querySelector(".dr-drum"), say = body.querySelector(".dr-say"), moves = body.querySelector(".ms-moves");
+    let n = 0, lock = false;
+    body.querySelectorAll(".dr-stone").forEach((st) => st.addEventListener("click", async () => {
+      if (lock || st.classList.contains("knocked")) return;
+      lock = true;
+      n++;
+      const i = +st.dataset.i, d = dist(i);
+      Sfx.play("knock");
+      st.classList.add("knocked", "hit");
+      moves.textContent = t("doorLeft", { n: max - n });
+      moves.classList.toggle("low", max - n <= 2);
+      if (d === 0) {
+        Sfx.play("drum", 3);
+        drum.className = "dr-drum heat3";
+        st.classList.add("door");
+        say.textContent = t("doorHot");
+        await sleep(900);
+        Sfx.play("open");
+        UI.sparkle(st.getBoundingClientRect(), 16);
+        await sleep(700);
+        return done(n);
+      }
+      const heat = d === 1 ? 3 : d === 2 ? 2 : 1;
+      Sfx.play("drum", heat);
+      st.classList.add("h" + heat);
+      drum.className = "dr-drum"; void drum.offsetWidth; drum.className = "dr-drum heat" + heat;
+      say.textContent = t(heat === 3 ? "doorHot" : heat === 2 ? "doorWarm" : "doorCold");
+      await sleep(500);
+      st.classList.remove("hit");
+      lock = false;
+      if (n >= max) {
+        lock = true;
+        await sleep(500);
+        // show where the door was, then close
+        body.querySelector(`.dr-stone[data-i="${target}"]`).classList.add("missed");
+        Sfx.play("error");
+        await sleep(1100);
+        fail();
+      }
+    }));
+  }
+
+  const GAMES = { twins, door };
 
   const Mission = {
     open: false,

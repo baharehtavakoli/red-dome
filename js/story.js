@@ -67,9 +67,11 @@ window.STORY = {
   arch: {
     chapter: "Chapter 4",
     title: "The Great Arch",
-    cast: ["shideh", "mehrab"],
+    cast: ["shideh", "nasrin"],
     lines: [
-
+      { who: "nasrin", text: "This arch reminds me of a wall in our tale. A wall with no door at all." },
+      { who: "shideh", text: "A wall with no door? Who was the architect?" },
+      { who: "nasrin", text: "...Sit down. I'll tell you." },
     ],
   },
 

@@ -1555,3 +1555,25 @@ html.ui-art #tale .tl-open { min-width: 220px; min-height: 54px; padding: 0 40px
 @keyframes ms-close { 30% { transform: translateX(-4px); } 60% { transform: translateX(4px); } 100% { transform: none; filter: brightness(.6); } }
 #mission.lost .ms-say p { font-style: normal; }
 html.ui-art:not([dir="rtl"]) .merge-btn { font-size: 25px; }
+
+/* ---------- mission: the wall without a door ---------- */
+#mission .dr-drum { display: grid; place-items: center; width: 64px; height: 64px; margin: 2px auto 4px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, #8a2a3a, #4a1220); border: 2px solid #c99a3a; font-size: 34px; transition: box-shadow .3s; }
+#mission .dr-drum.heat1 { animation: dr-shake1 .4s ease; }
+#mission .dr-drum.heat2 { animation: dr-shake2 .5s ease; box-shadow: 0 0 12px rgba(255, 190, 80, .7); }
+#mission .dr-drum.heat3 { animation: dr-shake3 .6s ease; box-shadow: 0 0 22px rgba(255, 120, 60, .95); }
+@keyframes dr-shake1 { 50% { transform: rotate(-3deg); } }
+@keyframes dr-shake2 { 25% { transform: rotate(-8deg) scale(1.05); } 75% { transform: rotate(8deg) scale(1.05); } }
+@keyframes dr-shake3 { 20% { transform: rotate(-14deg) scale(1.12); } 40% { transform: rotate(14deg) scale(1.12); } 60% { transform: rotate(-10deg) scale(1.08); } 80% { transform: rotate(8deg); } }
+#mission .dr-say { margin: 0 0 8px; min-height: 1.5em; font: 800 14px/1.5 "Nunito", "Vazirmatn", sans-serif; color: #7a1c2a; }
+#mission .dr-wall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; max-width: 250px; margin: 0 auto 10px; padding: 7px;
+  border-radius: 10px; background: #6b4a3a; box-shadow: inset 0 2px 6px rgba(0, 0, 0, .4); }
+#mission .dr-stone { aspect-ratio: 5 / 4; border: 0; border-radius: 5px; cursor: pointer; transition: background .3s, box-shadow .3s;
+  background: linear-gradient(180deg, #d8c3a0, #b89c74); box-shadow: inset 0 -3px 0 rgba(80, 50, 30, .35), inset 0 2px 0 rgba(255, 255, 255, .35); }
+#mission .dr-stone.hit { animation: dr-hit .3s ease; }
+@keyframes dr-hit { 50% { transform: scale(.9); } }
+#mission .dr-stone.h1 { background: linear-gradient(180deg, #a9a39a, #8a847a); }
+#mission .dr-stone.h2 { background: linear-gradient(180deg, #f3d27a, #d4a537); box-shadow: 0 0 8px rgba(255, 200, 90, .7); }
+#mission .dr-stone.h3 { background: linear-gradient(180deg, #ff9a5a, #d0432a); box-shadow: 0 0 12px rgba(255, 120, 60, .9); }
+#mission .dr-stone.door { background: radial-gradient(circle, #fff3c4, #ffd76a 60%, #c98a1a); box-shadow: 0 0 18px #ffd76a; }
+#mission .dr-stone.missed { outline: 3px dashed #ffd76a; outline-offset: -3px; animation: dr-hit .5s ease 2; }

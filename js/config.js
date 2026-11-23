@@ -96,7 +96,7 @@ window.GAME_CONFIG = {
     { id: "walls", name: "Red Brick Walls", cost: 12, story: "walls", emoji: "🧱",
       box: { x: 0, y: 34, w: 360, h: 406 }, focus: { x: 25, y: 265, w: 310, h: 185 }, button: { x: 90, y: 360 },
       ruined: "assets/scenes/parts/walls_ruined.webp", restored: "assets/scenes/parts/walls_restored.webp" },
-    { id: "arch", name: "Iwan & Doors", cost: 18, story: "arch", emoji: "🚪",
+    { id: "arch", name: "Iwan & Doors", cost: 18, story: "arch", tale: "tale2", mission: "door", emoji: "🚪",
       box: { x: 31, y: 163, w: 273, h: 260 }, focus: { x: 120, y: 290, w: 120, h: 160 }, button: { x: 180, y: 330 },
       ruined: "assets/scenes/parts/arch_ruined.webp", restored: "assets/scenes/parts/arch_restored.webp" },
     { id: "balcony", name: "Balcony", cost: 24, story: "balcony", emoji: "🏛️",
@@ -157,11 +157,20 @@ window.GAME_CONFIG = {
         { key: "tale1p3", img: "assets/scenes/tale/tale1_3.webp", fallback: "assets/tiles/talisman.webp", fit: "contain" },
       ],
     },
+    tale2: {
+      host: "nasrin", kicker: "taleKicker2", title: "tale2Title", mission: "door",
+      pages: [
+        { key: "tale2p1", img: "assets/scenes/tale/tale2_1.webp", fallback: "assets/scenes/tale/tale1_2.webp" },
+        { key: "tale2p2", img: "assets/scenes/tale/tale2_2.webp", fallback: "assets/scenes/tale/tale1_3.webp" },
+        { key: "tale2p3", img: "assets/scenes/tale/tale2_3.webp", fallback: "assets/scenes/tale/tale1_1.webp" },
+      ],
+    },
   },
 
   /* Story missions (js/mission.js): a mini-game after a chapter, opened by domeParts[].mission. */
   missions: {
     twins: { host: "nasrin", maxTries: 14, reward: { energy: 20, stars: 3 } }, // after the Stone Stairs; 6 pairs, 14 tries
+    door: { host: "nasrin", maxTries: 6, reward: { energy: 25, stars: 5 } },  // after the arch; a 4x4 wall, 6 knocks
   },
 
   talisman: {
