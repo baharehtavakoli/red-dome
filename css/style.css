@@ -1777,7 +1777,8 @@ html.ui-art #mission .bt-board-wrap { padding-top: 18px; padding-left: 18px; pad
 #mission .bt-cell { transition: opacity .2s, transform .2s, filter .2s; }
 #mission .bt-cell.match { box-shadow: 0 0 0 3px #ffd76a, 0 0 12px rgba(255, 200, 80, .9); animation: bt-match .7s ease-in-out infinite alternate; }
 @keyframes bt-match { to { transform: scale(1.06); } }
-#mission .bt-cell.dim { opacity: .4; filter: grayscale(.6); }
+#mission .bt-cell.queued { box-shadow: 0 0 0 3px #ffd76a, 0 0 14px rgba(255, 200, 80, 1); transform: scale(.94); }
+#mission .bt-cell.stone i { background: #3d332a; }
 #mission .bt-cell.nope { animation: bt-nope .35s ease; }
 @keyframes bt-nope { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
 #mission .bt-cell.stone { background: linear-gradient(160deg, #a89a88, #6f6253) !important; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .3), inset 0 2px 0 rgba(255, 255, 255, .25) !important;

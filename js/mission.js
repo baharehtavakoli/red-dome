@@ -138,7 +138,7 @@
 
     const $ = (s) => layer.querySelector(s);
     const boardEl = $(".bt-board"), fxEl = $(".bt-fx"), gEl = $(".bt-guardian"), pEl = $(".bt-prince");
-    let gHp = gMax, pHp = pMax, shield = 0, stun = 0, since = 0, moves = 0, over = false, busy = false, sel = -1, angry = false;
+    let gHp = gMax, pHp = pMax, shield = 0, stun = 0, since = 0, moves = 0, over = false, busy = false, sel = -1, angry = false, queued = null;
     let board = Array.from({ length: W * H }, rnd);
     // make sure the first board has something to merge for every tool
     TOOL_KEYS.forEach((k, i) => { board[i * 2] = { k }; board[i * 2 + 9] = { k }; });
@@ -211,13 +211,13 @@
       $(".bt-shield b").textContent = shield > 1 ? "×" + shield : "";
       $(".bt-cracks").style.opacity = String(Math.min(1, (1 - gHp / gMax) * 1.2));
     };
-    // picking a tool lights up the tools it can go with and dims the rest
+    // picking a tool lights up the tools it can go with; stones show how many moves they have left
     const render = () => {
       const pk = sel >= 0 && board[sel] ? board[sel].k : null;
       boardEl.innerHTML = board.map((c, i) => {
         if (!c) return `<div class="bt-cell empty"></div>`;
-        if (c.k === "stone") return `<div class="bt-cell stone${c.fresh ? " fresh" : ""}"><span>🪨</span></div>`;
-        const st = i === sel ? " sel" : pk ? (c.k === pk ? " match" : " dim") : "";
+        if (c.k === "stone") return `<div class="bt-cell stone${c.fresh ? " fresh" : ""}"><span>🪨</span><i>${c.t}</i></div>`;
+        const st = queued && queued.includes(i) ? " queued" : i === sel ? " sel" : pk && c.k === pk ? " match" : "";
         return `<button class="bt-cell${st}" data-i="${i}" data-k="${c.k}">${icon(c.k)}</button>`;
       }).join("");
       board.forEach((c) => { if (c) delete c.fresh; });
@@ -397,6 +397,7 @@
       board[b] = null;
       render();
       Sfx.play("merge", 2);
+      setTimeout(() => { if (!over) { refill(); render(); } }, 160);
       await act(k);
       if (over) return;
       if (gHp <= 0) return win();
@@ -417,16 +418,21 @@
       }
       if (over) return;
       if (pHp <= 0) return lose();
-      // new tools drop into the empty cells
-      await sleep(150);
+      refill();
+      render();
+      busy = false;
+      // a pair picked while the fight was playing goes now
+      const q = queued;
+      queued = null;
+      if (q && board[q[0]] && board[q[1]] && board[q[0]].k === board[q[1]].k && board[q[0]].k !== "stone") merge(q[0], q[1]);
+    }
+    // new tools drop into the empty cells; never leave the board stuck
+    function refill() {
       board = board.map((c) => c || rnd());
       if (!hasMove()) {
-        // never leave the board stuck: copy one tool onto another so a pair exists
         const tools = board.map((c, i) => (c && c.k !== "stone" ? i : -1)).filter((i) => i >= 0);
         if (tools.length > 1) board[tools[1]] = { k: board[tools[0]].k };
       }
-      render();
-      busy = false;
     }
 
     async function win() {
@@ -466,11 +472,11 @@
     let dragFrom = -1;
     boardEl.addEventListener("pointerdown", (e) => {
       const c = e.target.closest(".bt-cell[data-i]");
-      if (!c || busy || over) return;
+      if (!c || over) return;
       dragFrom = +c.dataset.i;
     });
     boardEl.addEventListener("pointerup", (e) => {
-      if (busy || over) return;
+      if (over) return;
       const el = document.elementFromPoint(e.clientX, e.clientY);
       const c = el && el.closest(".bt-cell[data-i]");
       const to = c ? +c.dataset.i : -1;
@@ -479,7 +485,11 @@
       if (to < 0) return;
       const tryMerge = (a, b) => {
         const A = board[a], B = board[b];
-        if (a !== b && A && B && A.k === B.k) { merge(a, b); return true; }
+        if (a !== b && A && B && A.k === B.k) {
+          if (busy) { queued = [a, b]; sel = -1; render(); Sfx.play("select"); }
+          else merge(a, b);
+          return true;
+        }
         return false;
       };
       const nope = (i) => { Sfx.play("error"); sel = -1; render(); const el = boardEl.children[i]; if (el) anim(el, "nope", 350); };
