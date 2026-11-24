@@ -200,7 +200,7 @@ window.GAME_CONFIG = {
                sword: "assets/scenes/battle/sword.webp",
                shield: "assets/scenes/battle/shield.webp",
                rose: "assets/scenes/battle/rosewater.webp",
-               star: "assets/items/star.webp",
+               star: "assets/scenes/battle/delay.webp",
              } },
   },
 

@@ -1679,7 +1679,7 @@ html[dir="rtl"] #mission .bt-title { font: 800 19px/1.3 "Vazirmatn", sans-serif;
 @keyframes bt-float { from { opacity: 1; transform: translate(-50%, 0) scale(1.2); } to { opacity: 0; transform: translate(-50%, -60px) scale(1); } }
 #mission .bt-board-wrap { flex: 0 0 auto; padding: 8px 12px max(10px, env(safe-area-inset-bottom)); text-align: center;
   background: linear-gradient(180deg, #fbf1dc, #ecd8b0); border-top: 3px solid #c99a3a; }
-html.ui-art #mission .bt-board-wrap { background: none; border: 22px solid transparent; border-image: url("../assets/ui/modal_frame.webp") 44 fill / 22px stretch; }
+html.ui-art #mission .bt-board-wrap { background: none; border: 30px solid transparent; border-image: url("../assets/scenes/battle/battle_tray.webp") 130 fill / 30px stretch; }
 #mission .bt-tip { margin: 2px 0 6px; font: 700 12.5px/1.5 "Nunito", sans-serif; color: var(--ink); }
 html[dir="rtl"] #mission .bt-tip { font-family: "Vazirmatn", sans-serif; }
 #mission .bt-board { direction: ltr; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; width: min(100%, 290px); margin: 0 auto; touch-action: none; }
@@ -1800,3 +1800,37 @@ html.ui-art #mission .bt-board-wrap { padding: 0 2px max(0px, env(safe-area-inse
 #test-bar button { padding: 6px 12px; border-radius: 14px; border: 0; background: linear-gradient(180deg, #ffe08a, #e0a83a); color: #5a1020; font: 800 12px/1 "Nunito", "Vazirmatn", sans-serif; }
 #test-bar button:disabled { opacity: .45; }
 #test-bar[hidden] { display: none; }
+
+/* ---------- battle board v3: the gilded tray (battle_tray.webp) with full-size corners, and enamel slots per tool ---------- */
+html.ui-art #mission .bt-board-wrap {
+  position: relative; z-index: 1; margin: 0 4px 4px; padding: 6px 10px max(6px, env(safe-area-inset-bottom));
+  border: 16px solid transparent;
+  border-image: url("../assets/scenes/battle/battle_tray.webp") 130 fill / 48px / 0 stretch;
+  filter: drop-shadow(0 -4px 10px rgba(30, 8, 20, .45));
+}
+html.ui-art #mission .bt-tip { margin-top: 4px; color: #5a2a14; }
+/* each tool sits in its own enamel slot, like the order and generator slots elsewhere in the game */
+html.ui-art #mission .bt-cell { border-radius: 14px; background: url("../assets/ui/slot_gold.webp") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 2px 2px rgba(70, 30, 10, .35)); transition: transform .12s ease; }
+html.ui-art #mission .bt-cell[data-k="sword"] { background-image: url("../assets/ui/slot_clay.webp"); }
+html.ui-art #mission .bt-cell[data-k="shield"] { background-image: url("../assets/ui/slot_gold.webp"); }
+html.ui-art #mission .bt-cell[data-k="rose"] { background-image: url("../assets/ui/slot_turquoise.webp"); }
+html.ui-art #mission .bt-cell[data-k="star"] { background-image: url("../assets/ui/slot_lapis.webp"); }
+html.ui-art #mission .bt-cell img { width: 74%; height: 74%; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .45)); }
+html.ui-art #mission .bt-cell.empty { background: url("../assets/ui/board_tile_dark.webp") center / 100% 100%; border-radius: 14px; opacity: .45; filter: none; }
+html.ui-art #mission .bt-cell.stone { background-image: url("../assets/ui/slot_gold.webp"); }
+html.ui-art #mission .bt-cell.sel { outline: 0; transform: scale(1.08); filter: drop-shadow(0 0 6px #ffd76a) drop-shadow(0 0 3px #fff4c0); }
+html.ui-art #mission .bt-legend small { color: #5a2a14; }
+
+/* ---------- battle HP bars: the game's gilded progress frame (cropped to hp_frame.webp) with painted fills ---------- */
+html.ui-art #mission .bt-bars { gap: 6px; padding: 4px 8px; }
+html.ui-art #mission .bt-bar b { margin-bottom: 2px; letter-spacing: .3px; color: #ffe7a8; text-shadow: 0 1px 0 #5a1a10, 0 1px 4px #000; }
+html.ui-art #mission .bt-bar i {
+  height: 23px; box-sizing: border-box; padding: 5px 0; border-radius: 0; overflow: visible; background: none;
+  border: 0 solid transparent; border-width: 0 30px;
+  border-image: url("../assets/scenes/battle/hp_frame.webp") 0 60 fill / 0 30px stretch;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .5));
+}
+html.ui-art #mission .bt-bar span { border-radius: 7px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -2px 2px rgba(0, 0, 0, .25); }
+html.ui-art #mission .bt-bar.p span { background: url("../assets/ui/progress_fill.webp") center / 100% 100%; }
+html.ui-art #mission .bt-bar.g span { background: linear-gradient(180deg, #ffe9a0, #e0a83a 50%, #a8681a); }
