@@ -19,10 +19,10 @@
         const el = document.createElement("div");
         el.id = "tale";
         const book = GAME_CONFIG.taleBook;
-        const bookArt = book && (!GAME_CONFIG.tryImages || Art.has(book));
+        const bookArt = !!book; // the picture may still be preloading: show it anyway, the 📖 replaces it only if it fails
         el.innerHTML = `
           <div class="tl-cover">
-            <div class="tl-cover-pic">${bookArt ? `<img src="${book}" alt="" draggable="false">` : '<span class="tl-cover-ic">📖</span>'}</div>
+            <div class="tl-cover-pic">${bookArt ? `<img src="${book}" alt="" draggable="false" onerror="this.outerHTML='<span class=&quot;tl-cover-ic&quot;>📖</span>'">` : '<span class="tl-cover-ic">📖</span>'}</div>
             <div class="tl-cover-text">
               <small>${t(tale.kicker)}</small><b>${t(tale.title)}</b>
               <button class="btn gold tl-open">${t("taleOpen")}</button>

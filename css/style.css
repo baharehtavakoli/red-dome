@@ -1844,3 +1844,8 @@ html.ui-art #mission .bt-bar.g span { background: linear-gradient(180deg, #ffe9a
 /* ---------- Dome button: when the next part can be built, it bobs (with its "!" badge) ---------- */
 .back-btn.notify { animation: back-call 1.6s ease-in-out infinite; }
 @keyframes back-call { 0%, 55%, 100% { transform: translateY(0); } 65% { transform: translateY(-5px); } 75% { transform: translateY(0); } 85% { transform: translateY(-3px); } }
+
+/* ---------- tale cover: the dark band under the title runs the full screen width (it stopped at 520px) ---------- */
+#tale .tl-cover-text { width: 100%; }
+#tale .tl-cover-text > * { max-width: 520px; margin-left: auto; margin-right: auto; }
+#tale .tl-cover-text .tl-open { margin-left: auto; margin-right: auto; }

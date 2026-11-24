@@ -151,7 +151,7 @@ window.GAME_CONFIG = {
      img = the page's picture; until it exists, fallback is shown (fit: "cover" | "contain" | "portrait"). */
   taleBook: "assets/scenes/tale/tale_book.webp", // the storybook on the desk, shown before every tale night
   tales: {
-    // night 1, after the Stone Stairs: the princess, her castle, the prince in red; then he fights a guardian
+    // night 1, after the Pool & Fountain: the princess, her castle, the prince in red; then he fights a guardian
     tale1: {
       host: "nasrin", kicker: "taleKicker1", title: "tale1Title", mission: "guard",
       pages: [
