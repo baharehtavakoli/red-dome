@@ -62,60 +62,151 @@
     }));
   }
 
-  /* ---------- The wall without a door: knock on stones, the drum answers louder near the door ---------- */
+  /* ---------- The guardian wakes: block its blows by tapping when the golden ring meets the chest symbol ---------- */
+  function guard(body, done, fail, opts = {}) {
+    const need = opts.blocks || 5, lives = opts.lives || 3;
+    const useArt = opts.art && Art.has(opts.art);
+    const art = useArt ? opts.art : opts.fallback;
+    const f = (useArt ? opts.focus : opts.fallbackFocus) || [50, 50];
+    body.innerHTML = `
+      <p class="ms-tip">${t("guardTip")}</p>
+      <div class="gd-hud"><span class="gd-hearts"></span><span class="gd-count"></span></div>
+      <div class="gd-arena" style="--fx:${f[0]}%;--fy:${f[1]}%">
+        <img class="gd-img" src="${art}" alt="" draggable="false">
+        <div class="gd-target"></div><div class="gd-ring"></div><div class="gd-flash"></div>
+      </div>
+      <button class="btn gold wide gd-block">🛡️ ${t("guardBlock")}</button>`;
+    const arena = body.querySelector(".gd-arena"), ring = body.querySelector(".gd-ring");
+    const hearts = body.querySelector(".gd-hearts"), count = body.querySelector(".gd-count");
+    let hp = lives, ok = 0, attack = null, over = false, speed = 1700;
+    const hud = () => {
+      hearts.textContent = "❤️".repeat(Math.max(0, hp)) + "🖤".repeat(Math.max(0, lives - hp));
+      count.textContent = t("guardLeft", { n: Math.max(0, need - ok) });
+    };
+    const strike = () => {
+      if (over) return;
+      attack = { t0: performance.now(), dur: speed };
+      ring.style.animation = "none"; void ring.offsetWidth;
+      ring.style.animation = `gd-shrink ${speed}ms linear forwards`;
+      arena.classList.add("winding");
+      attack.timer = setTimeout(() => settle(false), speed + 150); // too late: the blow lands
+    };
+    const settle = async (blocked) => {
+      if (!attack || over) return;
+      clearTimeout(attack.timer);
+      attack = null;
+      ring.style.animation = "none";
+      arena.classList.remove("winding", "blocked", "hurt");
+      void arena.offsetWidth;
+      if (blocked) {
+        ok++;
+        Sfx.play("clang");
+        arena.classList.add("blocked");
+        UI.sparkle(body.querySelector(".gd-target").getBoundingClientRect(), 10);
+        speed = Math.max(900, speed - 170); // each blow comes a little faster
+      } else {
+        hp--;
+        Sfx.play("error");
+        arena.classList.add("hurt");
+      }
+      hud();
+      if (ok >= need) {
+        over = true;
+        await sleep(500);
+        arena.classList.add("asleep");
+        await sleep(1000);
+        return done(lives - hp);
+      }
+      if (hp <= 0) {
+        over = true;
+        await sleep(800);
+        return fail();
+      }
+      setTimeout(strike, 550 + Math.random() * 700);
+    };
+    // the ring shrinks from 2.4x to 0.8x: it meets the symbol at 87.5% of the way
+    const tap = (e) => {
+      e.preventDefault();
+      if (!attack || over) return;
+      const p = (performance.now() - attack.t0) / attack.dur;
+      settle(p >= 0.74 && p <= 0.99);
+    };
+    arena.addEventListener("pointerdown", tap);
+    body.querySelector(".gd-block").addEventListener("pointerdown", tap);
+    hud();
+    setTimeout(strike, 900);
+  }
+
+  /* ---------- The wall without a door: rotate the stones until the golden lines draw the door ---------- */
   function door(body, done, fail, opts = {}) {
-    const COLS = 4, ROWS = 4, max = opts.maxTries || 6;
-    const target = Math.floor(Math.random() * COLS * ROWS);
-    const dist = (i) => Math.abs((i % COLS) - (target % COLS)) + Math.abs(Math.floor(i / COLS) - Math.floor(target / COLS));
+    const C = 4, R = 5;
+    // connections per stone: N=1 E=2 S=4 W=8; 0 = a door panel inside the outline (does not turn)
+    const SOL = [6, 10, 10, 12, 5, 0, 0, 5, 5, 0, 0, 5, 5, 0, 0, 5, 3, 10, 10, 9];
+    const turn = (m, k) => { for (let i = 0; i < k % 4; i++) m = ((m << 1) | (m >> 3)) & 15; return m; };
+    const P = { 1: [50, 0], 2: [100, 50], 4: [50, 100], 8: [0, 50] };
+    const draw = (m) => {
+      const b = [1, 2, 4, 8].filter((x) => m & x);
+      if (b.length !== 2) return "";
+      const [a, c] = b.map((x) => P[x]);
+      const straight = (m === 5 || m === 10);
+      const d = straight ? `M${a[0]} ${a[1]} L${c[0]} ${c[1]}` : `M${a[0]} ${a[1]} Q50 50 ${c[0]} ${c[1]}`;
+      return `<svg viewBox="0 0 100 100"><path d="${d}" class="dr-line"/><path d="${d}" class="dr-core"/></svg>`;
+    };
+    // every stone starts turned the wrong way
+    const rot = SOL.map((m) => {
+      if (!m) return 0;
+      const wrong = [1, 2, 3].filter((k) => turn(m, k) !== m);
+      return U.pick(wrong);
+    });
+    const minTaps = SOL.reduce((s, m, i) => {
+      if (!m) return s;
+      let k = 1;
+      while (turn(m, rot[i] + k) !== m) k++;
+      return s + k;
+    }, 0);
+    const max = minTaps + (opts.extraTurns ?? 6);
     body.innerHTML = `
       <p class="ms-tip">${t("doorTip")}</p>
-      <div class="dr-drum"><span>🥁</span></div>
-      <p class="dr-say">&nbsp;</p>
-      <div class="dr-wall">${Array.from({ length: COLS * ROWS }, (_, i) => `<button class="dr-stone" data-i="${i}" aria-label="stone"></button>`).join("")}</div>
+      <div class="dr-grid">${SOL.map((m, i) => m
+        ? `<button class="dr-tile" data-i="${i}" aria-label="stone"><div class="dr-rot" style="transform:rotate(${rot[i] * 90}deg)">${draw(m)}</div></button>`
+        : `<div class="dr-panel"></div>`).join("")}</div>
       <p class="ms-moves">${t("doorLeft", { n: max })}</p>`;
-    const drum = body.querySelector(".dr-drum"), say = body.querySelector(".dr-say"), moves = body.querySelector(".ms-moves");
-    let n = 0, lock = false;
-    body.querySelectorAll(".dr-stone").forEach((st) => st.addEventListener("click", async () => {
-      if (lock || st.classList.contains("knocked")) return;
-      lock = true;
+    const moves = body.querySelector(".ms-moves"), grid = body.querySelector(".dr-grid");
+    let n = 0, over = false;
+    const solved = () => SOL.every((m, i) => !m || turn(m, rot[i]) === m);
+    body.querySelectorAll(".dr-tile").forEach((tile) => tile.addEventListener("click", async () => {
+      if (over) return;
+      const i = +tile.dataset.i;
+      rot[i]++;
       n++;
-      const i = +st.dataset.i, d = dist(i);
-      Sfx.play("knock");
-      st.classList.add("knocked", "hit");
+      tile.firstElementChild.style.transform = `rotate(${rot[i] * 90}deg)`;
+      tile.classList.toggle("ok", turn(SOL[i], rot[i]) === SOL[i]);
+      Sfx.play("place");
       moves.textContent = t("doorLeft", { n: max - n });
-      moves.classList.toggle("low", max - n <= 2);
-      if (d === 0) {
-        Sfx.play("drum", 3);
-        drum.className = "dr-drum heat3";
-        st.classList.add("door");
-        say.textContent = t("doorHot");
-        await sleep(900);
+      moves.classList.toggle("low", max - n <= 3);
+      if (solved()) {
+        over = true;
+        await sleep(350);
+        grid.classList.add("done");
+        Sfx.play("charm");
+        await sleep(1300);
+        grid.classList.add("open");
         Sfx.play("open");
-        UI.sparkle(st.getBoundingClientRect(), 16);
-        await sleep(700);
+        await sleep(900);
         return done(n);
       }
-      const heat = d === 1 ? 3 : d === 2 ? 2 : 1;
-      Sfx.play("drum", heat);
-      st.classList.add("h" + heat);
-      drum.className = "dr-drum"; void drum.offsetWidth; drum.className = "dr-drum heat" + heat;
-      say.textContent = t(heat === 3 ? "doorHot" : heat === 2 ? "doorWarm" : "doorCold");
-      await sleep(500);
-      st.classList.remove("hit");
-      lock = false;
       if (n >= max) {
-        lock = true;
-        await sleep(500);
-        // show where the door was, then close
-        body.querySelector(`.dr-stone[data-i="${target}"]`).classList.add("missed");
+        over = true;
+        await sleep(400);
+        grid.classList.add("failed");
         Sfx.play("error");
-        await sleep(1100);
+        await sleep(900);
         fail();
       }
     }));
   }
 
-  const GAMES = { twins, door };
+  const GAMES = { twins, door, guard };
 
   const Mission = {
     open: false,
@@ -138,6 +229,8 @@
       });
       document.getElementById("scene-screen").appendChild(btn);
       this.btn = btn;
+      const g = cfg().guard;
+      if (g) Art.probe([g.art, g.fallback].filter(Boolean), () => {});
       Art.probe(["assets/ui/icons/story.webp"], () => { btn.firstElementChild.outerHTML = Art.html("assets/ui/icons/story.webp", "📜", "gift-ic"); });
       this.refresh();
     },
@@ -187,7 +280,7 @@
           el.querySelector(".ms-actions").innerHTML = `<button class="btn ghost wide" data-later>${t("missionLater")}</button>`;
           el.querySelector("[data-later]").addEventListener("click", close);
           // 2. the game
-          game(el.querySelector(".ms-body"), won, lost, { maxTries: m.maxTries });
+          game(el.querySelector(".ms-body"), won, lost, m);
         };
         // out of tries: no reward, play it again (now or later)
         const lost = () => {
@@ -218,7 +311,8 @@
           el.classList.add("won");
           el.querySelector("h3").textContent = t(id + "WinTitle");
           el.querySelector(".ms-say p").textContent = t(id + "Win");
-          el.querySelector(".ms-body").innerHTML = `<p class="ms-moves">${t("twinsMoves", { n: moves })}</p><div class="ms-gift">${gift}</div>`;
+          const res = t(id + "Result", { n: moves });
+          el.querySelector(".ms-body").innerHTML = `<p class="ms-moves">${res !== id + "Result" ? res : t("twinsMoves", { n: moves })}</p><div class="ms-gift">${gift}</div>`;
           el.querySelector(".ms-actions").innerHTML = `<button class="btn gold wide" data-collect>${t("missionCollect")}</button>`;
           const b = el.querySelector("[data-collect]");
           b.addEventListener("click", () => { UI.sparkle(b.getBoundingClientRect(), 16); Sfx.play("energy"); close(); });

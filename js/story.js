@@ -69,9 +69,9 @@ window.STORY = {
     title: "The Great Arch",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "This arch reminds me of a wall in our tale. A wall with no door at all." },
-      { who: "shideh", text: "A wall with no door? Who was the architect?" },
-      { who: "nasrin", text: "...Sit down. I'll tell you." },
+      { who: "nasrin", text: "Look at this arch: every stone has a twin it leans on." },
+      { who: "shideh", text: "If one of them goes, the arch falls." },
+      { who: "nasrin", text: "That was the secret of the talismans in our tale too. Sit down." },
     ],
   },
 
@@ -94,6 +94,7 @@ window.STORY = {
       { who: "sage", text: "Greetings, architect. I am the sage of this mountain; for thirty years I have counted the stars from here." },
       { who: "shideh", text: "So the astrolabe was yours. It showed me exactly where the dome should go." },
       { who: "sage", text: "I only showed you the star. Building it was your work." },
+      { who: "nasrin", side: "left", text: "You should sit down too, sage. You must hear this part of the tale." },
     ],
   },
 

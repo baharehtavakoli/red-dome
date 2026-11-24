@@ -90,19 +90,19 @@ window.GAME_CONFIG = {
     { id: "terrace", name: "Terrace", cost: 5, story: "terrace", emoji: "🧱",
       box: { x: 0, y: 161, w: 360, h: 371 }, focus: { x: 20, y: 430, w: 320, h: 80 }, button: { x: 180, y: 476 },
       ruined: "assets/scenes/parts/terrace_ruined.webp", restored: "assets/scenes/parts/terrace_restored.webp" },
-    { id: "stairs", name: "Stone Stairs", cost: 8, story: "stairs", tale: "tale1", mission: "twins", emoji: "🪜",
+    { id: "stairs", name: "Stone Stairs", cost: 8, story: "stairs", tale: "tale1", mission: "guard", emoji: "🪜",
       box: { x: 31, y: 163, w: 298, h: 319 }, focus: { x: 70, y: 420, w: 220, h: 85 }, button: { x: 180, y: 440 },
       ruined: "assets/scenes/parts/stairs_ruined.webp", restored: "assets/scenes/parts/stairs_restored.webp" },
     { id: "walls", name: "Red Brick Walls", cost: 12, story: "walls", emoji: "🧱",
       box: { x: 0, y: 34, w: 360, h: 406 }, focus: { x: 25, y: 265, w: 310, h: 185 }, button: { x: 90, y: 360 },
       ruined: "assets/scenes/parts/walls_ruined.webp", restored: "assets/scenes/parts/walls_restored.webp" },
-    { id: "arch", name: "Iwan & Doors", cost: 18, story: "arch", tale: "tale2", mission: "door", emoji: "🚪",
+    { id: "arch", name: "Iwan & Doors", cost: 18, story: "arch", tale: "tale2", mission: "twins", emoji: "🚪",
       box: { x: 31, y: 163, w: 273, h: 260 }, focus: { x: 120, y: 290, w: 120, h: 160 }, button: { x: 180, y: 330 },
       ruined: "assets/scenes/parts/arch_ruined.webp", restored: "assets/scenes/parts/arch_restored.webp" },
     { id: "balcony", name: "Balcony", cost: 24, story: "balcony", emoji: "🏛️",
       box: { x: 22, y: 36, w: 337, h: 404 }, focus: { x: 30, y: 210, w: 300, h: 100 }, button: { x: 180, y: 250 },
       ruined: "assets/scenes/parts/balcony_ruined.webp", restored: "assets/scenes/parts/balcony_restored.webp" },
-    { id: "dome", name: "Red Dome", cost: 32, story: "dome", emoji: "🕌",
+    { id: "dome", name: "Red Dome", cost: 32, story: "dome", tale: "tale3", mission: "door", emoji: "🕌",
       box: { x: 0, y: 34, w: 360, h: 425 }, focus: { x: 95, y: 60, w: 170, h: 160 }, button: { x: 180, y: 140 },
       ruined: "assets/scenes/parts/dome_ruined.webp", restored: "assets/scenes/parts/dome_restored.webp" },
     { id: "tiles", name: "Tilework", cost: 42, story: "tiles", emoji: "💠",
@@ -149,20 +149,31 @@ window.GAME_CONFIG = {
      img = the page's picture; until it exists, fallback is shown (fit: "cover" | "contain" | "portrait"). */
   taleBook: "assets/scenes/tale/tale_book.webp", // the storybook on the desk, shown before every tale night
   tales: {
+    // night 1, after the Stone Stairs: the princess, her castle, the prince in red; then he fights a guardian
     tale1: {
-      host: "nasrin", kicker: "taleKicker1", title: "tale1Title", mission: "twins",
+      host: "nasrin", kicker: "taleKicker1", title: "tale1Title", mission: "guard",
       pages: [
         { key: "tale1p1", img: "assets/scenes/tale/tale1_1.webp", fallback: "assets/characters/nasrin.webp", fit: "portrait" },
         { key: "tale1p2", img: "assets/scenes/tale/tale1_2.webp", fallback: "assets/scenes/intro/intro_ladies.webp" },
-        { key: "tale1p3", img: "assets/scenes/tale/tale1_3.webp", fallback: "assets/tiles/talisman.webp", fit: "contain" },
+        { key: "tale1p3", img: "assets/scenes/tale/tale1_3b.webp", fallback: "assets/scenes/tale/tale1_3.webp" },
       ],
     },
+    // night 2, after the arch: the sage and the secret of the twin talismans
     tale2: {
-      host: "nasrin", kicker: "taleKicker2", title: "tale2Title", mission: "door",
+      host: "nasrin", kicker: "taleKicker2", title: "tale2Title", mission: "twins",
       pages: [
         { key: "tale2p1", img: "assets/scenes/tale/tale2_1.webp", fallback: "assets/scenes/tale/tale1_2.webp" },
-        { key: "tale2p2", img: "assets/scenes/tale/tale2_2.webp", fallback: "assets/scenes/tale/tale1_3.webp" },
-        { key: "tale2p3", img: "assets/scenes/tale/tale2_3.webp", fallback: "assets/scenes/tale/tale1_1.webp" },
+        { key: "tale2p2", img: "assets/scenes/tale/tale2_2.webp", fallback: "assets/tiles/talisman.webp", fit: "contain" },
+        { key: "tale2p3", img: "assets/scenes/tale/tale1_3.webp", fallback: "assets/scenes/tale/tale1_3.webp" },
+      ],
+    },
+    // night 3, after the dome: the wall without a door
+    tale3: {
+      host: "nasrin", kicker: "taleKicker3", title: "tale3Title", mission: "door",
+      pages: [
+        { key: "tale3p1", img: "assets/scenes/tale/tale3_1.webp", fallback: "assets/scenes/tale/tale1_2.webp" },
+        { key: "tale3p2", img: "assets/scenes/tale/tale3_2.webp", fallback: "assets/scenes/tale/tale1_2.webp" },
+        { key: "tale3p3", img: "assets/scenes/tale/tale3_3.webp", fallback: "assets/scenes/tale/tale1_3.webp" },
       ],
     },
   },
@@ -170,7 +181,10 @@ window.GAME_CONFIG = {
   /* Story missions (js/mission.js): a mini-game after a chapter, opened by domeParts[].mission. */
   missions: {
     twins: { host: "nasrin", maxTries: 14, reward: { energy: 20, stars: 3 } }, // after the Stone Stairs; 6 pairs, 14 tries
-    door: { host: "nasrin", maxTries: 6, reward: { energy: 25, stars: 5 } },  // after the arch; a 4x4 wall, 6 knocks
+    door: { host: "nasrin", extraTurns: 6, reward: { energy: 25, stars: 5 } },  // after the dome; turns allowed = fewest needed + 6
+    guard: { host: "nasrin", blocks: 5, lives: 3, reward: { energy: 20, stars: 3 },   // after the stairs; block 5 blows, 3 hearts
+             art: "assets/scenes/tale/guardian_attack.webp", focus: [50, 50],          // focus = where the chest symbol is, in %
+             fallback: "assets/scenes/tale/guardian_temp.webp", fallbackFocus: [49, 50] },
   },
 
   talisman: {

@@ -25,14 +25,15 @@
 
   const S = {
     en: {
-      taleKicker1: "Nasrin-Nush's tale · Night 1", tale1Title: "The Talisman Road", taleOn: "Take the test", taleOpen: "Open the book", taleClose: "Close the book",
+      taleKicker1: "Nasrin-Nush's tale · Night 1", tale1Title: "The Prince in Red", taleOn: "Take the test", taleOpen: "Open the book", taleClose: "Close the book",
       tale1p1: "In my land there lived a princess, as clever as she was beautiful. Many kings came to ask for her hand, but most of them wanted her throne, not her.",
       tale1p2: "So the princess built a castle high on a mountain, and set talismans along the road to stop every stranger. The names of those who failed were hung on the city gate, for everyone to read.",
-      tale1p3: "Every talisman on that road had a twin. Only a suitor who found the twins could pass.",
+      tale1p3: "One day a young prince came to that city and saw the princess's portrait on the gate. He lost his heart at first sight. He put on red, the colour of those who seek justice, and set out for the mountain.",
       twinsLeft: "Tries left: {n}", twinsFailTitle: "The talismans woke up!", missionRetry: "Try again",
       twinsFail: "The road has closed again. Talismans are not easy: try once more.",
       use_pebble: "the foundation mortar", use_stone: "the stairs", use_red_brick: "the columns", use_red_tile: "the hall floor", use_glazed_red_tile: "the mihrab wall", use_carved_red_panel: "the porch gateway", use_rough_gem: "the turquoise patterns over the gate", use_polished_gem: "the jewels in the dome ceiling", use_pearl: "the edges of the muqarnas", use_pearl_string: "the chandelier in the hall", use_royal_pearl: "the crown on top of the dome", use_star_shard: "the dome windows", use_star: "the sunburst in the middle of the ceiling", use_astrolabe_charm: "breaking the talismans", use_seed: "the flower beds by the pool", use_sprout: "the garden beds", use_rose_bush: "the foot of the walls", use_pomegranate_tree: "the courtyard", ord_mehrab0: "Master, I need this {item} for {use}.", ord_mehrab1: "I need a {item}, master, for {use}.", ord_mehrab2: "Bring me a {item} for {use}!", ord_shideh0: "I need this {item} for {use}.", ord_shideh1: "A {item}, please, for {use}.", ord_shideh2: "We're short of a {item} for {use}.", ord_golnar0: "I want a {item} for {use}!", ord_golnar1: "Bring me a {item} for {use}!", ord_golnar2: "This {item} is for {use}!",
-      taleKicker2: "Nasrin-Nush's tale · Night 2", tale2Title: "The Wall Without a Door", tale2p1: "At the end of the road stood a high wall: a wall with no door. No gate, not even a crack.", tale2p2: "The only thing on that wall was a drum, hanging there. Whoever knocked on the stones, the drum answered.", tale2p3: "Most suitors grew tired and turned back. Only someone patient, who listened well, could find the door.", doorTitle: "The Wall Without a Door", doorIntro: "Now you stand before that wall. Knock on the stones and listen: the closer you are to the door, the louder the drum answers.", doorTip: "Tap a stone to knock. Watch the drum and the stone: the closer to the door, the stronger they glow.", doorLeft: "Knocks left: {n}", doorCold: "The drum stays silent.", doorWarm: "The drum trembles softly...", doorHot: "The drum answers loudly!", doorWinTitle: "The door opened!", doorWin: "You were patient, and you found it. But behind this door, the princess had left one more test...", doorFailTitle: "The drum fell silent", doorFail: "The wall is quiet again. Listen more closely, and try once more.",
+      taleKicker2: "Nasrin-Nush's tale · Night 2", tale2Title: "The Secret of the Talismans", tale2p1: "Tired and wounded, the prince came down the mountain and went to a sage who lived in a cave above the valley.", tale2p2: "The sage said: “Talismans are not broken with swords. Every talisman has a twin; find its twin, and it will step aside by itself.”", tale2p3: "The prince went back to the road. This time he looked at the guardians one by one, and found the twins.", doorTitle: "The Wall Without a Door", doorIntro: "Now you stand before that wall. Turn the stones until the golden lines meet and draw the door.", doorTip: "Tap a stone to turn it. When every golden line joins up, the door appears.", doorLeft: "Turns left: {n}", doorCold: "The drum stays silent.", doorWarm: "The drum trembles softly...", doorHot: "The drum answers loudly!", doorWinTitle: "The door opened!", doorWin: "The outline of the door was complete, and it opened slowly. But behind this door, the princess had left one more test...", doorFailTitle: "The door stayed hidden", doorFail: "The wall closed up again. Turn the stones more carefully, and try once more.",
+      taleKicker3: "Nasrin-Nush's tale · Night 3", tale3Title: "The Wall Without a Door", tale3p1: "At the end of the road the prince reached a high wall: a wall with no door. No gate, not even a crack.", tale3p2: "The only thing on that wall was a drum, hanging there. Whoever knocked on the stones, the drum answered.", tale3p3: "The other suitors had grown tired and turned back. But the prince was patient and listened to the drum; with every beat, a golden line shone on the stones, and the outline of a hidden door began to appear.", twinsIntro: "Now you are the prince. Find the twin talismans to open the road.", twinsWin: "The talismans stepped aside. But higher up the road, something else was waiting for the prince...", guardTitle: "The Guardian Wakes", guardIntro: "At the first bend of the road, a bronze guardian opened its eyes and blocked the way. Raise your shield!", guardTip: "When the golden ring reaches the symbol on the guardian's chest, tap to block the blow.", guardBlock: "Block", guardLeft: "Blows to block: {n}", guardWinTitle: "The guardian fell asleep", guardWin: "The prince escaped alive. But he understood: no sword could get him past this road...", guardFailTitle: "The guardian drove the prince back", guardFail: "Catch your breath, and raise your shield again.", guardResult: "All the blows were blocked!", doorResult: "Turns: {n}",
       rwEnergy: "Energy", rwStars: "Stars",
       obPrev: "Back", obNext: "Next", obStart: "Build the Red Dome",
       ob1a: "Once upon a time, there lived a king named Bahram, who was fascinated by the mysteries of the sky and the planets.",
@@ -44,9 +45,7 @@
       ob5: "Merge items to make new materials and tools, and help Shideh build the Red Dome, step by step. As you build, Nasrin-Nush will tell you her tale.",
       missionKicker: "Story mission", missionStart: "Start", missionLater: "Later", missionCollect: "Collect",
       twinsTitle: "The Talisman Road", twinsTip: "Turn over two talismans. If they guard the same treasure, they are twins and the road opens.",
-      twinsIntro: "Now you are the suitor. Can you find the twins and open the road?",
       twinsMoves: "Tries: {n}", twinsWinTitle: "The road is open!",
-      twinsWin: "You would have passed the road! But the princess had harder tests still. Keep building and I'll tell you.",
       merge: "Workshop", dome: "Dome", skip: "Skip ›", skipConfirm: "Skip story? Tap again",
       deliver: "Deliver", sure: "Sure?", remove: "Remove", lv: "Lv",
       sellFor: "Sell for {n} stars", removeItem: "Remove item", activate: "Activate",
@@ -92,14 +91,15 @@
       dailyToast: "Day {n} gift: {gift}", boardFullStars: " (board full: +{n} ⭐)",
     },
     fa: {
-      taleKicker1: "قصه‌ی نسرین‌نوش · شب اول", tale1Title: "جاده‌ی طلسم‌ها", taleOn: "آزمون را بده", taleOpen: "باز کردن کتاب", taleClose: "بستن کتاب",
+      taleKicker1: "قصه‌ی نسرین‌نوش · شب اول", tale1Title: "شاهزاده‌ی سرخ‌پوش", taleOn: "آزمون را بده", taleOpen: "باز کردن کتاب", taleClose: "بستن کتاب",
       tale1p1: "در سرزمین من بانویی بود، هم زیرک و هم زیبا. شاهان بسیاری به خواستگاری‌اش آمدند، اما بیشترشان تاج و تخت او را می‌خواستند، نه خودش را.",
       tale1p2: "پس بانو دژی بر فراز کوه ساخت و بر سر راهش طلسم‌هایی گذاشت که هر غریبه‌ای را بازمی‌داشتند. نام آن‌ها که شکست می‌خوردند بر دروازه‌ی شهر آویخته می‌شد تا همه بخوانند.",
-      tale1p3: "هر طلسمِ آن جاده جفتی داشت. تنها خواستگاری که جفت‌ها را می‌یافت، می‌توانست از جاده بگذرد.",
+      tale1p3: "روزی شاهزاده‌ای جوان به آن شهر رسید و بر دروازه، تصویر بانو را دید. از همان نگاه دلش رفت. جامه‌ی سرخ پوشید، رنگ دادخواهی، و رو به کوه گذاشت.",
       twinsLeft: "تلاش‌های باقی‌مانده: {n}", twinsFailTitle: "طلسم‌ها بیدار شدند!", missionRetry: "دوباره امتحان کن",
       twinsFail: "راه دوباره بسته شد. طلسم‌ها آسان نیستند؛ یک بار دیگر امتحان کن.",
       use_pebble: "ملات پی", use_stone: "پله‌ها", use_red_brick: "ستون‌ها", use_red_tile: "کف تالار", use_glazed_red_tile: "دیوار محراب", use_carved_red_panel: "سردر ایوان", use_rough_gem: "نقش‌های فیروزه‌ای سردر", use_polished_gem: "نگین‌های سقف گنبد", use_pearl: "لبه‌ی مقرنس‌ها", use_pearl_string: "آویز چلچراغ تالار", use_royal_pearl: "تاج نوک گنبد", use_star_shard: "پنجره‌های گنبد", use_star: "شمسه‌ی وسط سقف", use_astrolabe_charm: "شکستن طلسم‌ها", use_seed: "باغچه‌های کنار حوض", use_sprout: "کرت‌های باغ", use_rose_bush: "پای دیوارها", use_pomegranate_tree: "حیاط", ord_mehrab0: "استاد، این {item} رو برای {use} می‌خوام.", ord_mehrab1: "{item} لازم دارم، استاد؛ برای {use}.", ord_mehrab2: "چند تا {item} برسون، برای {use}!", ord_shideh0: "این {item} رو برای {use} لازم دارم.", ord_shideh1: "{item} می‌خوام؛ برای {use}.", ord_shideh2: "برای {use}، {item} کم داریم.", ord_golnar0: "{item} رو برای {use} می‌خوام!", ord_golnar1: "برای {use} یه {item} بیار!", ord_golnar2: "برای {use}، {item} لازمه!",
-      taleKicker2: "قصه‌ی نسرین‌نوش · شب دوم", tale2Title: "دیوار بی‌در", tale2p1: "جاده که تمام می‌شد، به دیواری بلند می‌رسیدی؛ دیواری بی‌در. نه دروازه‌ای، نه حتی شکافی.", tale2p2: "تنها چیزی که بر آن دیوار بود، طبلی بود آویخته. هر که بر سنگ‌ها می‌کوبید، طبل جوابش را می‌داد.", tale2p3: "بیشتر خواستگاران خسته شدند و برگشتند. تنها کسی در را می‌یافت که صبور بود و خوب گوش می‌داد.", doorTitle: "دیوار بی‌در", doorIntro: "حالا تو پای آن دیواری. به سنگ‌ها بکوب و گوش کن؛ هر چه به در نزدیک‌تر باشی، طبل بلندتر جواب می‌دهد.", doorTip: "روی یک سنگ بزن تا بکوبی. به طبل و سنگ نگاه کن: هر چه به در نزدیک‌تر، درخشش بیشتر.", doorLeft: "کوبه‌های باقی‌مانده: {n}", doorCold: "طبل ساکت ماند.", doorWarm: "طبل آرام لرزید…", doorHot: "طبل بلند جواب داد!", doorWinTitle: "در باز شد!", doorWin: "صبور بودی و پیدایش کردی. ولی پشت این در، بانو آزمون دیگری هم گذاشته بود…", doorFailTitle: "طبل خاموش شد", doorFail: "دیوار دوباره ساکت است. آرام‌تر گوش کن و یک بار دیگر امتحان کن.",
+      taleKicker2: "قصه‌ی نسرین‌نوش · شب دوم", tale2Title: "راز طلسم‌ها", tale2p1: "شاهزاده خسته و زخمی از کوه پایین آمد و سراغ حکیمی رفت که در غاری بالای دره زندگی می‌کرد.", tale2p2: "حکیم گفت: «طلسم را با شمشیر نمی‌شکنند. هر طلسمی جفتی دارد؛ جفتش را پیدا کن تا خودش کنار برود.»", tale2p3: "شاهزاده به جاده برگشت. این بار نگهبان‌ها را یکی‌یکی نگاه کرد و جفت‌ها را پیدا کرد.", doorTitle: "دیوار بی‌در", doorIntro: "حالا تو پای آن دیواری. سنگ‌ها را بچرخان تا خط‌های طلایی به هم برسند و نقش در کامل شود.", doorTip: "روی هر سنگ بزن تا بچرخد. وقتی همه‌ی خط‌های طلایی به هم وصل شوند، در پیدا می‌شود.", doorLeft: "چرخش‌های باقی‌مانده: {n}", doorCold: "طبل ساکت ماند.", doorWarm: "طبل آرام لرزید…", doorHot: "طبل بلند جواب داد!", doorWinTitle: "در باز شد!", doorWin: "نقش در کامل شد و در آرام باز شد. ولی پشت این در، بانو آزمون دیگری هم گذاشته بود…", doorFailTitle: "در پنهان ماند", doorFail: "دیوار دوباره بسته شد. با دقت بیشتری بچرخان و یک بار دیگر امتحان کن.",
+      taleKicker3: "قصه‌ی نسرین‌نوش · شب سوم", tale3Title: "دیوار بی‌در", tale3p1: "جاده که تمام شد، شاهزاده به دیواری بلند رسید؛ دیواری بی‌در. نه دروازه‌ای، نه حتی شکافی.", tale3p2: "تنها چیزی که بر آن دیوار بود، طبلی بود آویخته. هر که بر سنگ‌ها می‌کوبید، طبل جوابش را می‌داد.", tale3p3: "خواستگاران دیگر خسته شده و برگشته بودند. ولی شاهزاده صبر کرد و به طبل گوش داد؛ با هر ضربه، خطی طلایی بر سنگ‌ها می‌درخشید و نقش دری پنهان پیدا می‌شد.", twinsIntro: "حالا تو جای شاهزاده‌ای. جفت طلسم‌ها را پیدا کن تا راه باز شود.", twinsWin: "طلسم‌ها کنار رفتند. ولی بالای جاده، چیز دیگری انتظار شاهزاده را می‌کشید…", guardTitle: "نگهبان بیدار شد", guardIntro: "در نخستین پیچ جاده، نگهبانی مفرغی چشم گشود و راه را بست. سپرت را بالا بگیر!", guardTip: "وقتی حلقه‌ی طلایی به نشانِ سینه‌ی نگهبان رسید، بزن تا ضربه را دفع کنی.", guardBlock: "دفاع", guardLeft: "ضربه‌های باقی‌مانده: {n}", guardWinTitle: "نگهبان به خواب رفت", guardWin: "شاهزاده جان سالم به در برد. ولی فهمید با شمشیر نمی‌شود از این جاده گذشت…", guardFailTitle: "نگهبان شاهزاده را عقب راند", guardFail: "نفسی تازه کن و دوباره سپر را بالا بگیر.", guardResult: "همه‌ی ضربه‌ها دفع شد!", doorResult: "چرخش‌ها: {n}",
       rwEnergy: "انرژی", rwStars: "ستاره",
       obPrev: "قبلی", obNext: "بعدی", obStart: "ساخت گنبد سرخ",
       ob1a: "روزی روزگاری، پادشاهی به نام بهرام زندگی می‌کرد که شیفته‌ی رازهای آسمان و سیاره‌ها بود.",
@@ -111,9 +111,7 @@
       ob5: "با ترکیب آیتم‌ها، مصالح و ابزار تازه بساز و به شیده کمک کن گنبد سرخ را قدم‌به‌قدم کامل کند. در همین حین، نسرین‌نوش قصه‌اش را برایت روایت خواهد کرد.",
       missionKicker: "مأموریت قصه", missionStart: "شروع", missionLater: "بعداً", missionCollect: "دریافت",
       twinsTitle: "جاده‌ی طلسم‌ها", twinsTip: "دو طلسم را برگردان. اگر از یک گنج نگهبانی کنند، جفت هم‌اند و راه باز می‌شود.",
-      twinsIntro: "حالا تو جای خواستگاری. می‌توانی جفت طلسم‌ها را پیدا کنی و راه را باز کنی؟",
       twinsMoves: "تلاش‌ها: {n}", twinsWinTitle: "راه باز شد!",
-      twinsWin: "تو از جاده می‌گذشتی! ولی بانو آزمون‌های سخت‌تری هم داشت. بساز تا برایت بگویم.",
       merge: "کارگاه", dome: "گنبد", skip: "رد شدن ›", skipConfirm: "داستان رد شود؟ دوباره بزنید",
       deliver: "تحویل", sure: "مطمئنی؟", remove: "حذف", lv: "سطح",
       sellFor: "فروش به {n} ستاره", removeItem: "حذف آیتم", activate: "فعال کن",
@@ -209,9 +207,9 @@
 
     ] },
     arch: { chapter: "فصل ۴", title: "طاق بزرگ", lines: [
-      "این طاق مرا یاد دیواری در قصه‌مان می‌اندازد؛ دیواری که هیچ دری نداشت.",
-      "دیوار بی‌در؟ معمارش کی بوده؟",
-      "…بنشین. می‌گویم.",
+      "این طاق را ببین؛ هر سنگش جفتی دارد که به آن تکیه داده.",
+      "اگه یکی‌شون نباشه، طاق می‌ریزه.",
+      "راز طلسم‌های قصه‌ی ما هم همین بود. بنشین.",
     ] },
     balcony: { chapter: "فصل ۵", title: "گلنار باغبان", lines: [
       "سلام! من گلنارم، باغبونِ ده پایین.",
@@ -222,6 +220,7 @@
       "سلام، معمار. من حکیم این کوهم؛ سی سال است از اینجا ستاره‌ها را می‌شمارم.",
       "پس اسطرلاب کار شما بود. جای گنبد رو درست نشونم داد.",
       "من فقط ستاره را نشان دادم. ساختنش کار تو بود.",
+      "شما هم بنشینید. این بخش قصه را حتماً باید بشنوید.",
     ] },
     tiles: { chapter: "فصل ۷", title: "کاشی‌های سرخ", lines: [
 

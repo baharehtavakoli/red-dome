@@ -192,6 +192,11 @@
       [0, 4, 7].forEach((s) => pluck(note(s + 14), t + 0.75, 0.3));
       sparkle(t + 0.8, 8, 16, 0.06);
     },
+    clang(t) {
+      tone(1250, t, 0.35, 0.07, { type: "triangle", to: 1150, reverb: 0.4 });
+      tone(1870, t, 0.25, 0.05, { type: "sine", reverb: 0.4 });
+      noise(t, 0.06, 0.3, { type: "highpass", f: 3000, reverb: 0.2 });
+    },
     knock(t) { noise(t, 0.08, 0.35, { type: "lowpass", f: 320, reverb: 0.05 }); tone(120, t, 0.1, 0.14, { to: 70, reverb: 0 }); },
     drum(t, heat = 1) {
       // heat 1 = far (a faint thud), 2 = near, 3 = right next to the door (a deep, ringing boom)

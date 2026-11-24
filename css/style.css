@@ -1577,3 +1577,43 @@ html.ui-art:not([dir="rtl"]) .merge-btn { font-size: 25px; }
 #mission .dr-stone.h3 { background: linear-gradient(180deg, #ff9a5a, #d0432a); box-shadow: 0 0 12px rgba(255, 120, 60, .9); }
 #mission .dr-stone.door { background: radial-gradient(circle, #fff3c4, #ffd76a 60%, #c98a1a); box-shadow: 0 0 18px #ffd76a; }
 #mission .dr-stone.missed { outline: 3px dashed #ffd76a; outline-offset: -3px; animation: dr-hit .5s ease 2; }
+
+/* ---------- mission: the guardian wakes ---------- */
+#mission .gd-hud { display: flex; justify-content: space-between; align-items: center; margin: 0 4px 6px; font: 800 13px/1 "Nunito", "Vazirmatn", sans-serif; color: #7a1c2a; }
+#mission .gd-hearts { font-size: 18px; letter-spacing: 2px; direction: ltr; }
+#mission .gd-arena { position: relative; width: min(100%, 290px); aspect-ratio: 1; margin: 0 auto 10px; overflow: hidden; border-radius: 12px;
+  border: 2px solid #c99a3a; touch-action: manipulation; user-select: none; -webkit-user-select: none; cursor: pointer; }
+#mission .gd-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: filter .8s; }
+#mission .gd-arena.winding .gd-img { animation: gd-wind .5s ease-in-out infinite alternate; }
+@keyframes gd-wind { to { transform: scale(1.04) translateY(-1%); } }
+#mission .gd-arena.blocked .gd-img { animation: gd-recoil .35s ease; }
+@keyframes gd-recoil { 30% { transform: scale(.94) translateY(3%); } }
+#mission .gd-arena.asleep .gd-img { filter: grayscale(.8) brightness(.7); }
+#mission .gd-target, #mission .gd-ring { position: absolute; left: var(--fx); top: var(--fy); width: 74px; height: 74px; margin: -37px 0 0 -37px; border-radius: 50%; pointer-events: none; }
+#mission .gd-target { border: 3px dashed rgba(255, 240, 200, .75); box-shadow: 0 0 10px rgba(255, 215, 106, .5); }
+#mission .gd-ring { border: 4px solid #ffd76a; box-shadow: 0 0 14px #ffd76a; transform: scale(2.4); opacity: 0; }
+@keyframes gd-shrink { 0% { transform: scale(2.4); opacity: .35; } 100% { transform: scale(.8); opacity: 1; } }
+#mission .gd-flash { position: absolute; inset: 0; background: #d0242a; opacity: 0; pointer-events: none; }
+#mission .gd-arena.hurt .gd-flash { animation: gd-hurt .45s ease; }
+#mission .gd-arena.hurt { animation: gd-shake .4s ease; }
+@keyframes gd-hurt { 20% { opacity: .45; } }
+@keyframes gd-shake { 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
+html.ui-art #mission .gd-block { min-height: 54px; font-size: 18px; }
+
+/* ---------- mission: the wall without a door (turn the stones) ---------- */
+#mission .dr-grid { direction: ltr; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; width: min(100%, 236px); margin: 4px auto 10px; padding: 6px;
+  border-radius: 12px 12px 6px 6px; background: #4a3240; box-shadow: inset 0 2px 8px rgba(0, 0, 0, .5); }
+#mission .dr-tile, #mission .dr-panel { aspect-ratio: 1; border-radius: 4px; }
+#mission .dr-tile { position: relative; padding: 0; border: 0; cursor: pointer; background: linear-gradient(180deg, #7a6070, #5d4656);
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .3), inset 0 2px 0 rgba(255, 255, 255, .12); }
+#mission .dr-panel { background: rgba(0, 0, 0, .18); transition: background .8s, box-shadow .8s; }
+#mission .dr-rot { width: 100%; height: 100%; transition: transform .22s ease; }
+#mission .dr-rot svg { width: 100%; height: 100%; display: block; overflow: visible; }
+#mission .dr-line { fill: none; stroke: #9c7217; stroke-width: 16; stroke-linecap: round; }
+#mission .dr-core { fill: none; stroke: #e0b24a; stroke-width: 8; stroke-linecap: round; }
+#mission .dr-tile.ok .dr-core { stroke: #ffe7a8; }
+#mission .dr-tile.ok .dr-line { stroke: #d4a537; }
+#mission .dr-grid.done .dr-core { stroke: #fff4d8; filter: drop-shadow(0 0 4px #ffd76a) drop-shadow(0 0 8px #ffb84a); }
+#mission .dr-grid.done .dr-panel { background: rgba(255, 215, 106, .35); box-shadow: inset 0 0 12px rgba(255, 215, 106, .8); }
+#mission .dr-grid.open .dr-panel { background: radial-gradient(circle, #fff3c4, #ffd76a); }
+#mission .dr-grid.failed { animation: gd-shake .5s ease; filter: grayscale(.6); }
