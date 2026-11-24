@@ -2,6 +2,8 @@
 (function () {
   function boot() {
     State.load();
+    const test = Debug.testTarget();
+    if (test) Debug.prepareTest();
     State.tickEnergy();
     Orders.ensure();
 
@@ -46,7 +48,9 @@
     });
     window.addEventListener("pagehide", () => State.saveNow());
 
-    if (!State.d.seenIntro) {
+    if (test) {
+      Debug.runTest(test);
+    } else if (!State.d.seenIntro) {
       // lock the scene while the intro's art loads, so the board can't be opened under it
       Scene.busy = true;
       document.getElementById("scene-screen").classList.add("cinematic");
