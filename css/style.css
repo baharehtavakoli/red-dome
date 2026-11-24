@@ -1761,3 +1761,4 @@ html.ui-art #mission .bt-board-wrap { padding-top: 18px; padding-left: 18px; pad
 #mission .bt-dizzy span:nth-child(2) { animation-delay: -.233s; } #mission .bt-dizzy span:nth-child(3) { animation-delay: -.466s; }
 @keyframes bt-orbit { from { transform: translate(-50%, -50%) rotate(0) translateX(34px) rotate(0) scaleY(1); } to { transform: translate(-50%, -50%) rotate(360deg) translateX(34px) rotate(-360deg); } }
 @keyframes bt-dizzy { 0% { opacity: 0; } 15%, 80% { opacity: 1; } 100% { opacity: 0; } }
+#mission .bt-guardian.striking .bt-intent { opacity: 0; transition: opacity .15s; }

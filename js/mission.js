@@ -142,6 +142,10 @@
       const img = el.querySelector("img");
       const src = has(P[who] && P[who][name]) || art[who];
       if (img.getAttribute("src") !== src) img.setAttribute("src", src);
+      // a pose drawn smaller than the others (e.g. the low lunge) is scaled back up from the feet
+      const k = src !== art[who] && opts.poseScale && opts.poseScale[who] && opts.poseScale[who][name];
+      img.style.transformOrigin = "50% 100%";
+      img.style.scale = k ? String(k) : "";
     };
     const go = (el, x, ms, extra = "", easing = "cubic-bezier(.2,.8,.2,1)") => {
       const from = el._t || "translateX(0px)", to = `translateX(${x}px) ${extra}`;
@@ -308,6 +312,7 @@
     async function strike() {
       const d = dist();
       gEl.classList.remove("charging");
+      gEl.classList.add("striking");
       if (shield > 0) pose(pEl, "prince", "block");
       pose(gEl, "guardian", "windup");
       Sfx.play("drum");
@@ -315,7 +320,7 @@
       await sleep(140);
       pose(gEl, "guardian", "strike");
       gEl.classList.add("front");
-      const reach = d - pEl.offsetWidth * 0.5;
+      const reach = d - pEl.offsetWidth * 0.78;
       await go(gEl, reach, 150, "rotate(4deg)", "cubic-bezier(.6,0,.9,.5)");
       const at = spot(pEl, 0.4, 0.5);
       put("bt-wave", spot(pEl, 0.45, 0.98), art.wave ? `<img src="${art.wave}" alt="">` : "", 600);
@@ -347,7 +352,7 @@
       await sleep(160);
       pose(gEl, "guardian", "idle");
       await go(gEl, 0, 380, "", "ease-in-out");
-      gEl.classList.remove("front");
+      gEl.classList.remove("front", "striking");
       if (pHp > 0) pose(pEl, "prince", "idle");
       clock = every;
       hud();

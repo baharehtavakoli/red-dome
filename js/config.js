@@ -192,6 +192,7 @@ window.GAME_CONFIG = {
                prince: { idle: "assets/scenes/battle/prince_idle.webp", ready: "assets/scenes/battle/prince_ready.webp", attack: "assets/scenes/battle/prince_attack.webp", block: "assets/scenes/battle/prince_block.webp", hurt: "assets/scenes/battle/prince_hurt.webp" },
                guardian: { idle: "assets/scenes/battle/guardian_idle.webp", windup: "assets/scenes/battle/guardian_windup.webp", strike: "assets/scenes/battle/guardian_strike.webp", fallen: "assets/scenes/battle/guardian_fallen.webp" },
              },
+             poseScale: { prince: { attack: 1.22 } },   // the lunge was drawn ~20% smaller than the other poses
              fx: { slash: "assets/scenes/battle/fx_slash.webp", impact: "assets/scenes/battle/fx_impact.webp", wave: "assets/scenes/battle/fx_wave.webp" },
              // tool icons by level (1-4); until they exist the board shows emoji
              tools: {
