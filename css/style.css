@@ -1617,3 +1617,83 @@ html.ui-art #mission .gd-block { min-height: 54px; font-size: 18px; }
 #mission .dr-grid.done .dr-panel { background: rgba(255, 215, 106, .35); box-shadow: inset 0 0 12px rgba(255, 215, 106, .8); }
 #mission .dr-grid.open .dr-panel { background: radial-gradient(circle, #fff3c4, #ffd76a); }
 #mission .dr-grid.failed { animation: gd-shake .5s ease; filter: grayscale(.6); }
+
+/* ---------- the merge battle (mission "guard"): full screen over the mission panel ---------- */
+#mission .bt { position: fixed; inset: 0; z-index: 3; display: flex; flex-direction: column; width: min(100%, 520px); margin: 0 auto;
+  background: #2a0a18; opacity: 0; transition: opacity .4s; overflow: hidden; }
+#mission .bt.in { opacity: 1; }
+#mission .bt.shake { animation: gd-shake .4s ease; }
+#mission .bt.flash::after { content: ""; position: absolute; inset: 0; background: #d0242a; pointer-events: none; animation: gd-hurt .5s ease forwards; opacity: 0; }
+#mission .bt-stage { position: relative; flex: 1 1 54%; min-height: 0; background-size: cover; background-position: center 35%; }
+#mission .bt-stage::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30, 8, 20, .55), transparent 30%, transparent 70%, rgba(30, 8, 20, .85)); }
+#mission .bt-top { position: relative; display: flex; align-items: center; justify-content: space-between; padding: max(10px, env(safe-area-inset-top)) 12px 4px; }
+#mission .bt-title { font: 400 22px/1.2 var(--head); color: #ffd76a; text-shadow: 0 2px 6px rgba(0, 0, 0, .7); }
+html[dir="rtl"] #mission .bt-title { font: 800 19px/1.3 "Vazirmatn", sans-serif; }
+#mission .bt-later { padding: 7px 14px; border-radius: 16px; border: 1px solid rgba(243, 210, 122, .6); background: rgba(20, 6, 24, .5); color: #f7ecd5; font: 700 13px/1 "Nunito", "Vazirmatn", sans-serif; }
+#mission .bt-bars { position: relative; display: flex; gap: 12px; padding: 4px 12px; direction: ltr; }
+#mission .bt-bar { flex: 1; }
+#mission .bt-bar b { display: block; margin-bottom: 3px; font: 800 12px/1 "Nunito", "Vazirmatn", sans-serif; color: #fff4d8; text-shadow: 0 1px 3px #000; }
+#mission .bt-bar.p b { text-align: right; }
+#mission .bt-bar i { display: block; height: 14px; border-radius: 8px; border: 2px solid #e0b24a; background: rgba(20, 6, 24, .7); overflow: hidden; }
+#mission .bt-bar span { display: block; height: 100%; width: 100%; transition: width .45s ease; }
+#mission .bt-bar.g span { background: linear-gradient(180deg, #c9d2a8, #6f8a4a); }
+#mission .bt-bar.p span { background: linear-gradient(180deg, #ff8a7a, #c0392b); margin-left: auto; }
+#mission .bt-fighters { position: absolute; left: 0; right: 0; bottom: 6%; height: 66%; direction: ltr; }
+#mission .bt-guardian, #mission .bt-prince { position: absolute; bottom: 0; height: 100%; transition: transform .3s, filter .6s; }
+#mission .bt-guardian { left: 2%; width: 52%; }
+#mission .bt-prince { right: 2%; width: 50%; height: 88%; }
+#mission .bt-guardian img, #mission .bt-prince img { width: 100%; height: 100%; object-fit: contain; object-position: bottom; display: block; filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .5)); }
+#mission .bt-cracks { position: absolute; inset: 15% 20% 25%; opacity: 0; pointer-events: none;
+  background: repeating-linear-gradient(62deg, transparent 0 18px, rgba(255, 215, 106, .9) 18px 20px, transparent 20px 38px),
+              repeating-linear-gradient(-48deg, transparent 0 26px, rgba(255, 190, 80, .8) 26px 28px, transparent 28px 50px);
+  -webkit-mask-image: radial-gradient(circle, #000 30%, transparent 70%); mask-image: radial-gradient(circle, #000 30%, transparent 70%); transition: opacity .5s; }
+#mission .bt-guardian.windup { animation: bt-windup .6s ease; }
+@keyframes bt-windup { 60% { transform: translateX(-6%) scale(1.04) rotate(-3deg); filter: brightness(1.25); } }
+#mission .bt-guardian.smash { animation: bt-smash .45s ease; }
+@keyframes bt-smash { 35% { transform: translateX(22%) scale(1.08); } }
+#mission .bt-guardian.hit { animation: bt-hit .45s ease; }
+@keyframes bt-hit { 25% { transform: translateX(-8%); filter: brightness(1.8) sepia(1); } 60% { transform: translateX(3%); } }
+#mission .bt-guardian.stun { animation: bt-stun .7s ease; }
+@keyframes bt-stun { 0%, 100% { filter: none; } 30% { filter: hue-rotate(160deg) brightness(1.5); transform: rotate(-4deg); } 60% { transform: rotate(4deg); } }
+#mission .bt-guardian.fallen { transform: translateY(14%) rotate(-8deg); filter: grayscale(1) brightness(.55); transition: transform 1.2s ease-in, filter 1.2s; }
+#mission .bt-prince.lunge { animation: bt-lunge .5s ease; }
+@keyframes bt-lunge { 40% { transform: translateX(-34%) scale(1.06); } }
+#mission .bt-prince.hurt { animation: bt-hurt .5s ease; }
+@keyframes bt-hurt { 25% { transform: translateX(8%); filter: brightness(1.6) saturate(2) hue-rotate(-20deg); } }
+#mission .bt-prince.glow { animation: bt-glow .7s ease; }
+@keyframes bt-glow { 50% { filter: drop-shadow(0 0 16px #ff9ab0) brightness(1.2); } }
+#mission .bt-prince.down { transform: translateY(10%) rotate(6deg); filter: grayscale(.8) brightness(.6); transition: transform 1s, filter 1s; }
+#mission .bt-shield { position: absolute; left: 4%; top: 30%; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 240, 200, .9), rgba(224, 178, 74, .6)); box-shadow: 0 0 14px #ffd76a; font-size: 24px; opacity: 0; transform: scale(.5); transition: opacity .3s, transform .3s; }
+#mission .bt-shield.on { opacity: 1; transform: none; }
+#mission .bt-shield b { position: absolute; right: -6px; bottom: -4px; font: 900 12px/1 "Nunito", sans-serif; color: #7a1c2a; }
+#mission .bt-shield.pop { animation: ms-pop .4s ease; }
+#mission .bt-count { position: absolute; left: 50%; bottom: 3%; transform: translateX(-50%); padding: 5px 12px; border-radius: 12px; white-space: nowrap;
+  background: rgba(20, 6, 24, .7); border: 1px solid #c99a3a; color: #ffe7a8; font: 800 13px/1.2 "Nunito", "Vazirmatn", sans-serif; }
+#mission .bt-count.soon { color: #fff; background: #b8322a; animation: ms-warn .6s ease infinite alternate; }
+#mission .bt-fx { position: absolute; inset: 0; pointer-events: none; }
+#mission .bt-float { position: absolute; transform: translate(-50%, 0); font: 900 26px/1 "Nunito", sans-serif; color: #fff; text-shadow: 0 2px 4px #000; animation: bt-float 1.1s ease-out forwards; white-space: nowrap; }
+#mission .bt-float.dmg { color: #ffd76a; }
+#mission .bt-float.heal { color: #9dffb0; }
+#mission .bt-float.good { color: #fff4d8; font-size: 18px; }
+@keyframes bt-float { from { opacity: 1; transform: translate(-50%, 0) scale(1.2); } to { opacity: 0; transform: translate(-50%, -60px) scale(1); } }
+#mission .bt-board-wrap { flex: 0 0 auto; padding: 8px 12px max(10px, env(safe-area-inset-bottom)); text-align: center;
+  background: linear-gradient(180deg, #fbf1dc, #ecd8b0); border-top: 3px solid #c99a3a; }
+html.ui-art #mission .bt-board-wrap { background: url("../assets/ui/modal_frame.webp") center / 100% 100%; border: 0; }
+#mission .bt-tip { margin: 2px 0 6px; font: 700 12.5px/1.5 "Nunito", sans-serif; color: var(--ink); }
+html[dir="rtl"] #mission .bt-tip { font-family: "Vazirmatn", sans-serif; }
+#mission .bt-board { direction: ltr; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; width: min(100%, 290px); margin: 0 auto; touch-action: none; }
+#mission .bt-cell { position: relative; aspect-ratio: 1; display: grid; place-items: center; padding: 0; border: 0; border-radius: 10px; font-size: 26px;
+  background: linear-gradient(180deg, #fff8e6, #ead6af); box-shadow: inset 0 -3px 0 rgba(120, 70, 20, .3), 0 1px 2px rgba(0, 0, 0, .2); cursor: pointer; user-select: none; -webkit-user-select: none; }
+html.ui-art #mission .bt-cell { background: url("../assets/ui/board_tile_light.webp") center / 100% 100%; box-shadow: none; }
+#mission .bt-cell.empty { background: rgba(0, 0, 0, .08); box-shadow: none; }
+#mission .bt-cell img { width: 78%; height: 78%; object-fit: contain; pointer-events: none; }
+#mission .bt-cell span { pointer-events: none; }
+#mission .bt-cell i { position: absolute; right: 3px; bottom: 2px; min-width: 15px; height: 15px; border-radius: 8px; background: #7a1c2a; color: #fff; font: 900 10px/15px "Nunito", sans-serif; font-style: normal; pointer-events: none; }
+#mission .bt-cell.lv2 { font-size: 30px; } #mission .bt-cell.lv3 { font-size: 33px; box-shadow: 0 0 8px rgba(255, 200, 90, .8); }
+#mission .bt-cell.sel { outline: 3px solid #ffd76a; outline-offset: -2px; transform: scale(1.06); }
+#mission .bt-legend { display: flex; justify-content: center; gap: 12px; margin-top: 6px; }
+#mission .bt-legend span { display: flex; align-items: center; gap: 3px; font-size: 15px; }
+#mission .bt-legend img { width: 20px; height: 20px; object-fit: contain; }
+#mission .bt-legend small { font: 800 11px/1 "Nunito", "Vazirmatn", sans-serif; color: #7a4a20; }
+html.ui-art #mission .bt-board-wrap { padding-top: 18px; padding-left: 18px; padding-right: 18px; }

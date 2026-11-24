@@ -62,79 +62,218 @@
     }));
   }
 
-  /* ---------- The guardian wakes: block its blows by tapping when the golden ring meets the chest symbol ---------- */
+  /* ---------- The guardian wakes: a full-screen merge battle ----------
+     The prince faces a bronze guardian. Below them is a small board of tools; merging two of the same
+     tool fires it at once, and the higher the level made, the stronger it is:
+       sword  -> the prince strikes          shield -> blocks the guardian's next blows
+       rose water -> heals the prince        star -> magic: pushes the guardian's blow back (and hurts it)
+     The guardian strikes every few moves. A level-4 tool is used up when it's made.
+     Art: config.js -> missions.guard (sprites, tool icons); emoji stand in until the art exists. */
+  const TOOLS = {
+    sword: { emoji: ["", "🗡️", "🗡️", "⚔️", "⚔️"], fx: [0, 0, 1, 3, 6] },          // damage by level made
+    shield: { emoji: ["", "🛡️", "🛡️", "🛡️", "🛡️"], fx: [0, 0, 1, 2, 3] },        // blocks
+    rose: { emoji: ["", "🌹", "🌹", "🌹", "🌹"], fx: [0, 0, 1, 2, 4] },           // healing
+    star: { emoji: ["", "✨", "🌟", "💫", "💫"], fx: [0, 0, 1, 2, 3] },           // moves pushed back (+ damage)
+  };
+  const TOOL_KEYS = Object.keys(TOOLS);
+
   function guard(body, done, fail, opts = {}) {
-    const need = opts.blocks || 5, lives = opts.lives || 3;
-    const useArt = opts.art && Art.has(opts.art);
-    const art = useArt ? opts.art : opts.fallback;
-    const f = (useArt ? opts.focus : opts.fallbackFocus) || [50, 50];
-    body.innerHTML = `
-      <p class="ms-tip">${t("guardTip")}</p>
-      <div class="gd-hud"><span class="gd-hearts"></span><span class="gd-count"></span></div>
-      <div class="gd-arena" style="--fx:${f[0]}%;--fy:${f[1]}%">
-        <img class="gd-img" src="${art}" alt="" draggable="false">
-        <div class="gd-target"></div><div class="gd-ring"></div><div class="gd-flash"></div>
+    const W = 4, H = 4, MAXLV = 4;
+    const gMax = opts.guardianHp || 12, pMax = opts.princeHp || 6, every = opts.strikeEvery || 3, hitDmg = opts.strikeDmg || 2;
+    const pick = (paths) => paths.find((p) => p && Art.has(p)) || paths[paths.length - 1];
+    const art = {
+      bg: pick([opts.bg, opts.bgFallback]),
+      guardian: pick([opts.guardianArt, opts.guardianFallback]),
+      prince: pick([opts.princeArt, opts.princeFallback]),
+    };
+    const icon = (k, lv) => {
+      const p = opts.tools && opts.tools[k] && opts.tools[k][lv - 1];
+      return p && Art.has(p) ? `<img src="${p}" alt="" draggable="false">` : `<span>${TOOLS[k].emoji[lv]}</span>`;
+    };
+    const rnd = () => ({ k: U.pick(["sword", "sword", "shield", "shield", "rose", "star"]), lv: 1 });
+
+    const mission = body.closest("#mission");
+    const layer = document.createElement("div");
+    layer.className = "bt";
+    layer.innerHTML = `
+      <div class="bt-stage" style="background-image:url('${art.bg}')">
+        <div class="bt-top">
+          <button class="bt-later">${t("missionLater")}</button>
+          <div class="bt-title">${t("guardTitle")}</div>
+        </div>
+        <div class="bt-bars">
+          <div class="bt-bar g"><b>${U.esc(t("guardName"))}</b><i><span></span></i></div>
+          <div class="bt-bar p"><b>${U.esc(t("princeName"))}</b><i><span></span></i></div>
+        </div>
+        <div class="bt-fighters">
+          <div class="bt-guardian"><img src="${art.guardian}" alt="" draggable="false"><div class="bt-cracks"></div></div>
+          <div class="bt-prince"><img src="${art.prince}" alt="" draggable="false"><div class="bt-shield"><span>🛡️</span><b></b></div></div>
+        </div>
+        <div class="bt-count"></div>
+        <div class="bt-fx"></div>
       </div>
-      <button class="btn gold wide gd-block">🛡️ ${t("guardBlock")}</button>`;
-    const arena = body.querySelector(".gd-arena"), ring = body.querySelector(".gd-ring");
-    const hearts = body.querySelector(".gd-hearts"), count = body.querySelector(".gd-count");
-    let hp = lives, ok = 0, attack = null, over = false, speed = 1700;
+      <div class="bt-board-wrap">
+        <p class="bt-tip">${t("guardTip")}</p>
+        <div class="bt-board"></div>
+        <div class="bt-legend">${TOOL_KEYS.map((k) => `<span>${icon(k, 2)}<small>${t("tool_" + k)}</small></span>`).join("")}</div>
+      </div>`;
+    mission.appendChild(layer);
+    setTimeout(() => layer.classList.add("in"), 30);
+    layer.querySelector(".bt-later").addEventListener("click", () => {
+      layer.remove();
+      const later = mission.querySelector(".ms-actions [data-later]");
+      if (later) later.click();
+    });
+
+    const $ = (s) => layer.querySelector(s);
+    const boardEl = $(".bt-board"), fxEl = $(".bt-fx"), gEl = $(".bt-guardian"), pEl = $(".bt-prince");
+    let gHp = gMax, pHp = pMax, shield = 0, clock = every, moves = 0, over = false, busy = false, sel = -1;
+    let board = Array.from({ length: W * H }, rnd);
+    // make sure the first board has something to merge for every tool
+    TOOL_KEYS.forEach((k, i) => { board[i * 2] = { k, lv: 1 }; board[i * 2 + 9] = { k, lv: 1 }; });
+
     const hud = () => {
-      hearts.textContent = "❤️".repeat(Math.max(0, hp)) + "🖤".repeat(Math.max(0, lives - hp));
-      count.textContent = t("guardLeft", { n: Math.max(0, need - ok) });
+      $(".bt-bar.g span").style.width = `${(Math.max(0, gHp) / gMax) * 100}%`;
+      $(".bt-bar.p span").style.width = `${(Math.max(0, pHp) / pMax) * 100}%`;
+      $(".bt-shield").classList.toggle("on", shield > 0);
+      $(".bt-shield b").textContent = shield > 1 ? "×" + shield : "";
+      const c = $(".bt-count");
+      c.textContent = t("guardLeft", { n: clock });
+      c.classList.toggle("soon", clock <= 1);
+      $(".bt-cracks").style.opacity = String(Math.min(1, (1 - gHp / gMax) * 1.2));
     };
-    const strike = () => {
-      if (over) return;
-      attack = { t0: performance.now(), dur: speed };
-      ring.style.animation = "none"; void ring.offsetWidth;
-      ring.style.animation = `gd-shrink ${speed}ms linear forwards`;
-      arena.classList.add("winding");
-      attack.timer = setTimeout(() => settle(false), speed + 150); // too late: the blow lands
+    const render = () => {
+      boardEl.innerHTML = board.map((c, i) => c
+        ? `<button class="bt-cell lv${c.lv}${i === sel ? " sel" : ""}" data-i="${i}" data-k="${c.k}">${icon(c.k, c.lv)}<i>${c.lv}</i></button>`
+        : `<div class="bt-cell empty"></div>`).join("");
     };
-    const settle = async (blocked) => {
-      if (!attack || over) return;
-      clearTimeout(attack.timer);
-      attack = null;
-      ring.style.animation = "none";
-      arena.classList.remove("winding", "blocked", "hurt");
-      void arena.offsetWidth;
-      if (blocked) {
-        ok++;
-        Sfx.play("clang");
-        arena.classList.add("blocked");
-        UI.sparkle(body.querySelector(".gd-target").getBoundingClientRect(), 10);
-        speed = Math.max(900, speed - 170); // each blow comes a little faster
-      } else {
-        hp--;
-        Sfx.play("error");
-        arena.classList.add("hurt");
+    const float = (el, text, cls) => {
+      const r = el.getBoundingClientRect(), s = fxEl.getBoundingClientRect();
+      const d = document.createElement("div");
+      d.className = "bt-float " + (cls || "");
+      d.textContent = text;
+      d.style.left = `${r.left - s.left + r.width / 2}px`;
+      d.style.top = `${r.top - s.top + r.height * 0.3}px`;
+      fxEl.appendChild(d);
+      setTimeout(() => d.remove(), 1100);
+    };
+    const anim = (el, cls, ms) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); setTimeout(() => el.classList.remove(cls), ms); };
+    const hasMove = () => board.some((a, i) => a && a.lv < MAXLV && board.some((b, j) => j !== i && b && b.k === a.k && b.lv === a.lv));
+
+    async function act(k, lv) {
+      const v = TOOLS[k].fx[lv];
+      if (k === "sword") {
+        anim(pEl, "lunge", 500); Sfx.play("clang");
+        await sleep(220);
+        gHp -= v; anim(gEl, "hit", 450); float(gEl, `-${v}`, "dmg");
+        if (lv >= 3) anim(layer, "shake", 400);
+      } else if (k === "shield") {
+        shield += v; Sfx.play("place"); anim($(".bt-shield"), "pop", 400); float(pEl, `🛡️ +${v}`, "good");
+      } else if (k === "rose") {
+        const before = pHp; pHp = Math.min(pMax, pHp + v); Sfx.play("energy");
+        float(pEl, `+${pHp - before}`, "heal"); anim(pEl, "glow", 700);
+      } else if (k === "star") {
+        clock += v; Sfx.play("charm"); anim(gEl, "stun", 700);
+        float(gEl, `⏳ +${v}`, "good");
+        if (lv >= 3) { gHp -= lv - 2; float(gEl, `-${lv - 2}`, "dmg"); }
       }
       hud();
-      if (ok >= need) {
-        over = true;
-        await sleep(500);
-        arena.classList.add("asleep");
-        await sleep(1000);
-        return done(lives - hp);
+    }
+
+    async function strike() {
+      anim(gEl, "windup", 600);
+      await sleep(550);
+      anim(gEl, "smash", 450);
+      await sleep(180);
+      if (shield > 0) {
+        shield--; Sfx.play("clang"); anim($(".bt-shield"), "pop", 400); float(pEl, t("guardBlocked"), "good");
+      } else {
+        pHp -= hitDmg; Sfx.play("error"); anim(pEl, "hurt", 500); anim(layer, "shake", 400); anim(layer, "flash", 500);
+        float(pEl, `-${hitDmg}`, "dmg");
       }
-      if (hp <= 0) {
-        over = true;
-        await sleep(800);
-        return fail();
+      clock = every;
+      hud();
+    }
+
+    async function merge(a, b) {
+      busy = true;
+      sel = -1;
+      const lv = board[a].lv + 1, k = board[a].k;
+      moves++;
+      board[a] = null;
+      board[b] = lv >= MAXLV ? null : { k, lv };
+      render();
+      const cell = boardEl.querySelector(`[data-i="${b}"]`) || boardEl.children[b];
+      if (cell) UI.sparkle(cell.getBoundingClientRect(), lv >= 3 ? 12 : 6);
+      Sfx.play("merge", lv);
+      await act(k, lv);
+      if (gHp <= 0) return win();
+      clock--;
+      hud();
+      if (clock <= 0) { await sleep(350); await strike(); }
+      if (pHp <= 0) return lose();
+      // new tools drop into the empty cells
+      await sleep(200);
+      board = board.map((c) => c || rnd());
+      if (!hasMove()) {
+        // never leave the board stuck: copy one tool onto another cell so a merge exists
+        const i0 = board.findIndex((c) => c && c.lv < MAXLV);
+        const j0 = board.findIndex((c, j) => j !== i0);
+        if (i0 >= 0 && j0 >= 0) board[j0] = { ...board[i0] };
       }
-      setTimeout(strike, 550 + Math.random() * 700);
-    };
-    // the ring shrinks from 2.4x to 0.8x: it meets the symbol at 87.5% of the way
-    const tap = (e) => {
-      e.preventDefault();
-      if (!attack || over) return;
-      const p = (performance.now() - attack.t0) / attack.dur;
-      settle(p >= 0.74 && p <= 0.99);
-    };
-    arena.addEventListener("pointerdown", tap);
-    body.querySelector(".gd-block").addEventListener("pointerdown", tap);
+      render();
+      busy = false;
+    }
+
+    async function win() {
+      over = true;
+      anim(layer, "shake", 500);
+      gEl.classList.add("fallen");
+      Sfx.play("shatter", 3);
+      await sleep(1400);
+      layer.classList.remove("in");
+      await sleep(400);
+      layer.remove();
+      done(moves);
+    }
+    async function lose() {
+      over = true;
+      pEl.classList.add("down");
+      await sleep(1200);
+      layer.classList.remove("in");
+      await sleep(400);
+      layer.remove();
+      fail();
+    }
+
+    // tap one tool, then a matching one; or drag one onto the other
+    let dragFrom = -1;
+    boardEl.addEventListener("pointerdown", (e) => {
+      const c = e.target.closest(".bt-cell[data-i]");
+      if (!c || busy || over) return;
+      dragFrom = +c.dataset.i;
+    });
+    boardEl.addEventListener("pointerup", (e) => {
+      if (busy || over) return;
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      const c = el && el.closest(".bt-cell[data-i]");
+      const to = c ? +c.dataset.i : -1;
+      const from = dragFrom;
+      dragFrom = -1;
+      if (to < 0) return;
+      const tryMerge = (a, b) => {
+        const A = board[a], B = board[b];
+        if (a !== b && A && B && A.k === B.k && A.lv === B.lv && A.lv < MAXLV) { merge(a, b); return true; }
+        return false;
+      };
+      if (from >= 0 && from !== to) { if (!tryMerge(from, to)) { Sfx.play("error"); sel = -1; render(); } return; }
+      if (sel < 0) { sel = to; Sfx.play("select"); render(); return; }
+      if (sel === to) { sel = -1; render(); return; }
+      if (!tryMerge(sel, to)) { sel = to; Sfx.play("select"); render(); }
+    });
+
+    render();
     hud();
-    setTimeout(strike, 900);
   }
 
   /* ---------- The wall without a door: rotate the stones until the golden lines draw the door ---------- */
@@ -230,7 +369,8 @@
       document.getElementById("scene-screen").appendChild(btn);
       this.btn = btn;
       const g = cfg().guard;
-      if (g) Art.probe([g.art, g.fallback].filter(Boolean), () => {});
+      if (g) Art.probe([g.bg, g.bgFallback, g.guardianArt, g.guardianFallback, g.princeArt, g.princeFallback]
+        .concat(...Object.values(g.tools || {})).filter(Boolean), () => {});
       Art.probe(["assets/ui/icons/story.webp"], () => { btn.firstElementChild.outerHTML = Art.html("assets/ui/icons/story.webp", "📜", "gift-ic"); });
       this.refresh();
     },

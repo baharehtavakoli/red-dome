@@ -182,9 +182,18 @@ window.GAME_CONFIG = {
   missions: {
     twins: { host: "nasrin", maxTries: 14, reward: { energy: 20, stars: 3 } }, // after the Stone Stairs; 6 pairs, 14 tries
     door: { host: "nasrin", extraTurns: 6, reward: { energy: 25, stars: 5 } },  // after the dome; turns allowed = fewest needed + 6
-    guard: { host: "nasrin", blocks: 5, lives: 3, reward: { energy: 20, stars: 3 },   // after the stairs; block 5 blows, 3 hearts
-             art: "assets/scenes/tale/guardian_attack.webp", focus: [50, 50],          // focus = where the chest symbol is, in %
-             fallback: "assets/scenes/tale/guardian_temp.webp", fallbackFocus: [49, 50] },
+    guard: { host: "nasrin", reward: { energy: 20, stars: 3 },   // after the stairs: the merge battle with a bronze guardian
+             guardianHp: 12, princeHp: 6, strikeEvery: 3, strikeDmg: 2,
+             bg: "assets/scenes/battle/battle_bg.webp", bgFallback: "assets/scenes/tale/tale1_2.webp",
+             guardianArt: "assets/scenes/battle/guardian.webp", guardianFallback: "assets/scenes/tale/guardian_body_temp.webp",
+             princeArt: "assets/scenes/battle/prince.webp", princeFallback: "assets/scenes/tale/prince_temp.webp",
+             // tool icons by level (1-4); until they exist the board shows emoji
+             tools: {
+               sword: ["assets/scenes/battle/sword_1.webp", "assets/scenes/battle/sword_2.webp", "assets/scenes/battle/sword_3.webp", "assets/scenes/battle/sword_4.webp"],
+               shield: ["assets/scenes/battle/shield_1.webp", "assets/scenes/battle/shield_2.webp", "assets/scenes/battle/shield_3.webp", "assets/scenes/battle/shield_4.webp"],
+               rose: ["assets/scenes/battle/rosewater_1.webp", "assets/scenes/battle/rosewater_2.webp", "assets/scenes/battle/rosewater_3.webp", "assets/scenes/battle/rosewater_4.webp"],
+               star: ["assets/items/star_shard.webp", "assets/items/star.webp", "assets/items/astrolabe_charm.webp", "assets/items/astrolabe_charm.webp"],
+             } },
   },
 
   talisman: {
