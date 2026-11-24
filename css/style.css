@@ -1762,3 +1762,28 @@ html.ui-art #mission .bt-board-wrap { padding-top: 18px; padding-left: 18px; pad
 @keyframes bt-orbit { from { transform: translate(-50%, -50%) rotate(0) translateX(34px) rotate(0) scaleY(1); } to { transform: translate(-50%, -50%) rotate(360deg) translateX(34px) rotate(-360deg); } }
 @keyframes bt-dizzy { 0% { opacity: 0; } 15%, 80% { opacity: 1; } 100% { opacity: 0; } }
 #mission .bt-guardian.striking .bt-intent { opacity: 0; transition: opacity .15s; }
+
+/* ---------- battle v3: no levels; a living guardian that strikes without warning ---------- */
+#mission .bt-guardian img { transform-origin: 50% 100%; animation: bt-breathe 2.8s ease-in-out infinite; }
+#mission .bt-prince img { animation: bt-breathe-p 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes bt-breathe { 50% { transform: scale(1.012, 1.022); filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .5)) brightness(1.06); } }
+@keyframes bt-breathe-p { 50% { transform: scaleY(1.012); } }
+#mission .bt-guardian.angry img { animation: bt-rage 1.1s ease-in-out infinite; }
+@keyframes bt-rage { 0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 60, 30, .7)) saturate(1.2); }
+  50% { transform: scale(1.015, 1.03); filter: drop-shadow(0 0 20px rgba(255, 40, 20, .95)) brightness(1.15) saturate(1.4); } }
+#mission .bt-guardian.striking img, #mission .bt-guardian.fallen img, #mission .bt-prince.down img { animation: none; }
+#mission .bt-guardian img.whiteout, #mission .bt-prince img.whiteout { animation: none; }
+#mission .bt-dizzy.on { animation: none; opacity: 1; }
+#mission .bt-cell { transition: opacity .2s, transform .2s, filter .2s; }
+#mission .bt-cell.match { box-shadow: 0 0 0 3px #ffd76a, 0 0 12px rgba(255, 200, 80, .9); animation: bt-match .7s ease-in-out infinite alternate; }
+@keyframes bt-match { to { transform: scale(1.06); } }
+#mission .bt-cell.dim { opacity: .4; filter: grayscale(.6); }
+#mission .bt-cell.nope { animation: bt-nope .35s ease; }
+@keyframes bt-nope { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
+#mission .bt-cell.stone { background: linear-gradient(160deg, #a89a88, #6f6253) !important; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .3), inset 0 2px 0 rgba(255, 255, 255, .25) !important;
+  font-size: 26px; filter: saturate(.6); }
+#mission .bt-cell.stone::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(115deg, transparent 46%, rgba(40, 25, 15, .55) 47% 50%, transparent 51%), linear-gradient(35deg, transparent 58%, rgba(40, 25, 15, .45) 59% 61%, transparent 62%); }
+#mission .bt-cell.stone.fresh { animation: bt-stone .45s ease; }
+@keyframes bt-stone { 0% { transform: scale(1.3); filter: brightness(2.2); } 100% { transform: none; } }
+#mission .bt-board.quake { animation: gd-shake .45s ease; }

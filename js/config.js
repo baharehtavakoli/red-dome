@@ -183,7 +183,7 @@ window.GAME_CONFIG = {
     twins: { host: "nasrin", maxTries: 14, reward: { energy: 20, stars: 3 } }, // after the Stone Stairs; 6 pairs, 14 tries
     door: { host: "nasrin", extraTurns: 6, reward: { energy: 25, stars: 5 } },  // after the dome; turns allowed = fewest needed + 6
     guard: { host: "nasrin", reward: { energy: 20, stars: 3 },   // after the stairs: the merge battle with a bronze guardian
-             guardianHp: 12, princeHp: 6, strikeEvery: 3, strikeDmg: 2,
+             guardianHp: 12, princeHp: 6,   // its temper (how often/hard it strikes) is GUARD_PHASES in mission.js
              bg: "assets/scenes/battle/battle_bg.webp", bgFallback: "assets/scenes/tale/tale1_2.webp",
              guardianArt: "assets/scenes/battle/guardian.webp", guardianFallback: "assets/scenes/tale/guardian_body_temp.webp",
              princeArt: "assets/scenes/battle/prince.webp", princeFallback: "assets/scenes/tale/prince_temp.webp",

@@ -63,23 +63,31 @@
   }
 
   /* ---------- The guardian wakes: a full-screen merge battle ----------
-     The prince faces a bronze guardian. Below them is a small board of tools; merging two of the same
-     tool fires it at once, and the higher the level made, the stronger it is:
-       sword  -> the prince strikes          shield -> blocks the guardian's next blows
-       rose water -> heals the prince        star -> magic: pushes the guardian's blow back (and hurts it)
-     The guardian strikes every few moves. A level-4 tool is used up when it's made.
-     Art: config.js -> missions.guard (sprites, tool icons); emoji stand in until the art exists. */
+     The prince faces a bronze guardian. Below them is a small board of tools; dragging two of the same
+     tool together fires it at once (no levels, no numbers):
+       sword -> the prince strikes          shield -> blocks the guardian's next blow
+       rose water -> heals the prince       star -> magic: hurts and stuns the guardian for a couple of moves
+     The guardian strikes when it likes, without warning. As it weakens it gets harder: it strikes more often,
+     its blows crack tools on the board into stone for a while, and at the end it is enraged and hits harder.
+     Art: config.js -> missions.guard (poses, tool icons, hit effects); emoji/CSS stand in until the art exists. */
   const TOOLS = {
-    sword: { emoji: ["", "🗡️", "🗡️", "⚔️", "⚔️"], fx: [0, 0, 1, 3, 6] },          // damage by level made
-    shield: { emoji: ["", "🛡️", "🛡️", "🛡️", "🛡️"], fx: [0, 0, 1, 2, 3] },        // blocks
-    rose: { emoji: ["", "🌹", "🌹", "🌹", "🌹"], fx: [0, 0, 1, 2, 4] },           // healing
-    star: { emoji: ["", "✨", "🌟", "💫", "💫"], fx: [0, 0, 1, 2, 3] },           // moves pushed back (+ damage)
+    sword: { emoji: "🗡️", fx: 2 },   // damage
+    shield: { emoji: "🛡️", fx: 1 },  // blows blocked
+    rose: { emoji: "🌹", fx: 2 },    // healing
+    star: { emoji: "✨", fx: 1 },    // damage, plus the guardian is stunned for 2 moves
   };
   const TOOL_KEYS = Object.keys(TOOLS);
+  // the guardian's temper by how much health it has left: chance to strike after each move, the fewest and
+  // most moves between blows, damage, and how many tools each blow turns to stone
+  const GUARD_PHASES = [
+    { hp: 1, chance: 0.3, min: 2, max: 4, dmg: 1, stones: 0 },
+    { hp: 0.67, chance: 0.4, min: 2, max: 4, dmg: 1, stones: 1 },
+    { hp: 0.34, chance: 0.55, min: 1, max: 3, dmg: 2, stones: 2, angry: true },
+  ];
 
   function guard(body, done, fail, opts = {}) {
-    const W = 4, H = 4, MAXLV = 4;
-    const gMax = opts.guardianHp || 12, pMax = opts.princeHp || 6, every = opts.strikeEvery || 3, hitDmg = opts.strikeDmg || 2;
+    const W = 4, H = 4, LV = 2; // LV only sizes the hit effects now
+    const gMax = opts.guardianHp || 12, pMax = opts.princeHp || 6, PH = opts.phases || GUARD_PHASES;
     const pick = (paths) => paths.find((p) => p && Art.has(p)) || paths[paths.length - 1];
     const has = (p) => (p && Art.has(p) ? p : null);
     const P = opts.poses || {}, FX = opts.fx || {};
@@ -89,11 +97,11 @@
       prince: has(P.prince && P.prince.idle) || pick([opts.princeArt, opts.princeFallback]),
       slash: has(FX.slash), impact: has(FX.impact), wave: has(FX.wave),
     };
-    const icon = (k, lv) => {
-      const p = opts.tools && opts.tools[k] && opts.tools[k][lv - 1];
-      return p && Art.has(p) ? `<img src="${p}" alt="" draggable="false">` : `<span>${TOOLS[k].emoji[lv]}</span>`;
+    const icon = (k) => {
+      const p = opts.tools && opts.tools[k] && opts.tools[k][1];
+      return p && Art.has(p) ? `<img src="${p}" alt="" draggable="false">` : `<span>${TOOLS[k].emoji}</span>`;
     };
-    const rnd = () => ({ k: U.pick(["sword", "sword", "shield", "shield", "rose", "star"]), lv: 1 });
+    const rnd = () => ({ k: U.pick(["sword", "sword", "sword", "shield", "shield", "rose", "star"]) });
 
     const mission = body.closest("#mission");
     const layer = document.createElement("div");
@@ -109,17 +117,15 @@
           <div class="bt-bar p"><b>${U.esc(t("princeName"))}</b><i><span></span></i></div>
         </div>
         <div class="bt-fighters">
-          <div class="bt-guardian"><img src="${art.guardian}" alt="" draggable="false"><div class="bt-cracks"></div>
-            <div class="bt-intent"><i>✊</i><b></b></div></div>
-          <div class="bt-prince"><img src="${art.prince}" alt="" draggable="false"><div class="bt-shield">${icon("shield", 3)}<b></b></div></div>
+          <div class="bt-guardian"><img src="${art.guardian}" alt="" draggable="false"><div class="bt-cracks"></div></div>
+          <div class="bt-prince"><img src="${art.prince}" alt="" draggable="false"><div class="bt-shield">${icon("shield")}<b></b></div></div>
         </div>
-        <div class="bt-count"></div>
         <div class="bt-fx"></div>
       </div>
       <div class="bt-board-wrap">
         <p class="bt-tip">${t("guardTip")}</p>
         <div class="bt-board"></div>
-        <div class="bt-legend">${TOOL_KEYS.map((k) => `<span>${icon(k, 2)}<small>${t("tool_" + k)}</small></span>`).join("")}</div>
+        <div class="bt-legend">${TOOL_KEYS.map((k) => `<span>${icon(k)}<small>${t("tool_" + k)}</small></span>`).join("")}</div>
       </div>`;
     mission.appendChild(layer);
     setTimeout(() => layer.classList.add("in"), 30);
@@ -132,10 +138,11 @@
 
     const $ = (s) => layer.querySelector(s);
     const boardEl = $(".bt-board"), fxEl = $(".bt-fx"), gEl = $(".bt-guardian"), pEl = $(".bt-prince");
-    let gHp = gMax, pHp = pMax, shield = 0, clock = every, moves = 0, over = false, busy = false, sel = -1;
+    let gHp = gMax, pHp = pMax, shield = 0, stun = 0, since = 0, moves = 0, over = false, busy = false, sel = -1, angry = false;
     let board = Array.from({ length: W * H }, rnd);
     // make sure the first board has something to merge for every tool
-    TOOL_KEYS.forEach((k, i) => { board[i * 2] = { k, lv: 1 }; board[i * 2 + 9] = { k, lv: 1 }; });
+    TOOL_KEYS.forEach((k, i) => { board[i * 2] = { k }; board[i * 2 + 9] = { k }; });
+    const phase = () => { let ph = PH[0]; PH.forEach((x) => { if (gHp / gMax <= x.hp) ph = x; }); return ph; };
 
     /* ---- motion helpers: each fighter moves along x (px) with a little extra transform ---- */
     const pose = (el, who, name) => {
@@ -202,22 +209,26 @@
       $(".bt-bar.p span").style.width = `${(Math.max(0, pHp) / pMax) * 100}%`;
       $(".bt-shield").classList.toggle("on", shield > 0);
       $(".bt-shield b").textContent = shield > 1 ? "×" + shield : "";
-      const soon = clock <= 1;
-      const c = $(".bt-count");
-      c.textContent = soon && shield === 0 ? t("guardWarn") : t("guardLeft", { n: clock });
-      c.classList.toggle("soon", soon);
-      $(".bt-intent b").textContent = clock > 0 ? String(clock) : "!";
-      $(".bt-intent").classList.toggle("soon", soon);
-      gEl.classList.toggle("charging", soon && !over);
       $(".bt-cracks").style.opacity = String(Math.min(1, (1 - gHp / gMax) * 1.2));
     };
+    // picking a tool lights up the tools it can go with and dims the rest
     const render = () => {
-      boardEl.innerHTML = board.map((c, i) => c
-        ? `<button class="bt-cell lv${c.lv}${i === sel ? " sel" : ""}" data-i="${i}" data-k="${c.k}">${icon(c.k, c.lv)}<i>${c.lv}</i></button>`
-        : `<div class="bt-cell empty"></div>`).join("");
+      const pk = sel >= 0 && board[sel] ? board[sel].k : null;
+      boardEl.innerHTML = board.map((c, i) => {
+        if (!c) return `<div class="bt-cell empty"></div>`;
+        if (c.k === "stone") return `<div class="bt-cell stone${c.fresh ? " fresh" : ""}"><span>🪨</span></div>`;
+        const st = i === sel ? " sel" : pk ? (c.k === pk ? " match" : " dim") : "";
+        return `<button class="bt-cell${st}" data-i="${i}" data-k="${c.k}">${icon(c.k)}</button>`;
+      }).join("");
+      board.forEach((c) => { if (c) delete c.fresh; });
     };
     const anim = (el, cls, ms) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); setTimeout(() => el.classList.remove(cls), ms); };
-    const hasMove = () => board.some((a, i) => a && a.lv < MAXLV && board.some((b, j) => j !== i && b && b.k === a.k && b.lv === a.lv));
+    const hasMove = () => board.some((a, i) => a && a.k !== "stone" && board.some((b, j) => j !== i && b && b.k === a.k));
+    const setDizzy = (on) => {
+      let d = gEl.querySelector(".bt-dizzy");
+      if (on && !d) { d = document.createElement("div"); d.className = "bt-dizzy on"; d.innerHTML = "<span>✦</span><span>✧</span><span>✦</span>"; gEl.appendChild(d); }
+      if (!on && d) d.remove();
+    };
 
     /* ---- the prince's sword: wind back, dash in, slash, freeze on the hit, knock the guardian back, return ---- */
     async function swordAttack(v, lv) {
@@ -256,7 +267,7 @@
       pose(pEl, "prince", "attack");
       await go(pEl, -10, 100, "", "ease-out");
       const from = spot(pEl, 0.3, 0.45), to = spot(gEl, 0.52, 0.38);
-      const orb = put("bt-orb", { x: 0, y: 0 }, icon("star", Math.min(lv, 3)), 700);
+      const orb = put("bt-orb", { x: 0, y: 0 }, icon("star"), 700);
       orb.animate([
         { transform: `translate(${from.x}px,${from.y}px) translate(-50%,-50%) scale(.6) rotate(0deg)` },
         { transform: `translate(${(from.x + to.x) / 2}px,${Math.min(from.y, to.y) - 50}px) translate(-50%,-50%) scale(1.2) rotate(180deg)`, offset: 0.5 },
@@ -267,26 +278,23 @@
       boom(to, lv, "magic");
       burst(to, 10);
       flash(gEl, 90);
-      const dizzy = document.createElement("div");
-      dizzy.className = "bt-dizzy";
-      dizzy.innerHTML = "<span>✦</span><span>✧</span><span>✦</span>";
-      gEl.appendChild(dizzy);
-      setTimeout(() => dizzy.remove(), 1500);
-      clock += v;
-      num(to, `⏳ +${v}`, "magic", 1);
-      if (lv >= 3) { gHp -= lv - 2; setTimeout(() => num(spot(gEl, 0.5, 0.55), `-${lv - 2}`, "dmg", 2), 160); }
+      stun = 2;
+      setDizzy(true);
+      gHp -= v;
+      num(to, `-${v}`, "dmg", 2);
+      setTimeout(() => num(spot(gEl, 0.5, 0.2), t("guardStunned"), "magic", 1), 220);
       hud();
       go(gEl, -10, 120, "rotate(-5deg)").then(() => { if (!over) go(gEl, 0, 400, "", "ease-in-out"); });
       pose(pEl, "prince", "idle");
       await go(pEl, 0, 220, "", "ease-in-out");
     }
 
-    async function act(k, lv) {
-      const v = TOOLS[k].fx[lv];
+    async function act(k) {
+      const v = TOOLS[k].fx, lv = LV;
       if (k === "sword") {
         await swordAttack(v, lv);
       } else if (k === "shield") {
-        shield += v;
+        shield = Math.min(3, shield + v);
         Sfx.play("place");
         pose(pEl, "prince", "block");
         anim($(".bt-shield"), "pop", 400);
@@ -309,15 +317,14 @@
     }
 
     /* ---- the guardian's blow: rear back, charge across, smash; the shield takes it or the prince does ---- */
-    async function strike() {
-      const d = dist();
-      gEl.classList.remove("charging");
+    async function strike(ph) {
+      const d = dist(), hitDmg = ph.dmg;
       gEl.classList.add("striking");
-      if (shield > 0) pose(pEl, "prince", "block");
       pose(gEl, "guardian", "windup");
       Sfx.play("drum");
-      await go(gEl, -18, 280, "scale(1.06) rotate(-5deg)", "ease-out");
-      await sleep(140);
+      await go(gEl, -18, 200, "scale(1.06) rotate(-5deg)", "ease-out");
+      if (shield > 0) pose(pEl, "prince", "block");
+      await sleep(70);
       pose(gEl, "guardian", "strike");
       gEl.classList.add("front");
       const reach = d - pEl.offsetWidth * 0.78;
@@ -354,37 +361,69 @@
       await go(gEl, 0, 380, "", "ease-in-out");
       gEl.classList.remove("front", "striking");
       if (pHp > 0) pose(pEl, "prince", "idle");
-      clock = every;
+      // the blow shakes the board: some tools crack into stone for two moves
+      if (ph.stones && pHp > 0) {
+        const free = board.map((c, i) => (c && c.k !== "stone" ? i : -1)).filter((i) => i >= 0);
+        for (let n = 0; n < ph.stones && free.length; n++) {
+          const i = free.splice(Math.floor(Math.random() * free.length), 1)[0];
+          board[i] = { k: "stone", t: 2, fresh: true };
+        }
+        anim(boardEl, "quake", 450);
+        Sfx.play("knock");
+        render();
+      }
       hud();
+    }
+
+    // when it gets weak, it gets angry: one roar, then it hits harder and more often
+    async function enrage() {
+      angry = true;
+      gEl.classList.add("angry");
+      Sfx.play("drum", 2);
+      anim(layer, "shake", 500);
+      anim(layer, "flash", 500);
+      num(spot(gEl, 0.5, 0.15), t("guardAngry"), "hurt", 1);
+      await sleep(700);
     }
 
     async function merge(a, b) {
       busy = true;
       sel = -1;
-      const lv = board[a].lv + 1, k = board[a].k;
+      const k = board[a].k;
       moves++;
+      const cell = boardEl.querySelector(`[data-i="${b}"]`);
+      if (cell) UI.sparkle(cell.getBoundingClientRect(), 8);
       board[a] = null;
-      board[b] = lv >= MAXLV ? null : { k, lv };
+      board[b] = null;
       render();
-      const cell = boardEl.querySelector(`[data-i="${b}"]`) || boardEl.children[b];
-      if (cell) UI.sparkle(cell.getBoundingClientRect(), lv >= 3 ? 12 : 6);
-      Sfx.play("merge", lv);
-      await act(k, lv);
+      Sfx.play("merge", 2);
+      await act(k);
       if (over) return;
       if (gHp <= 0) return win();
-      clock--;
-      hud();
-      if (clock <= 0) { await sleep(250); await strike(); }
+      // stones crumble back into tools after two moves
+      board.forEach((c, i) => { if (c && c.k === "stone" && --c.t <= 0) board[i] = null; });
+      if (!angry && phase().angry) await enrage();
+      // the guardian strikes when it likes: never right away, never too long, otherwise by chance
+      since++;
+      if (stun > 0) {
+        if (--stun === 0) setDizzy(false);
+      } else {
+        const ph = phase();
+        if (since >= ph.min && (since >= ph.max || Math.random() < ph.chance)) {
+          await sleep(220);
+          await strike(ph);
+          since = 0;
+        }
+      }
       if (over) return;
       if (pHp <= 0) return lose();
       // new tools drop into the empty cells
       await sleep(150);
       board = board.map((c) => c || rnd());
       if (!hasMove()) {
-        // never leave the board stuck: copy one tool onto another cell so a merge exists
-        const i0 = board.findIndex((c) => c && c.lv < MAXLV);
-        const j0 = board.findIndex((c, j) => j !== i0);
-        if (i0 >= 0 && j0 >= 0) board[j0] = { ...board[i0] };
+        // never leave the board stuck: copy one tool onto another so a pair exists
+        const tools = board.map((c, i) => (c && c.k !== "stone" ? i : -1)).filter((i) => i >= 0);
+        if (tools.length > 1) board[tools[1]] = { k: board[tools[0]].k };
       }
       render();
       busy = false;
@@ -399,7 +438,9 @@
       burst(at, 12);
       await sleep(200);
       still(gEl);
+      setDizzy(false);
       pose(gEl, "guardian", "fallen");
+      gEl.classList.remove("angry");
       gEl.classList.add("fallen");
       Sfx.play("shatter", 3);
       await sleep(1400);
@@ -438,10 +479,11 @@
       if (to < 0) return;
       const tryMerge = (a, b) => {
         const A = board[a], B = board[b];
-        if (a !== b && A && B && A.k === B.k && A.lv === B.lv && A.lv < MAXLV) { merge(a, b); return true; }
+        if (a !== b && A && B && A.k === B.k) { merge(a, b); return true; }
         return false;
       };
-      if (from >= 0 && from !== to) { if (!tryMerge(from, to)) { Sfx.play("error"); sel = -1; render(); } return; }
+      const nope = (i) => { Sfx.play("error"); sel = -1; render(); const el = boardEl.children[i]; if (el) anim(el, "nope", 350); };
+      if (from >= 0 && from !== to) { if (!tryMerge(from, to)) nope(from); return; }
       if (sel < 0) { sel = to; Sfx.play("select"); render(); return; }
       if (sel === to) { sel = -1; render(); return; }
       if (!tryMerge(sel, to)) { sel = to; Sfx.play("select"); render(); }
