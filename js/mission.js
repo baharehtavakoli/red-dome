@@ -211,12 +211,12 @@
       $(".bt-shield b").textContent = shield > 1 ? "×" + shield : "";
       $(".bt-cracks").style.opacity = String(Math.min(1, (1 - gHp / gMax) * 1.2));
     };
-    // picking a tool lights up the tools it can go with; stones show how many moves they have left
+    // picking a tool lights up the tools it can go with; a frozen tool is drawn greyed and cannot be used
     const render = () => {
       const pk = sel >= 0 && board[sel] ? board[sel].k : null;
       boardEl.innerHTML = board.map((c, i) => {
         if (!c) return `<div class="bt-cell empty"></div>`;
-        if (c.k === "stone") return `<div class="bt-cell stone${c.fresh ? " fresh" : ""}"><span>🪨</span><i>${c.t}</i></div>`;
+        if (c.k === "stone") return `<div class="bt-cell stone${c.fresh ? " fresh" : ""}">${icon(c.was)}</div>`;
         const st = queued && queued.includes(i) ? " queued" : i === sel ? " sel" : pk && c.k === pk ? " match" : "";
         return `<button class="bt-cell${st}" data-i="${i}" data-k="${c.k}">${icon(c.k)}</button>`;
       }).join("");
@@ -361,12 +361,12 @@
       await go(gEl, 0, 380, "", "ease-in-out");
       gEl.classList.remove("front", "striking");
       if (pHp > 0) pose(pEl, "prince", "idle");
-      // the blow shakes the board: some tools crack into stone for two moves
+      // the blow shakes the board: some tools freeze (shown greyed) for two moves
       if (ph.stones && pHp > 0) {
         const free = board.map((c, i) => (c && c.k !== "stone" ? i : -1)).filter((i) => i >= 0);
         for (let n = 0; n < ph.stones && free.length; n++) {
           const i = free.splice(Math.floor(Math.random() * free.length), 1)[0];
-          board[i] = { k: "stone", t: 2, fresh: true };
+          board[i] = { k: "stone", was: board[i].k, t: 2, fresh: true };
         }
         anim(boardEl, "quake", 450);
         Sfx.play("knock");
