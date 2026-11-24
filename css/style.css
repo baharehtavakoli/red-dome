@@ -1834,3 +1834,13 @@ html.ui-art #mission .bt-bar i {
 html.ui-art #mission .bt-bar span { border-radius: 7px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -2px 2px rgba(0, 0, 0, .25); }
 html.ui-art #mission .bt-bar.p span { background: url("../assets/ui/progress_fill.webp") center / 100% 100%; }
 html.ui-art #mission .bt-bar.g span { background: linear-gradient(180deg, #ffe9a0, #e0a83a 50%, #a8681a); }
+
+
+/* ---------- dome task bubble: painted part icon, and a ready-pulse with no square glow (the art bubble has no border-radius) ---------- */
+.task .t-ic .t-art { display: block; width: auto; height: 19px; max-width: 34px; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(60, 20, 10, .35)); }
+.ui-art .task.ready { animation: taskready-art 1.2s ease-in-out infinite; }
+@keyframes taskready-art { 50% { transform: translate(-50%, -50%) scale(1.12); } }
+
+/* ---------- Dome button: when the next part can be built, it bobs (with its "!" badge) ---------- */
+.back-btn.notify { animation: back-call 1.6s ease-in-out infinite; }
+@keyframes back-call { 0%, 55%, 100% { transform: translateY(0); } 65% { transform: translateY(-5px); } 75% { transform: translateY(0); } 85% { transform: translateY(-3px); } }

@@ -136,7 +136,9 @@
         const low = cy > window.innerHeight * 0.55 && a.width > a.height * 1.6;
         this.hand.textContent = low ? "👇" : "👆";
         this.hand.classList.toggle("down", low);
-        this.hand.style.cssText = low ? `left:${cx}px;top:${a.top - 50}px` : `left:${cx}px;top:${cy}px`;
+        // a button at the very top (the Dome button) gets the hand just under it, so its label stays readable
+        const top = !low && cy < window.innerHeight * 0.18;
+        this.hand.style.cssText = low ? `left:${cx}px;top:${a.top - 50}px` : `left:${cx}px;top:${top ? a.bottom + 2 : cy}px`;
         this._handAbove = low;
       }
       if (this.tip._html !== text) { this.tip.innerHTML = text; this.tip._html = text; }
@@ -145,7 +147,7 @@
       const below = cy < vh * 0.55;
       const left = Math.max(12, Math.min(window.innerWidth - w - 12, cx - w / 2));
       this.tip.style.cssText = `width:${w}px;left:${left}px;` +
-        (below ? `top:${a.bottom + 54}px` : `bottom:${vh - a.top + (this._handAbove ? 62 : 20)}px`);
+        (below ? `top:${a.bottom + 58}px` : `bottom:${vh - a.top + (this._handAbove ? 62 : 20)}px`);
       if (this._last !== id) { this._last = id; this.tip.classList.remove("pop"); void this.tip.offsetWidth; this.tip.classList.add("pop"); }
     },
 

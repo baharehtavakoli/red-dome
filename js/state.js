@@ -3,6 +3,8 @@
 (function () {
   const SAVE_KEY = "reddome_save_v1";
   const VERSION = 1;
+  // the build order before the pool moved to the front (saves without `domeOrder` use it)
+  const OLD_DOME_ORDER = ["terrace", "stairs", "walls", "arch", "balcony", "dome", "tiles", "towers", "pool", "garden"];
   const cfg = () => window.GAME_CONFIG;
 
   function cellFromLegend(def) {
@@ -51,6 +53,7 @@
         orderSeq: 0,
         ordersDone: 0,
         dome: cfg().domeParts.map(() => false),
+        domeOrder: cfg().domeParts.map((p) => p.id),
         seenIntro: false,
         ads: { day: "", count: 0 },
       };
@@ -94,8 +97,12 @@
     sanitize() {
       const d = this.d;
       d.board = d.board.map(validCell);
-      const parts = cfg().domeParts.length;
-      d.dome = Array.from({ length: parts }, (_, i) => !!(d.dome && d.dome[i]));
+      const ids = cfg().domeParts.map((p) => p.id);
+      // Saves from before the build order changed (stairs, then pool) list the parts in the old order: re-map them by id.
+      const order = Array.isArray(d.domeOrder) ? d.domeOrder : OLD_DOME_ORDER;
+      const old = d.dome || [];
+      d.dome = ids.map((id) => { const k = order.indexOf(id); return k >= 0 && !!old[k]; });
+      d.domeOrder = ids;
       d.orders = (d.orders || []).map((o) =>
         o && Array.isArray(o.items) && Number.isFinite(o.stars) && window.CHARACTERS[o.who] &&
         o.items.every((it) => U.item(it.chain, it.level)) ? o : null

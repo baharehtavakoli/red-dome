@@ -87,34 +87,36 @@ window.GAME_CONFIG = {
        emoji     shown on the task button
      Parts are layered in list order (later = on top). */
   domeParts: [
-    { id: "terrace", name: "Terrace", cost: 5, story: "terrace", emoji: "🧱",
-      box: { x: 0, y: 161, w: 360, h: 371 }, focus: { x: 20, y: 430, w: 320, h: 80 }, button: { x: 180, y: 476 },
+    // Build order. `layer` = paint order: the part layers were cut from the stage paintings in the old order
+    // (terrace, stairs, walls, arch, balcony, dome, tiles, towers, pool, garden), so a later layer must stay on top.
+    { id: "stairs", layer: 1, name: "Stone Stairs", cost: 5, story: "stairs", icon: "assets/scenes/parts/icon_stairs.webp?v=3", emoji: "🪜",
+      box: { x: 31, y: 163, w: 298, h: 319 }, focus: { x: 70, y: 420, w: 220, h: 85 }, button: { x: 180, y: 392 }, // above the fountain
+      ruined: "assets/scenes/parts/stairs_ruined.webp?v=3", restored: "assets/scenes/parts/stairs_restored.webp?v=3" },
+    { id: "pool", layer: 8, name: "Pool & Fountain", cost: 8, story: "pool", tale: "tale1", mission: "guard", icon: "assets/scenes/parts/icon_pool.webp?v=4", emoji: "⛲",
+      box: { x: 69, y: 0, w: 291, h: 513 }, focus: { x: 90, y: 450, w: 180, h: 75 }, button: { x: 180, y: 488 },
+      ruined: "assets/scenes/parts/pool_ruined.webp?v=3", restored: "assets/scenes/parts/pool_restored.webp?v=4" },
+    { id: "terrace", layer: 0, name: "Terrace", cost: 12, story: "terrace", emoji: "🧱",
+      box: { x: 0, y: 161, w: 360, h: 371 }, focus: { x: 0, y: 330, w: 360, h: 150 }, button: { x: 300, y: 392 }, // on the right stone wall, clear of the fountain and the Workshop button // frame the stone side walls, stairs and the paved yard: what actually changes
       ruined: "assets/scenes/parts/terrace_ruined.webp", restored: "assets/scenes/parts/terrace_restored.webp" },
-    { id: "stairs", name: "Stone Stairs", cost: 8, story: "stairs", tale: "tale1", mission: "guard", emoji: "🪜",
-      box: { x: 31, y: 163, w: 298, h: 319 }, focus: { x: 70, y: 420, w: 220, h: 85 }, button: { x: 180, y: 440 },
-      ruined: "assets/scenes/parts/stairs_ruined.webp", restored: "assets/scenes/parts/stairs_restored.webp" },
-    { id: "walls", name: "Red Brick Walls", cost: 12, story: "walls", emoji: "🧱",
+    { id: "walls", layer: 2, name: "Red Brick Walls", cost: 18, story: "walls", emoji: "🧱",
       box: { x: 0, y: 34, w: 360, h: 406 }, focus: { x: 25, y: 265, w: 310, h: 185 }, button: { x: 90, y: 360 },
       ruined: "assets/scenes/parts/walls_ruined.webp", restored: "assets/scenes/parts/walls_restored.webp" },
-    { id: "arch", name: "Iwan & Doors", cost: 18, story: "arch", tale: "tale2", mission: "twins", emoji: "🚪",
+    { id: "arch", layer: 3, name: "Iwan & Doors", cost: 24, story: "arch", tale: "tale2", mission: "twins", emoji: "🚪",
       box: { x: 31, y: 163, w: 273, h: 260 }, focus: { x: 120, y: 290, w: 120, h: 160 }, button: { x: 180, y: 330 },
       ruined: "assets/scenes/parts/arch_ruined.webp", restored: "assets/scenes/parts/arch_restored.webp" },
-    { id: "balcony", name: "Balcony", cost: 24, story: "balcony", emoji: "🏛️",
+    { id: "balcony", layer: 4, name: "Balcony", cost: 32, story: "balcony", emoji: "🏛️",
       box: { x: 22, y: 36, w: 337, h: 404 }, focus: { x: 30, y: 210, w: 300, h: 100 }, button: { x: 180, y: 250 },
       ruined: "assets/scenes/parts/balcony_ruined.webp", restored: "assets/scenes/parts/balcony_restored.webp" },
-    { id: "dome", name: "Red Dome", cost: 32, story: "dome", tale: "tale3", mission: "door", emoji: "🕌",
+    { id: "dome", layer: 5, name: "Red Dome", cost: 42, story: "dome", tale: "tale3", mission: "door", emoji: "🕌",
       box: { x: 0, y: 34, w: 360, h: 425 }, focus: { x: 95, y: 60, w: 170, h: 160 }, button: { x: 180, y: 140 },
       ruined: "assets/scenes/parts/dome_ruined.webp", restored: "assets/scenes/parts/dome_restored.webp" },
-    { id: "tiles", name: "Tilework", cost: 42, story: "tiles", emoji: "💠",
+    { id: "tiles", layer: 6, name: "Tilework", cost: 52, story: "tiles", emoji: "💠",
       box: { x: 0, y: 5, w: 360, h: 502 }, focus: { x: 30, y: 250, w: 300, h: 200 }, button: { x: 270, y: 360 },
       ruined: "assets/scenes/parts/tiles_ruined.webp", restored: "assets/scenes/parts/tiles_restored.webp" },
-    { id: "towers", name: "Towers", cost: 52, story: "towers", emoji: "🗼",
+    { id: "towers", layer: 7, name: "Towers", cost: 64, story: "towers", emoji: "🗼",
       box: { x: 0, y: 0, w: 360, h: 513 }, focus: { x: 20, y: 150, w: 320, h: 150 }, button: { x: 62, y: 210 },
       ruined: "assets/scenes/parts/towers_ruined.webp", restored: "assets/scenes/parts/towers_restored.webp" },
-    { id: "pool", name: "Pool & Fountain", cost: 64, story: "pool", emoji: "⛲",
-      box: { x: 69, y: 0, w: 291, h: 513 }, focus: { x: 90, y: 450, w: 180, h: 75 }, button: { x: 180, y: 488 },
-      ruined: "assets/scenes/parts/pool_ruined.webp", restored: "assets/scenes/parts/pool_restored.webp" },
-    { id: "garden", name: "Garden", cost: 80, story: "garden", emoji: "🌳",
+    { id: "garden", layer: 9, name: "Garden", cost: 80, story: "garden", emoji: "🌳",
       box: { x: 0, y: 15, w: 360, h: 443 }, focus: { x: 0, y: 280, w: 360, h: 220 }, button: { x: 84, y: 430 },
       ruined: "assets/scenes/parts/garden_ruined.webp", restored: "assets/scenes/parts/garden_restored.webp" },
   ],
@@ -182,7 +184,7 @@ window.GAME_CONFIG = {
   missions: {
     twins: { host: "nasrin", maxTries: 14, reward: { energy: 20, stars: 3 } }, // after the Stone Stairs; 6 pairs, 14 tries
     door: { host: "nasrin", extraTurns: 6, reward: { energy: 25, stars: 5 } },  // after the dome; turns allowed = fewest needed + 6
-    guard: { host: "nasrin", reward: { energy: 20, stars: 3 },   // after the stairs: the merge battle with a bronze guardian
+    guard: { host: "nasrin", reward: { energy: 20, stars: 3 },   // after the pool: the merge battle with a bronze guardian
              guardianHp: 12, princeHp: 6,   // its temper (how often/hard it strikes) is GUARD_PHASES in mission.js
              bg: "assets/scenes/battle/battle_bg.webp", bgFallback: "assets/scenes/tale/tale1_2.webp",
              guardianArt: "assets/scenes/battle/guardian.webp", guardianFallback: "assets/scenes/tale/guardian_body_temp.webp",

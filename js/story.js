@@ -36,7 +36,7 @@ window.STORY = {
   },
 
   terrace: {
-    chapter: "Chapter 1",
+    chapter: "Chapter 3",
     title: "The First Stone",
     cast: ["shideh", "mehrab"],
     lines: [
@@ -45,18 +45,17 @@ window.STORY = {
   },
 
   stairs: {
-    chapter: "Chapter 2",
+    chapter: "Chapter 1",
     title: "Stone Stairs",
     cast: ["shideh", "nasrin"],
     lines: [
-      { who: "nasrin", text: "My mother told me this tale on this very mountain. Back then there was nothing here but wind." },
-      { who: "shideh", side: "left", text: "Now it has a dome." },
-      { who: "nasrin", text: "...Sit down. It's my turn." },
+
+
     ],
   },
 
   walls: {
-    chapter: "Chapter 3",
+    chapter: "Chapter 4",
     title: "The Walls",
     cast: ["shideh", "nasrin"],
     lines: [
@@ -65,7 +64,7 @@ window.STORY = {
   },
 
   arch: {
-    chapter: "Chapter 4",
+    chapter: "Chapter 5",
     title: "The Great Arch",
     cast: ["shideh", "nasrin"],
     lines: [
@@ -76,7 +75,7 @@ window.STORY = {
   },
 
   balcony: {
-    chapter: "Chapter 5",
+    chapter: "Chapter 6",
     title: "The Gardener",
     cast: ["shideh", "golnar"],
     lines: [
@@ -87,7 +86,7 @@ window.STORY = {
   },
 
   dome: {
-    chapter: "Chapter 6",
+    chapter: "Chapter 7",
     title: "The Sage of the Hills",
     cast: ["shideh", "sage"],
     lines: [
@@ -99,7 +98,7 @@ window.STORY = {
   },
 
   tiles: {
-    chapter: "Chapter 7",
+    chapter: "Chapter 8",
     title: "Crimson Tiles",
     cast: ["shideh", "mehrab"],
     lines: [
@@ -108,7 +107,7 @@ window.STORY = {
   },
 
   towers: {
-    chapter: "Chapter 8",
+    chapter: "Chapter 9",
     title: "The Towers",
     cast: ["shideh", "nasrin"],
     lines: [
@@ -119,11 +118,13 @@ window.STORY = {
   },
 
   pool: {
-    chapter: "Chapter 9",
+    chapter: "Chapter 2",
     title: "Two Domes",
     cast: ["shideh", "nasrin"],
     lines: [
-
+      { who: "nasrin", text: "My mother told me this tale on this very mountain. Back then there was nothing here but wind." },
+      { who: "shideh", side: "left", text: "Now it has a dome." },
+      { who: "nasrin", text: "...Sit down. It's my turn." },
     ],
   },
 

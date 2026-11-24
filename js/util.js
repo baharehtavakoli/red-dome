@@ -93,7 +93,7 @@
       intro.forEach((w) => C[w] && out.push(C[w].portrait));
       (G.scene.residents || []).forEach((r) => C[r.who] && C[r.who].body && out.push(C[r.who].body + "neutral.webp"));
       // 2. parts already built, and the next one
-      G.domeParts.forEach((p, i) => { if (done[i] || i === next) out.push(p.restored); });
+      G.domeParts.forEach((p, i) => { if (done[i] || i === next) out.push(p.restored); if (p.icon) out.push(p.icon); });
       // 3. the merge board
       out.push(G.talisman.icon);
       Object.values(window.CHAINS).forEach((c) => {

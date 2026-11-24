@@ -41,7 +41,15 @@
       for (let s = 0; s < n; s++) if (!o[s]) o[s] = this.generate(s);
     },
 
+    /* A new order should be something to make, not something already lying on the board
+       (a fresh game opened with an order ready to deliver): re-roll up to a few times. */
     generate(slot) {
+      let o = null;
+      for (let k = 0; k < 12; k++) { o = this.roll(slot); if (!this.find(o)) break; }
+      return o;
+    },
+
+    roll(slot) {
       const cfg = oc();
       const busy = State.d.orders.filter((o, j) => o && j !== slot).map((o) => o.who);
       let givers = Object.keys(cfg.givers).filter((w) => !busy.includes(w) && CHARACTERS[w]);

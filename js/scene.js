@@ -145,7 +145,7 @@
         const el = document.createElement("div");
         el.className = "spart";
         el.dataset.part = i;
-        Object.assign(el.style, { left: p.box.x + "px", top: p.box.y + "px", width: p.box.w + "px", height: p.box.h + "px", zIndex: i + 1 });
+        Object.assign(el.style, { left: p.box.x + "px", top: p.box.y + "px", width: p.box.w + "px", height: p.box.h + "px", zIndex: (p.layer ?? i) + 1 });
         el.innerHTML = `<div class="layer ruined"></div><div class="layer restored"></div>`;
         partsLayer.appendChild(el);
         this.partEls.push(el);
@@ -302,7 +302,7 @@
         if (done[i]) cls += " gone";
         else if (i === next) {
           cls += stars >= p.cost ? " ready" : " need";
-          html = `<span class="t-ic">${p.emoji || "🔨"}</span><span class="t-cost">⭐${p.cost}</span>`;
+          html = `<span class="t-ic">${p.icon ? Art.html(p.icon, p.emoji || "🔨", "t-art") : p.emoji || "🔨"}</span><span class="t-cost">⭐${p.cost}</span>`;
         } else {
           cls += " gone"; // only the next part's task is shown, like a to-do list
         }
@@ -332,8 +332,10 @@
       const FOCUS_Y = 0.34; // where the part should sit on screen (above portraits + dialogue)
       const cx = box.x + box.w / 2, cy = box.y + box.h / 2;
       let s = Math.min((vw * 0.8) / box.w, (vh * 0.36) / box.h);
-      // Low parts need extra zoom so the camera can centre them without showing past the world's edge.
-      s = Math.max(s, ((1 - FOCUS_Y) * vh) / Math.max(1, H - cy));
+      // Low parts would need a big zoom to sit at FOCUS_Y without showing past the world's edge; that zoom
+      // filled the screen with plain floor (the terrace build looked like nothing happened), so cap it and let
+      // a low part sit lower on screen instead.
+      s = Math.max(s, Math.min(base * 1.3, ((1 - FOCUS_Y) * vh) / Math.max(1, H - cy)));
       s = Math.max(base * 1.15, Math.min(base * maxZoom, s));
       let tx = vw / 2 - cx * s, ty = vh * FOCUS_Y - cy * s;
       tx = Math.min(0, Math.max(vw - W * s, tx));

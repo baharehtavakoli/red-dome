@@ -83,7 +83,7 @@
       tutMerge: "Two of a kind make something better. <b>Drag one pebble onto the other.</b>",
       tutDeliver: "Mehrab needs a <b>Stone</b>. Tap <b>Deliver</b>!",
       tutBack: "Orders pay ⭐ stars. You have enough for the first part. <b>Back to the dome!</b>",
-      tutBuild: "Tap here to <b>build</b> the terrace!",
+      tutBuild: "Tap here to <b>build</b> the stone stairs!",
       tutToBoard: "Back to the workshop: tap <b>Workshop</b>.",
       tutToScene: "Tap here to go back to the dome.",
       tutDone: "Well done! Merge, deliver orders and build the whole Red Dome.",
@@ -150,7 +150,7 @@
       tutMerge: "دو تای یکسان، چیز بهتری می‌سازند. <b>یک سنگریزه را روی دیگری بکش.</b>",
       tutDeliver: "مهراب یک <b>سنگ</b> می‌خواهد. <b>تحویل</b> را بزن!",
       tutBack: "سفارش‌ها ⭐ ستاره می‌دهند. برای اولین بخش کافی است. <b>برگرد به گنبد!</b>",
-      tutBuild: "اینجا بزن تا <b>سکو</b> ساخته شود!",
+      tutBuild: "اینجا بزن تا <b>پلکان سنگی</b> ساخته شود!",
       tutToBoard: "برگرد به کارگاه: روی <b>کارگاه</b> بزن.",
       tutToScene: "اینجا بزن تا به گنبد برگردی.",
       tutDone: "آفرین! آیتم‌ها را ترکیب کن، سفارش تحویل بده و کل گنبد سرخ را بساز.",
@@ -197,43 +197,44 @@
         "نور مریخ است که در نقشه گیر افتاده. دو چیز یکسان را درست کنارش ترکیب کن تا بشکند.",
       ],
     },
-    terrace: { chapter: "فصل ۱", title: "سنگ نخست", lines: [
+    terrace: { chapter: "فصل ۳", title: "سنگ نخست", lines: [
 
     ] },
-    stairs: { chapter: "فصل ۲", title: "پله‌های سنگی", lines: [
-      "مادرم این قصه را روی همین کوه برایم می‌گفت. آن موقع اینجا فقط باد بود.",
-      "حالا یه گنبد داره.",
-      "…بنشین. نوبت من است.",
-    ] },
-    walls: { chapter: "فصل ۳", title: "دیوارها", lines: [
+    stairs: { chapter: "فصل ۱", title: "پله‌های سنگی", lines: [
+
 
     ] },
-    arch: { chapter: "فصل ۴", title: "طاق بزرگ", lines: [
+    walls: { chapter: "فصل ۴", title: "دیوارها", lines: [
+
+    ] },
+    arch: { chapter: "فصل ۵", title: "طاق بزرگ", lines: [
       "این طاق را ببین؛ هر سنگش جفتی دارد که به آن تکیه داده.",
       "اگه یکی‌شون نباشه، طاق می‌ریزه.",
       "راز طلسم‌های قصه‌ی ما هم همین بود. بنشین.",
     ] },
-    balcony: { chapter: "فصل ۵", title: "گلنار باغبان", lines: [
+    balcony: { chapter: "فصل ۶", title: "گلنار باغبان", lines: [
       "سلام! من گلنارم، باغبونِ ده پایین.",
       "خوش اومدی، گلنار. این باغ با دست تو جون می‌گیره.",
       "دورتادور گنبد گل سرخ می‌کارم.",
     ] },
-    dome: { chapter: "فصل ۶", title: "حکیم کوهستان", lines: [
+    dome: { chapter: "فصل ۷", title: "حکیم کوهستان", lines: [
       "سلام، معمار. من حکیم این کوهم؛ سی سال است از اینجا ستاره‌ها را می‌شمارم.",
       "پس اسطرلاب کار شما بود. جای گنبد رو درست نشونم داد.",
       "من فقط ستاره را نشان دادم. ساختنش کار تو بود.",
       "شما هم بنشینید. این بخش قصه را حتماً باید بشنوید.",
     ] },
-    tiles: { chapter: "فصل ۷", title: "کاشی‌های سرخ", lines: [
+    tiles: { chapter: "فصل ۸", title: "کاشی‌های سرخ", lines: [
 
     ] },
-    towers: { chapter: "فصل ۸", title: "برج‌ها", lines: [
+    towers: { chapter: "فصل ۹", title: "برج‌ها", lines: [
       "از بالای برج، راهی که شاه از آن می‌آید پیداست.",
       "نگرانی؟",
       "نه. فقط می‌خواهم ببینم کی می‌رسد.",
     ] },
-    pool: { chapter: "فصل ۹", title: "دو گنبد", lines: [
-
+    pool: { chapter: "فصل ۲", title: "دو گنبد", lines: [
+      "مادرم این قصه را روی همین کوه برایم می‌گفت. آن موقع اینجا فقط باد بود.",
+      "حالا یه گنبد داره.",
+      "…بنشین. نوبت من است.",
     ] },
     garden: { chapter: "فصل ۱۰", title: "گنبد سرخ", lines: [
       "انارها گل دادن! زودتر از همیشه.",
