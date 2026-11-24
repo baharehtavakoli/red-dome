@@ -195,11 +195,12 @@ window.GAME_CONFIG = {
              poseScale: { prince: { attack: 1.22 } },   // the lunge was drawn ~20% smaller than the other poses
              fx: { slash: "assets/scenes/battle/fx_slash.webp", impact: "assets/scenes/battle/fx_impact.webp", wave: "assets/scenes/battle/fx_wave.webp" },
              // tool icons by level (1-4); until they exist the board shows emoji
+             // one icon per tool (the battle has no levels any more)
              tools: {
-               sword: ["assets/scenes/battle/sword_1.webp", "assets/scenes/battle/sword_2.webp", "assets/scenes/battle/sword_3.webp", "assets/scenes/battle/sword_4.webp"],
-               shield: ["assets/scenes/battle/shield_1.webp", "assets/scenes/battle/shield_2.webp", "assets/scenes/battle/shield_3.webp", "assets/scenes/battle/shield_4.webp"],
-               rose: ["assets/scenes/battle/rosewater_1.webp", "assets/scenes/battle/rosewater_2.webp", "assets/scenes/battle/rosewater_3.webp", "assets/scenes/battle/rosewater_4.webp"],
-               star: ["assets/items/star_shard.webp", "assets/items/star.webp", "assets/items/astrolabe_charm.webp", "assets/items/astrolabe_charm.webp"],
+               sword: "assets/scenes/battle/sword.webp",
+               shield: "assets/scenes/battle/shield.webp",
+               rose: "assets/scenes/battle/rosewater.webp",
+               star: "assets/items/star.webp",
              } },
   },
 

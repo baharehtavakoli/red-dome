@@ -98,7 +98,7 @@
       slash: has(FX.slash), impact: has(FX.impact), wave: has(FX.wave),
     };
     const icon = (k) => {
-      const p = opts.tools && opts.tools[k] && opts.tools[k][1];
+      const p = opts.tools && opts.tools[k];
       return p && Art.has(p) ? `<img src="${p}" alt="" draggable="false">` : `<span>${TOOLS[k].emoji}</span>`;
     };
     const rnd = () => ({ k: U.pick(["sword", "sword", "sword", "shield", "shield", "rose", "star"]) });
@@ -597,7 +597,7 @@
       this.btn = btn;
       const g = cfg().guard;
       if (g) Art.probe([g.bg, g.bgFallback, g.guardianArt, g.guardianFallback, g.princeArt, g.princeFallback]
-        .concat(...Object.values(g.tools || {}), ...Object.values(g.poses || {}).map((o) => Object.values(o)), Object.values(g.fx || {}))
+        .concat(Object.values(g.tools || {}), ...Object.values(g.poses || {}).map((o) => Object.values(o)), Object.values(g.fx || {}))
         .filter(Boolean), () => {});
       Art.probe(["assets/ui/icons/story.webp"], () => { btn.firstElementChild.outerHTML = Art.html("assets/ui/icons/story.webp", "📜", "gift-ic"); });
       this.refresh();
