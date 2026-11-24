@@ -1697,3 +1697,67 @@ html.ui-art #mission .bt-cell { background: url("../assets/ui/board_tile_light.w
 #mission .bt-legend img { width: 20px; height: 20px; object-fit: contain; }
 #mission .bt-legend small { font: 800 11px/1 "Nunito", "Vazirmatn", sans-serif; color: #7a4a20; }
 html.ui-art #mission .bt-board-wrap { padding-top: 18px; padding-left: 18px; padding-right: 18px; }
+
+/* ---------- battle v2: hits that land (dash, slash, hit-stop, white flash, big numbers, sparks) ---------- */
+#mission .bt-guardian, #mission .bt-prince { transition: filter .6s; will-change: transform; }
+#mission .bt-fighters .front { z-index: 2; }
+#mission .bt-guardian img.whiteout, #mission .bt-prince img.whiteout { filter: brightness(0) invert(1) drop-shadow(0 0 14px #fff); }
+#mission .bt-guardian.charging img { animation: bt-charge .6s ease-in-out infinite alternate; }
+@keyframes bt-charge { to { filter: drop-shadow(0 0 16px #ff4a2a) brightness(1.2) saturate(1.4); } }
+#mission .bt-prince.healglow img { animation: bt-glow .8s ease; }
+#mission .bt-intent { position: absolute; left: 50%; top: 2%; transform: translateX(-50%); display: flex; align-items: center; gap: 3px; z-index: 2;
+  padding: 3px 10px 3px 6px; border-radius: 20px; background: linear-gradient(180deg, #fff6dc, #e9cf95); border: 2px solid #b8862e;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, .45); font: 900 20px/1 "Nunito", sans-serif; color: #7a1c2a; white-space: nowrap; }
+#mission .bt-intent i { font-style: normal; font-size: 17px; }
+#mission .bt-intent.soon { background: linear-gradient(180deg, #ff6a4a, #b8221e); color: #fff; border-color: #ffd76a; animation: bt-beat .45s ease-in-out infinite alternate; }
+@keyframes bt-beat { to { transform: translateX(-50%) scale(1.18); } }
+#mission .bt-fighters.done .bt-intent, #mission .bt-guardian.fallen .bt-intent { display: none; }
+#mission .bt-shield { left: -8%; top: 26%; width: 42%; height: auto; aspect-ratio: 1; font-size: 34px;
+  background: radial-gradient(circle, rgba(255, 246, 210, .25) 0 50%, rgba(255, 215, 106, .55) 64%, rgba(255, 215, 106, 0) 71%);
+  box-shadow: none; }
+#mission .bt-shield img { width: 46%; height: 46%; object-fit: contain; filter: drop-shadow(0 0 8px #ffd76a); }
+#mission .bt-shield b { right: 14%; bottom: 14%; font-size: 15px; color: #fff; -webkit-text-stroke: 3px #7a1c2a; paint-order: stroke fill; }
+#mission .bt-shield.hitblock { animation: bt-block .4s ease; }
+@keyframes bt-block { 30% { transform: scale(1.35); filter: brightness(2.2); } }
+#mission .bt-fx { z-index: 3; direction: ltr; }
+#mission .bt-num { direction: ltr; unicode-bidi: isolate; }
+#mission .bt-num { position: absolute; transform: translate(-50%, -50%); font: 900 var(--fs, 40px)/1 "Nunito", sans-serif; color: #fff; white-space: nowrap;
+  -webkit-text-stroke: 6px #2a0a18; paint-order: stroke fill; text-shadow: 0 4px 0 #2a0a18; letter-spacing: -1px; animation: bt-num 1.05s ease-out forwards; }
+#mission .bt-num.heal { color: #a6ffb4; }
+#mission .bt-num.hurt { color: #ff7060; }
+#mission .bt-num.block, #mission .bt-num.magic { color: #c8f0ff; font-family: "Nunito", "Vazirmatn", sans-serif; -webkit-text-stroke-width: 5px; }
+@keyframes bt-num { 0% { transform: translate(-50%, -50%) scale(.2); opacity: 0; } 12% { transform: translate(-50%, -50%) scale(1.75); opacity: 1; }
+  26% { transform: translate(-50%, -50%) scale(1); } 70% { transform: translate(-50%, -95%) scale(1); opacity: 1; } 100% { transform: translate(-50%, -150%) scale(.9); opacity: 0; } }
+#mission .bt-slash { position: absolute; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); pointer-events: none;
+  filter: drop-shadow(0 0 10px #ffd76a); animation: bt-slash .36s ease-out forwards; }
+#mission .bt-slash.flip { --flip: -1; }
+#mission .bt-slash.big { filter: drop-shadow(0 0 18px #ffb347) brightness(1.15); }
+#mission .bt-slash svg, #mission .bt-slash img { width: 100%; height: 100%; display: block; }
+@keyframes bt-slash { 0% { opacity: 0; transform: scaleX(var(--flip, 1)) rotate(-50deg) scale(.55); } 25% { opacity: 1; }
+  100% { opacity: 0; transform: scaleX(var(--flip, 1)) rotate(12deg) scale(1.12); } }
+#mission .bt-boom, #mission .bt-impact { position: absolute; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); pointer-events: none; animation: bt-boom .34s ease-out forwards; }
+#mission .bt-impact img { width: 100%; height: 100%; }
+#mission .bt-boom { border-radius: 50%; background: radial-gradient(circle, #fff 0 16%, #ffeaa0 28%, rgba(255, 180, 70, .6) 44%, transparent 66%); }
+#mission .bt-boom::before { content: ""; position: absolute; inset: -30%; background: repeating-conic-gradient(rgba(255, 248, 210, .95) 0 5deg, transparent 5deg 30deg);
+  -webkit-mask-image: radial-gradient(circle, transparent 20%, #000 28%, transparent 66%); mask-image: radial-gradient(circle, transparent 20%, #000 28%, transparent 66%); }
+#mission .bt-boom.hurt { background: radial-gradient(circle, #fff 0 14%, #ffb4a4 28%, rgba(220, 40, 30, .6) 44%, transparent 66%); }
+#mission .bt-boom.block { background: radial-gradient(circle, #fff 0 16%, #d4f4ff 30%, rgba(120, 200, 255, .55) 46%, transparent 66%); }
+#mission .bt-boom.magic { background: radial-gradient(circle, #fff 0 14%, #e8d4ff 30%, rgba(170, 120, 255, .55) 46%, transparent 66%); }
+@keyframes bt-boom { from { transform: scale(.3); opacity: 1; } 60% { opacity: 1; } to { transform: scale(1.3); opacity: 0; } }
+#mission .bt-spark { position: absolute; width: 0; height: 0; display: grid; place-items: center; color: #ffe58a; font-size: 17px; line-height: 0;
+  text-shadow: 0 0 6px #ffb347; animation: bt-spark .65s cubic-bezier(.15, .8, .3, 1) both; }
+#mission .bt-spark.chip { width: 8px; height: 6px; margin: -3px; border-radius: 1px; background: linear-gradient(135deg, #f0bf70, #6f4318); box-shadow: 0 0 3px rgba(0, 0, 0, .4); }
+#mission .bt-spark.petal { font-size: 15px; text-shadow: none; animation-duration: .9s; }
+@keyframes bt-spark { from { transform: translate(0, 0) rotate(0) scale(1.2); opacity: 1; } to { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(.4); opacity: 0; } }
+#mission .bt-wave { position: absolute; width: 190px; height: 44px; margin: -22px 0 0 -95px; border-radius: 50%; border: 5px solid rgba(255, 232, 170, .95);
+  box-shadow: 0 0 14px rgba(255, 200, 120, .8), inset 0 0 10px rgba(255, 200, 120, .6); animation: bt-wave .55s ease-out forwards; }
+#mission .bt-wave:has(img) { border: 0; box-shadow: none; }
+#mission .bt-wave img { width: 100%; height: 100%; object-fit: contain; }
+@keyframes bt-wave { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
+#mission .bt-orb { position: absolute; left: 0; top: 0; font-size: 34px; line-height: 1; filter: drop-shadow(0 0 12px #ffe58a); }
+#mission .bt-orb img { width: 44px; height: 44px; object-fit: contain; display: block; }
+#mission .bt-dizzy { position: absolute; left: 50%; top: 12%; width: 80px; height: 26px; margin-left: -40px; pointer-events: none; animation: bt-dizzy 1.5s ease forwards; }
+#mission .bt-dizzy span { position: absolute; left: 50%; top: 50%; color: #ffe58a; font-size: 18px; text-shadow: 0 0 6px #b08bff; animation: bt-orbit .7s linear infinite; }
+#mission .bt-dizzy span:nth-child(2) { animation-delay: -.233s; } #mission .bt-dizzy span:nth-child(3) { animation-delay: -.466s; }
+@keyframes bt-orbit { from { transform: translate(-50%, -50%) rotate(0) translateX(34px) rotate(0) scaleY(1); } to { transform: translate(-50%, -50%) rotate(360deg) translateX(34px) rotate(-360deg); } }
+@keyframes bt-dizzy { 0% { opacity: 0; } 15%, 80% { opacity: 1; } 100% { opacity: 0; } }

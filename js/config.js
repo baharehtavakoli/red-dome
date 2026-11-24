@@ -187,6 +187,12 @@ window.GAME_CONFIG = {
              bg: "assets/scenes/battle/battle_bg.webp", bgFallback: "assets/scenes/tale/tale1_2.webp",
              guardianArt: "assets/scenes/battle/guardian.webp", guardianFallback: "assets/scenes/tale/guardian_body_temp.webp",
              princeArt: "assets/scenes/battle/prince.webp", princeFallback: "assets/scenes/tale/prince_temp.webp",
+             // poses swap in during the fight as soon as the files exist (see ART_BRIEF_BATTLE.md)
+             poses: {
+               prince: { idle: "assets/scenes/battle/prince_idle.webp", ready: "assets/scenes/battle/prince_ready.webp", attack: "assets/scenes/battle/prince_attack.webp", block: "assets/scenes/battle/prince_block.webp", hurt: "assets/scenes/battle/prince_hurt.webp" },
+               guardian: { idle: "assets/scenes/battle/guardian_idle.webp", windup: "assets/scenes/battle/guardian_windup.webp", strike: "assets/scenes/battle/guardian_strike.webp", fallen: "assets/scenes/battle/guardian_fallen.webp" },
+             },
+             fx: { slash: "assets/scenes/battle/fx_slash.webp", impact: "assets/scenes/battle/fx_impact.webp", wave: "assets/scenes/battle/fx_wave.webp" },
              // tool icons by level (1-4); until they exist the board shows emoji
              tools: {
                sword: ["assets/scenes/battle/sword_1.webp", "assets/scenes/battle/sword_2.webp", "assets/scenes/battle/sword_3.webp", "assets/scenes/battle/sword_4.webp"],
