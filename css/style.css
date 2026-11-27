@@ -1107,6 +1107,7 @@ img.art { width: 82%; height: 82%; object-fit: contain; pointer-events: none; }
 /* staged scene art: a part's ruined layer only shows while it is being built
    (the background already is the ruin, and earlier parts may overlap it) */
 #world.staged .spart:not(.shaking) .ruined { opacity: 0; }
+#world.staged .spart.keepbp:not(.restored) .ruined { opacity: 1; }
 
 /* full-body residents stand on the ground: no waist fade, a soft contact shadow */
 .resident.full .res-body { -webkit-mask-image: none; mask-image: none; }
@@ -1837,7 +1838,7 @@ html.ui-art #mission .bt-bar.g span { background: linear-gradient(180deg, #ffe9a
 
 
 /* ---------- dome task bubble: painted part icon, and a ready-pulse with no square glow (the art bubble has no border-radius) ---------- */
-.task .t-ic .t-art { display: block; width: auto; height: 19px; max-width: 34px; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(60, 20, 10, .35)); }
+.task .t-ic .t-art { display: block; width: auto; height: 20px; max-width: 46px; object-fit: contain; filter: drop-shadow(0 1px 1px rgba(60, 20, 10, .35)); }
 .ui-art .task.ready { animation: taskready-art 1.2s ease-in-out infinite; }
 @keyframes taskready-art { 50% { transform: translate(-50%, -50%) scale(1.12); } }
 

@@ -89,12 +89,12 @@ window.GAME_CONFIG = {
   domeParts: [
     // Build order. `layer` = paint order: the part layers were cut from the stage paintings in the old order
     // (terrace, stairs, walls, arch, balcony, dome, tiles, towers, pool, garden), so a later layer must stay on top.
-    { id: "stairs", layer: 1, name: "Stone Stairs", cost: 5, story: "stairs", icon: "assets/scenes/parts/icon_stairs.webp?v=3", emoji: "🪜",
+    { id: "stairs", layer: 1, name: "Stone Stairs", cost: 5, story: "stairs", icon: "assets/scenes/parts/icon_stairs.webp?v=4", emoji: "🪜",
       box: { x: 31, y: 163, w: 298, h: 319 }, focus: { x: 70, y: 420, w: 220, h: 85 }, button: { x: 180, y: 392 }, // above the fountain
-      ruined: "assets/scenes/parts/stairs_ruined.webp?v=3", restored: "assets/scenes/parts/stairs_restored.webp?v=3" },
-    { id: "pool", layer: 8, name: "Pool & Fountain", cost: 8, story: "pool", tale: "tale1", mission: "guard", icon: "assets/scenes/parts/icon_pool.webp?v=4", emoji: "⛲",
+      ruined: "assets/scenes/parts/stairs_ruined.webp?v=4", restored: "assets/scenes/parts/stairs_restored.webp?v=4" },
+    { id: "pool", layer: 8, name: "Pool & Fountain", cost: 8, story: "pool", tale: "tale1", mission: "guard", keepBlueprint: true, icon: "assets/scenes/parts/icon_pool.webp?v=5", emoji: "⛲",
       box: { x: 69, y: 0, w: 291, h: 513 }, focus: { x: 90, y: 450, w: 180, h: 75 }, button: { x: 180, y: 488 },
-      ruined: "assets/scenes/parts/pool_ruined.webp?v=3", restored: "assets/scenes/parts/pool_restored.webp?v=4" },
+      ruined: "assets/scenes/parts/pool_ruined.webp?v=4", restored: "assets/scenes/parts/pool_restored.webp?v=5" },
     { id: "terrace", layer: 0, name: "Terrace", cost: 12, story: "terrace", emoji: "🧱",
       box: { x: 0, y: 161, w: 360, h: 371 }, focus: { x: 0, y: 330, w: 360, h: 150 }, button: { x: 300, y: 392 }, // on the right stone wall, clear of the fountain and the Workshop button // frame the stone side walls, stairs and the paved yard: what actually changes
       ruined: "assets/scenes/parts/terrace_ruined.webp", restored: "assets/scenes/parts/terrace_restored.webp" },

@@ -143,7 +143,8 @@
       const tasksLayer = this.world.querySelector(".tasks-layer");
       parts().forEach((p, i) => {
         const el = document.createElement("div");
-        el.className = "spart";
+        // a part whose blueprint sits over an earlier part (the fountain over the stairs) keeps showing it
+        el.className = "spart" + (p.keepBlueprint ? " keepbp" : "");
         el.dataset.part = i;
         Object.assign(el.style, { left: p.box.x + "px", top: p.box.y + "px", width: p.box.w + "px", height: p.box.h + "px", zIndex: (p.layer ?? i) + 1 });
         el.innerHTML = `<div class="layer ruined"></div><div class="layer restored"></div>`;
